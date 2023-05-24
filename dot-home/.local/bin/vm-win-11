@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+basedir=/home/work/vm/win11
+diskdir=$(realpath $basedir/win11_base.qcow2)
+sharedir=$(realpath ~/share)
+
+cpufeaturesintel="pcid spec-ctrl stibp ssbd pdpe1gb md-clear mds-no taa-no tsx-ctrl"
+
+existedcpufeatures=""
+for f in $cpufeaturesintel
+do
+  finfo=$(grep "$f" /proc/cpuinfo)
+  if [ ! -z "$finfo" ]; then
+    existedcpufeatures="$existedcpufeatures,+$f"
+  fi
+done
+
+cpuinfo="Skylake-Client-noTSX-IBRS"
+
+# sound card
+#-soundhw hda \
+qemu-system-x86_64 --enable-kvm --name win11  \
+  -cpu $cpuinfo$existedcpufeatures \
+  -smp sockets=1,cores=2,threads=2 \
+  -machine pc,accel=kvm,hmat=on -m 8G -boot c \
+  -drive file=${diskdir},format=qcow2,index=2,media=disk,cache=writethrough \
+  -nic user,ipv6=off,model=e1000e,smb=${sharedir} \
+  -display gtk,grab-on-hover=on -vga vmware \
+  -usbdevice tablet \
+  -device qemu-xhci,id=xhci,p2=15,p3=12 \
+  -device usb-host,hostbus=1,hostport=3 \
+  -device usb-host,hostbus=1,hostport=4 \
+  -device usb-host,hostbus=1,hostport=1 \
+  -device usb-host,hostbus=2,hostport=3 \
+  -device usb-host,hostbus=2,hostport=4 \
+  -device usb-host,hostbus=2,hostport=1 \
+  -audiodev alsa,id=hda,out.frequency=48000,in.frequency=48000,in.buffer-length=20000,out.buffer-length=20000 -device intel-hda -device hda-duplex,audiodev=hda \
+  $@
+
+### backup
+  #-device usb-host,vendorid=0x05ac,productid=0x12a8 \
+  #-device usb-host,vendorid=0x1ff7,productid=0x0200 \
+  #-device usb-host,vendorid=0x05ac,productid=0x12a8 \
