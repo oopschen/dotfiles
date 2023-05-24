@@ -1,0 +1,43 @@
+!Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: full
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+
+! urxvt
+URxvt.scrollBar: false
+URxvt.scrollstyle: plain
+URxvt.font: xft:Source Code Pro:size=13, xft:WenQuanYi Zen Hei Mono:size=13
+URxvt.boldFont: xft:Source Code Pro:size=13, xft:WenQuanYi Zen Hei Mono:size=13
+URxvt.termName: rxvt-unicode
+URxvt.saveLines: 20000
+URxvt.foreground: #FFFFFF
+URxvt.background: #000000
+URxvt.cursorColor: #4D90F8
+URxvt.preeditType: Root
+
+! urxvt shortcut
+URxvt.perl-ext-common: default,keyboard-select,matcher,selection-to-clipboard
+URxvt.keysym.C-S-K: perl:keyboard-select:activate
+URxvt.keysym.C-S-S: perl:keyboard-select:search
+
+! matcher
+URxvt.url-launcher: google-chrome-stable
+URxvt.keysym.C-S-U: perl:matcher:select
+
+!*color0: #2E3436
+!*color1: #a40000
+!*color2: #4E9A06
+!*color3: #C4A000
+!*color4: #3465A4
+!*color5: #75507B
+!*color6: #ce5c00
+!*color7: #babdb9
+!*color8: #555753
+!*color9: #EF2929
+!*color10: #8AE234
+!*color11: #FCE94F
+!*color12: #729FCF
+!*color13: #AD7FA8
+!*color14: #fcaf3e
+!*color15: #EEEEEC

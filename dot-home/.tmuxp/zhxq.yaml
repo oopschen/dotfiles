@@ -1,0 +1,16 @@
+session_name: zhxq
+windows:
+- window_name: project
+  focus: true
+  start_directory: ~/project/ld/smart-comm
+  layout: tiled
+  panes:
+    - cd smart-community-adapter
+    - cd smart-community-api
+    - cd smart-community-data-api
+    - cd smart-community-data-handle
+
+- window_name: doc
+  start_directory: ~/project/ld/smart-comm
+  panes:
+    - cd smart-community-doc

@@ -1,0 +1,15 @@
+session_name: zaxy
+windows:
+- window_name: web-proxy
+  start_directory: ~/
+  layout: even-horizontal
+  panes:
+    - ssh zaxy-eoms ssh -NCL 127.0.0.1:50005:172.168.1.201:80 yqjyj
+    - ssh -NCL 0.0.0.0:50005:127.0.0.1:50005 zaxy-eoms
+
+- window_name: db
+  start_directory: ~/
+  layout: even-horizontal
+  panes:
+    - ssh -NCL 0.0.0.0:3456:rm-uf6mj4hrqesjy9wps.mysql.rds.aliyuncs.com:3306 zaxy-eoms
+    - mycli prd-hxg

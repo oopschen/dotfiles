@@ -1,0 +1,22 @@
+session_name: easyweb
+windows:
+- window_name: gallery
+  start_directory: ~/project/ray
+  layout: even-horizontal
+  panes:
+    - cd gradle-gallery
+    - cd gradle-gallery-test
+
+- window_name: security
+  options:
+    main-pane-width: 120
+  focus: true
+  layout: main-vertical
+  panes:
+    - shell_command:
+      - cd "~/project/ray/web-starter"
+      focus: true
+    - shell_command:
+      - cd "~/demo/spring-security"
+    - shell_command:
+      - cd "~/demo/spring-security"

@@ -1,0 +1,9 @@
+session_name: wzga-docker
+windows:
+- window_name: local
+  layout: main-horizontal
+  start_directory: ~/workspace/wzga/docker
+  panes:
+    - 
+      focus: true
+    - shell_command: ssh -t yykfk@inner-test "cd /home/yykfk/build_docker/docker; exec \$SHELL --login"

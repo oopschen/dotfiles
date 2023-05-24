@@ -1,0 +1,7 @@
+session_name: notes
+windows:
+- window_name: note
+  layout: tiled
+  start_directory: ~/project/notes/ld
+  panes:
+    - shell_command: mkdir -p $(date +%Y%m) && cd $(date +%Y%m)

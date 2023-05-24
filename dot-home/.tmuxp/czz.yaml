@@ -1,0 +1,8 @@
+session_name: czz-dev
+windows:
+- window_name: workspace
+  start_directory: ~/project/ld-Documents/project/neibao/device/chongzhuangzhuang/demo
+  layout: even-horizontal
+  panes:
+    - poetry shell
+    - poetry shell

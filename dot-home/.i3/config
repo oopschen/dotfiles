@@ -1,0 +1,323 @@
+# i3 config file (v4)
+# i3 config modified by Ray
+# @since 1.5
+# @date 2023.03.02
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
+#
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+font pango:Source Code Pro Bold 11px
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $up i
+set $down k
+set $left j
+set $right l
+set $mod Mod4
+set $alt Mod1
+
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+#bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# use libinput gesture lock
+#bindsym $mod+Shift+l "exec --no-startup-id i3lock -n -t -i ~/.i3/screen-saver.png"
+
+# start dmenu (a program launcher)
+#bindsym $mod+d exec "dmenu_run -b -f -l 5 -p '$' -i -fn 'Source Code Pro-15px' -nb '#333333' -nf '#AEACB2' -sb '#3079ed' -sf '#ffffff'"
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# reload the configuration file
+bindsym $mod+Shift+r reload
+
+# screen saver
+bindsym $mod+Shift+y exec "xset +dpms && xset s on"
+bindsym $mod+Shift+n exec "xset -dpms && xset s off"
+
+# monitor
+bindsym $alt+p move workspace to output primary
+bindsym $alt+h move workspace to output left
+bindsym $alt+l move workspace to output right
+bindsym $alt+i move workspace to output up
+bindsym $alt+k move workspace to output down
+
+
+bindsym $alt+Shift+p move container to output primary
+bindsym $alt+Shift+h move container to output left
+bindsym $alt+Shift+l move container to output right
+bindsym $alt+Shift+i move container to output up
+bindsym $alt+Shift+k move container to output down
+
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+# These bindings trigger as soon as you enter the resize mode
+
+# Pressing left will shrink the window’s width.
+# Pressing right will grow the window’s width.
+# Pressing up will shrink the window’s height.
+# Pressing down will grow the window’s height.
+  bindsym $left       resize shrink width 10 px or 10 ppt
+  bindsym $down       resize grow height 10 px or 10 ppt
+  bindsym $up         resize shrink height 10 px or 10 ppt
+  bindsym $right      resize grow width 10 px or 10 ppt
+
+# same bindings, but for the arrow keys
+  bindsym Left        resize shrink width 10 px or 10 ppt
+  bindsym Down        resize grow height 10 px or 10 ppt
+  bindsym Up          resize shrink height 10 px or 10 ppt
+  bindsym Right       resize grow width 10 px or 10 ppt
+
+# back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+bindsym $mod+b bar hidden_state toggle
+# bindsym $mod+Shift+j move container to output left
+# bindsym $mod+Shift+r move container to output right
+
+#bindsym $mod+m exec "i3-input -F 'mark %s' -l 4 -P 'Mark: '"
+#bindsym $mod+g exec "i3-input -F '[con_mark=%s] focus' -l 3 -P 'Go to: '"
+bindsym $mod+d exec "rofi -show combi"
+bindsym $mod+Tab exec "rofi -show window"
+bindsym --release $mod+Shift+p exec "scrot -s -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; sxiv /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
+bindsym --release $mod+Shift+u exec "scrot -u -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; sxiv /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
+bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; sxiv /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
+#bindsym $alt+Shift+9 [class="(?i)weixin"]  move scratchpad, workspace --no-auto-back-and-forth 8, split h, scratchpad show, floating disable
+#bindsym $alt+Shift+0 [class="(?i)weixin"] move scratchpad 
+
+# main mode: move all workspace except 5 to primary
+bindsym $alt+Shift+1 [workspace=".*"] move workspace to output primary, [workspace="[58]"] move workspace to output eDP-1-1
+# presentation mode: move  3 to primary
+bindsym $alt+Shift+2 [workspace=".*"] move workspace to output eDP-1-1, [workspace="3"] move workspace to output primary
+
+## cmd terminal settings
+bindsym $mod+Shift+slash exec st -f \
+    'MesloLGS NF:pixelsize=15:antialias=true:hinting:true:'
+bindsym $mod+slash exec i3-utils-cmd-term.sh toggle
+### make termial on startup move to scratchpad
+for_window [instance="(?i)cmdterm"] move scratchpad, exec i3-utils-cmd-term.sh toggle
+## end 
+
+# workspace
+default_orientation auto
+workspace_layout stacking
+workspace_auto_back_and_forth yes
+default_floating_border normal
+default_border none
+hide_edge_borders smart
+focus_follows_mouse no
+title_align center
+mouse_warping output
+popup_during_fullscreen smart
+floating_minimum_size 0 x 0
+floating_maximum_size 1920 x 1080
+focus_wrapping yes
+
+### ui custimize
+client.background #272827
+client.focused          #657b83 #272827 #B06534 #B06534   #657b83
+client.unfocused        #657b83 #272827 #E7F5E0 #E7F5E0   #657b83
+client.focused_inactive #657b83 #272827 #E7F5E0 #E7F5E0   #657b83
+client.urgent           #657b83 #272827 #EB3F46 #E7F5E0   #657b83
+client.placeholder      #657b83 #272827 #E7F5E0 #E7F5E0   #657b83
+
+### window assigment
+for_window [class="(?i)mpv"] fullscreen
+for_window [class="(?i)qemu-system"] fullscreen
+#### fix chrome popup to wrong workspace
+for_window [class="(?i)firefox"] move --no-auto-back-and-forth window to workspace 1
+for_window [class="(?i)google-chrome"] move --no-auto-back-and-forth window to workspace 1
+for_window [class="(?i)chromium"] move --no-auto-back-and-forth window to workspace 1
+### floating window center
+for_window [floating_from="user"] move position center
+### dingtalk & weixin popup
+for_window [class="(?i)com.alibabainc.dingtalk" title="(?i).*(分享|预览|.doc|.docx|.ppt|.pptx|.xls|.xlsx).*"] floating enable, resize set 90 ppt 90 ppt
+### dia window settings: 1. float toolbox_window & dia ,set size to 800x200
+for_window [class="(?i)dia" window_role="toolbox_window"] floating enable,resize set 10 ppt 60 ppt
+
+
+## w1 web: chrome
+assign [class="(?i)google-chrome"] 1
+assign [class="(?i)browser"] 1
+assign [class="(?i)firefox"] 1
+assign [class="(?i)chromium"] 1
+## w2 designer
+assign [title="(?i)dia"] 2
+assign [title="(?i)umlet"] 2
+assign [title="(?i)xmind"] 2
+## w3 office
+assign [class="(?i)^wps$"] 3
+assign [class="(?i)^et$"] 3
+assign [class="(?i)^wpp$"] 3
+## w4 media
+assign [class="(?i)mpv"] 4
+assign [class="(?i)^mupdf"] 4
+## w5 communication
+assign [class="(?i)vuze"] 5
+assign [class="(?i)thunderbird"] 5
+## w6 remote desktop
+## w7 virtual host
+assign [class="(?i)VirtualBox.*"] 7
+assign [class="(?i)vmware.*"] 7
+assign [class="(?i)qemu-system.+"] 7
+assign [class="(?i)rdesktop"] 7
+assign [class="(?i).*?xfreeerdp.*"] 7
+# w8 empty
+assign [class="(?i)com.alibabainc.dingtalk"] 8
+assign [class="(?i)weixin"] 8
+# w9 misc
+assign [title="(?i)baidunetdisk"] 9
+assign [title="(?i)百度网盘"] 9
+assign [title="(?i)qqmusic"] 9
+# w0 dev
+assign [class="(?i)jetbrains.*"] 10
+assign [class="(?i)mysql-workbench-bin"] 10
+assign [class="(?i)dbeaver.*"] 10
+assign [title="(?i)spoon.*"] 10
+assign [class="(?i)st-256color"] 10
+
+## no foucs
+no_focus [class="(?i)thunderbird"] 
+
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    status_command i3status --config ~/.i3/i3status.conf
+    mode hide
+    modifier none
+    position bottom
+    tray_output none
+    font pango:Source Code Pro 12px
+    workspace_buttons yes
+    colors {
+      background         #393E46
+      statusline         #6D9886
+      separator          #F2E7D5
+      focused_workspace  #393E46 #EC9B3B #FFFFFF
+      urgent_workspace   #393E46 #F24C4C #293462
+      inactive_workspace #393E46 #EDEDED #3C2C3E
+      active_workspace   #393E46 #98D8AA #000000
+    }
+}
+
+##### run after all config
+# auto startups
+#### systm service
+exec --no-startup-id dunst
+exec --no-startup-id libinput-gestures-setup autostart start
+exec --no-startup-id fcitx5 -r -d -s 2
+exec --no-startup-id netrp w
+exec --no-startup-id v2ray-nft T
+exec --no-startup-id hdmi-hotplug.sh
+exec --no-startup-id picom -b
+
+#### end 
+exec --no-startup-id google-chrome-stable
+exec --no-startup-id gtk-launch thunderbird-bin
+exec --no-startup-id i3-utils-cmd-term.sh
+
+#exec --no-startup-id firefox-bin
+#exec --no-startup-id gtk-launch weixin-uos
+#exec --no-startup-id gtk-launch com.alibabainc.dingtalk
+#exec --no-startup-id "i3-msg 'workspace 2, append_layout ~/.i3/workspace/workspace2.json;'"

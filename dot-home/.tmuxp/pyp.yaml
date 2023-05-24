@@ -1,0 +1,8 @@
+session_name: python-project
+windows:
+- window_name: workspace
+  start_directory: ~/project/ray/py-project
+  layout: even-horizontal
+  panes:
+    - poetry shell
+    - poetry shell

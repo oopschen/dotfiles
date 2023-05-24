@@ -1,0 +1,7 @@
+session_name: one-member
+windows:
+- window_name: project
+  start_directory: ~/project/ray/one_member
+  layout: even-horizontal
+  panes:
+    - 
