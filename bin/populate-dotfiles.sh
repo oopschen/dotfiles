@@ -26,6 +26,13 @@ check_file_exists() {
     [[ -e "$1" || -h "$1" ]] && return 0
     return 1
 }
+
+prompt4_removal() {
+    echo "File($1) exists, remove it [y|n]?"
+    read op
+    [[ "y" =~ "$op" ]] && return 0
+    return 1
+}
 ## end
 
 repo_dir=$(dirname $0)/..
@@ -53,31 +60,41 @@ do
     do
         if [[ -d "$dotfile_path" ]]; then
             dest_filename=$(get_real_config_filename "$dest_dir" "$dot_dir" "$dotfile_path")
-            if [[ -d "$dest_filename" ]]; then
-                if [[ -f "$dotfile_path/populate-dotfiles.sh" ]]; then
-                    echo "Exec $dotfile_path/populate-dotfiles.sh"
-		    sh $dotfile_path/populate-dotfiles.sh
+            if [[ -f "$dotfile_path/populate-dotfiles.sh" ]]; then
+                echo "Exec $dotfile_path/populate-dotfiles.sh"
+                sh $dotfile_path/populate-dotfiles.sh
+                continue
+
+            elif [[ -d "$dest_filename" ]]; then
+                prompt4_removal "$dest_filename"
+                if [[ 0 -eq $? ]]; then
+                    rm -i "$dest_filename"
                 else
-                    echo "Destination $dest_filename exists, please remove it manully."
-                    exit 2
+                    continue
                 fi
-            else
-                echo "Make link to $dest_filename"
-                ln -sv $(realpath $workdir/$dotfile_path) $dest_filename
+
             fi
+
+            echo "Link from $dotfile_path to $dest_filename"
+            ln -sv $(realpath $workdir/$dotfile_path) $dest_filename
 
         elif [[ -f "$dotfile_path" ]]; then
             dest_filename=$(get_real_config_filename "$dest_dir" "$dot_dir" "$dotfile_path")
             check_file_exists $dest_filename
             if [[ 0 -eq $? ]]; then
-                echo "Destination $dest_filename exists, please remove it manully."
-                exit 2
-            else
-                echo "Make link to $dest_filename"
-                ln -sv $(realpath $workdir/$dotfile_path) $dest_filename
+                prompt4_removal "$dest_filename"
+                if [[ 0 -eq $? ]]; then
+                    rm -i "$dest_filename"
+                else
+                    continue
+                fi
             fi
+
+            echo "Link from $dotfile_path to $dest_filename"
+            ln -sv $(realpath $workdir/$dotfile_path) $dest_filename
         fi
     done
 
-echo "Populate dotfiles done, enjoy yourself."
 done
+
+echo "Populate dotfiles done, enjoy yourself."
