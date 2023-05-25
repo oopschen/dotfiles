@@ -72,7 +72,8 @@ do
                 else
                     continue
                 fi
-
+            else
+                mkdir -p $(dirname "$dest_filename")
             fi
 
             echo "Link from $dotfile_path to $dest_filename"
@@ -88,6 +89,8 @@ do
                 else
                     continue
                 fi
+            else
+                mkdir -p $(dirname "$dest_filename")
             fi
 
             echo "Link from $dotfile_path to $dest_filename"
