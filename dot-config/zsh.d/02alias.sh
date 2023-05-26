@@ -7,6 +7,7 @@ alias dkc-reup='dkc stop $p; dkc rm -v $p; dkc up -d $p; dkc logs -f $p;'
 alias g='git'
 alias x='startx'
 alias wip='watch -n 1 ip addr show dev wlan0'
+
 ## alias suffix
 alias -s html=google-chrome-stable \
   docx=wps \
@@ -28,18 +29,20 @@ alias -s html=google-chrome-stable \
 
 alias swf="sudo rc-service net.wlan0 start"
 alias rswf="sudo rc-service net.wlan0 restart"
-# depend on rc-service ipset
+
 alias vpntoggle="v2ray-nft T"
 alias vpnoff="v2ray-nft D"
-alias hdof="monitor-op hdmi-off"
-alias hdw="monitor-op hdmi-on; i3-msg '[workspace=\"[^5]\"] move workspace to output primary' > /dev/null"
-alias hdo="monitor-op hdmi-on"
-alias hdm="monitor-op hdmi-mirror"
+
+alias hdoff="hdmi-hotplug.sh off"
+alias hdm="hdmi-hotplug.sh mirror"
+alias hdauto="hdmi-hotplug.sh"
+
 alias gw="./gradlew"
 alias cuzp="unzip -O cp936"
 alias mnt="sudo mount"
 alias mntw="sudo mount -o uid=work,iocharset=utf8"
 alias umt="sudo umount"
+
 ### wpa_cli commands alias
 alias ws="sudo wpa_cli -i wlan0"
 alias wsl="sudo wpa_cli -i wlan0 list_networks"
@@ -50,11 +53,14 @@ alias v="vim"
 alias ffcp="fzf -m --print0 --prompt=\"search: >\" | xargs -I{} --null cp {}"
 alias ffmv="fzf -m --print0 --prompt=\"search: >\" | xargs -I{} --null mv {}"
 alias rcs="sudo rc-service"
+
 ### dingtalk
 alias dingfix="pgrep -f com.alibabainc.dingtalk | xargs -I{} kill -9 {};rm -rf /home/work/.config/DingTalk/userdata/dump"
+
 #### fix zsh can not suspend(ctrl+z) after zplug update
 alias zsusfix="rm ~/.zplug/log/job.lock"
 alias pdm="podman"
+
 ### system tool alias
 alias sys-upworld="sudo emerge -uDNq @world"
 alias sys-cln-aftup="sudo emerge -q --depclean"
