@@ -133,6 +133,6 @@ if [ "1" = "$has_prog_exists" ]; then
 else
     echo "command term launches..."
     nohup st -f \
-        'MesloLGS NF:pixelsize=15:antialias=true:hinting:true:' \
+        ' FiraCode Nerd Font:style=Regular:pixelsize=15:antialias=true:hinting:true:' \
         -n $wm_instance -e tmuxp load normal 2>&1 1>/dev/null &
 fi
