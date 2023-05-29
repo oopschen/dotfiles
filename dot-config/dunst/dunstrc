@@ -296,10 +296,10 @@
 
     # shortcuts
     # Close notification.
-    close = mod1+c
+    close = ctrl+l
 
     # Close all notifications.
-    close_all = mod1+a
+    close_all = ctrl+shift+l
 
     # Redisplay last message(s).
     # On the US keyboard layout "grave" is normally above TAB and left
