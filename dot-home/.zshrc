@@ -9,7 +9,7 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-syntax-highlighting", use:"zsh-syntax-highlighting.zsh", defer:2
 
 # fzf
-zplug "junegunn/fzf", as:command, hook-build: "sh install --no-fish" 
+zplug "junegunn/fzf", as:command, hook-build: "sh install --no-fish --no-update-rc" 
 
 # z
 zplug "plugins/z", from:oh-my-zsh
@@ -20,5 +20,3 @@ zplug load
 for zsh_conf_file in $(find "$HOME/.config/zsh.d/" -mindepth 1 -type f -iname '*.sh' | sort -n); do
     source $zsh_conf_file
 done
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
