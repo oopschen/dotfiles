@@ -23,6 +23,7 @@ Oopschen's workstation dotfiles repo.
 - [dunst](https://github.com/dunst-project/dunst)
 - [st](https://st.suckless.org/)
 - [NerdFont](https://www.nerdfonts.com/)
+- [RobotoFont](https://fonts.google.com/specimen/Roboto)
 - [Rofi](https://github.com/davatorium/rofi)
 - [libinput](https://freedesktop.org/wiki/Software/libinput/)
 - [Fcitx](https://fcitx-im.org/)
