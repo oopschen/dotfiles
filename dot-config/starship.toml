@@ -15,6 +15,9 @@ symbol = " "
 
 [directory]
 read_only = " "
+truncation_symbol = "\uea7c "
+[directory.substitutions]
+fish_style_pwd_dir_length = "2"
 
 [docker_context]
 symbol = " "

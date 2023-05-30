@@ -8,4 +8,4 @@ src_dir=$(realpath $(pwd)/$script_dir)
 
 mkdir -p $dest_dir
 
-ln -sv $src_dir/gradle.properties $dest_dir/
+[[ ! -L "$dest_dir/gradle.properties" ]] && ln -sv $src_dir/gradle.properties $dest_dir/
