@@ -65,3 +65,6 @@ alias pdm="podman"
 alias sys-upworld="sudo emerge -uDNq @world"
 alias sys-cln-aftup="sudo emerge -q --depclean"
 alias sys-rm="sudo emerge --depclean -q"
+
+### python virtual env management
+alias activenv="source /usr/bin/virtualenvwrapper.sh"

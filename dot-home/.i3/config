@@ -192,7 +192,7 @@ bindsym $alt+Shift+2 [workspace=".*"] move workspace to output eDP-1-1, [workspa
 
 ## cmd terminal settings
 bindsym $mod+Shift+slash exec st -f \
-    'MesloLGS NF:pixelsize=15:antialias=true:hinting:true:'
+    'FiraCode Nerd Font:style=Regular:pixelsize=15:antialias=true:hinting:true'
 bindsym $mod+slash exec i3-utils-cmd-term.sh toggle
 ### make termial on startup move to scratchpad
 for_window [instance="(?i)cmdterm"] move scratchpad, exec i3-utils-cmd-term.sh toggle
