@@ -15,7 +15,7 @@ symbol = " "
 
 [directory]
 read_only = " "
-truncation_symbol = "\uea7c "
+truncation_symbol = "󰍻 "
 [directory.substitutions]
 fish_style_pwd_dir_length = "2"
 
