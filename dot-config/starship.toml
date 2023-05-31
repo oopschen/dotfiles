@@ -134,3 +134,6 @@ symbol = " "
 
 [spack]
 symbol = "🅢 "
+
+[[battery.display]]
+threshold =20
