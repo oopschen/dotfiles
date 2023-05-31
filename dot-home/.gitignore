@@ -1,3 +1,5 @@
 .vim/plugged
 .vim/.netrwhist
 .vim/viminfo
+*.swp
+*.swo

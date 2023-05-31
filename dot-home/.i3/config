@@ -191,8 +191,7 @@ bindsym $alt+Shift+1 [workspace=".*"] move workspace to output primary, [workspa
 bindsym $alt+Shift+2 [workspace=".*"] move workspace to output eDP-1-1, [workspace="3"] move workspace to output primary
 
 ## cmd terminal settings
-bindsym $mod+Shift+slash exec st -f \
-    'FiraCode Nerd Font:style=Regular:pixelsize=15:antialias=true:hinting:true'
+bindsym $mod+Shift+slash exec i3-utils-base-term.sh
 bindsym $mod+slash exec i3-utils-cmd-term.sh toggle
 ### make termial on startup move to scratchpad
 for_window [instance="(?i)cmdterm"] move scratchpad, exec i3-utils-cmd-term.sh toggle

@@ -132,7 +132,5 @@ if [ "1" = "$has_prog_exists" ]; then
     fi
 else
     echo "command term launches..."
-    nohup st -f \
-        'FiraCode Nerd Font:style=Regular:pixelsize=15:antialias=true:hinting:true' \
-        -n $wm_instance -e tmuxp load normal 2>&1 1>/dev/null &
+    i3-utils-base-term.sh "-n $wm_instance -e tmuxp load normal"
 fi
