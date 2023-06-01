@@ -4,7 +4,7 @@ export GTK_IM_MODULE=fcitx
 
 ## nvidia setting
 #xrandr --setprovideroutputsource modesetting NVIDIA-0
-#xrandr --auto
+xrandr --auto
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap

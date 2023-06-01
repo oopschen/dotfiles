@@ -186,9 +186,9 @@ bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir 
 #bindsym $alt+Shift+0 [class="(?i)weixin"] move scratchpad 
 
 # main mode: move all workspace except 5 to primary
-bindsym $alt+Shift+1 [workspace=".*"] move workspace to output primary, [workspace="[58]"] move workspace to output eDP-1-1
+bindsym $alt+Shift+1 [workspace=".*"] move workspace to output primary, [workspace="[58]"] move workspace to output eDP-1
 # presentation mode: move  3 to primary
-bindsym $alt+Shift+2 [workspace=".*"] move workspace to output eDP-1-1, [workspace="3"] move workspace to output primary
+bindsym $alt+Shift+2 [workspace=".*"] move workspace to output eDP-1, [workspace="3"] move workspace to output primary
 
 ## cmd terminal settings
 bindsym $mod+Shift+slash exec i3-utils-base-term.sh
@@ -305,7 +305,7 @@ bar {
 #### systm service
 exec --no-startup-id dunst
 exec --no-startup-id libinput-gestures-setup autostart start
-exec --no-startup-id fcitx5 -r -d -s 2
+exec --no-startup-id fcitx5 -r -d
 exec --no-startup-id netrp w
 exec --no-startup-id v2ray-nft T
 exec --no-startup-id hdmi-hotplug.sh
