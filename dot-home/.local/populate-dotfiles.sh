@@ -19,3 +19,4 @@ mkdir -p $dest_dir
 [[ ! -L  "$dest_dir/vm-w11" ]] && ln -sv $src_dir/vm-win-11 $dest_dir/vm-w11
 [[ ! -L  "$dest_dir/convert-chinese-2pinyin-dict.py" ]] && ln -sv $src_dir/convert-chinese-2pinyin-dict.py $dest_dir/
 [[ ! -L  "$dest_dir/i3-utils-base-term.sh" ]] && ln -sv $src_dir/i3-utils-base-term.sh $dest_dir/
+[[ ! -L  "~/.config/nftables.d" ]] && ln -sv $src_dir/nftables.d ~/.config
