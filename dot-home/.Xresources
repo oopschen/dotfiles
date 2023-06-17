@@ -3,6 +3,10 @@ Xft.antialias: true
 Xft.hinting: full
 Xft.hintstyle: hintslight
 Xft.rgba: rgb
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+
+rofi.dpi: 192
 
 ! urxvt
 URxvt.scrollBar: false
@@ -41,3 +45,7 @@ URxvt.keysym.C-S-U: perl:matcher:select
 !*color13: #AD7FA8
 !*color14: #fcaf3e
 !*color15: #EEEEEC
+!
+
+Xcursor.theme: macOS-Monterey-White
+Xcursor.size: 32

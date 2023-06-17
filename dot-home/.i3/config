@@ -18,7 +18,7 @@
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
-font pango:Source Code Pro Bold 11px
+font pango:Source Code Pro Bold 8pt
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
@@ -254,6 +254,7 @@ assign [class="(?i)^mupdf"] 4
 ## w5 communication
 assign [class="(?i)vuze"] 5
 assign [class="(?i)thunderbird"] 5
+assign [class="(?i)claws-mail"] 5
 ## w6 remote desktop
 ## w7 virtual host
 assign [class="(?i)VirtualBox.*"] 7
@@ -277,6 +278,7 @@ assign [class="(?i)st-256color"] 10
 
 ## no foucs
 no_focus [class="(?i)thunderbird"] 
+no_focus [class="(?i)claws-mail"] 
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -287,7 +289,7 @@ bar {
     modifier none
     position bottom
     tray_output none
-    font pango:Source Code Pro 12px
+    font pango:Source Code Pro 11pt
     workspace_buttons yes
     colors {
       background         #393E46
@@ -306,14 +308,14 @@ bar {
 exec --no-startup-id dunst
 exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id fcitx5 -r -d
-exec --no-startup-id netrp w
-exec --no-startup-id v2ray-nft T
+#exec --no-startup-id netrp w
+#exec --no-startup-id v2ray-nft T
 exec --no-startup-id hdmi-hotplug.sh
 exec --no-startup-id picom -b
 
 #### end 
 exec --no-startup-id google-chrome-stable
-exec --no-startup-id gtk-launch thunderbird-bin
+exec --no-startup-id gtk-launch claws-mail
 exec --no-startup-id i3-utils-cmd-term.sh
 
 #exec --no-startup-id firefox-bin

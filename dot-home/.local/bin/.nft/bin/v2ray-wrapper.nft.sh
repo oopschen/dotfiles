@@ -12,7 +12,7 @@ cmd_ip="sudo ip"
 
 ignore_file=~/.config/.v2ray.ignore.ip
 v2ray_config_file=/etc/nftables.d/v2ray.nft.conf
-policy_routing_table_name=166
+policy_routing_table_name=v2ray
 
 nft_table=$(grep -Ei "add\s+table" $v2ray_config_file | head -n1 | cut -d ' ' -f 3 | tr -d ' ')
 nft_ipv4_set_whitelist_set_name=$(grep -Ei "add\s+set\s+ip\s+$nft_table\s+" $v2ray_config_file | tail -n1 | cut -d ' ' -f 5 | tr -d ' ')
