@@ -48,4 +48,4 @@ URxvt.keysym.C-S-U: perl:matcher:select
 !
 
 Xcursor.theme: macOS-Monterey-White
-Xcursor.size: 32
+Xcursor.size: 48

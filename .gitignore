@@ -1,3 +1,4 @@
 !dot-config/.*
 !dot-home/.*
+!dot-home/.local/bin/.nft
 **/tmp

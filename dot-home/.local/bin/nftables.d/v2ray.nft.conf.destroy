@@ -1,7 +1,0 @@
-#!/sbin/nft -f
-
-## related to v2ray.nft.conf
-
-# 1. flush table
-flush table tbl_v2r
-delete table tbl_v2r

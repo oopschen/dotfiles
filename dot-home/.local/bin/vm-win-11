@@ -18,8 +18,8 @@ cpuinfo="Skylake-Client-noTSX-IBRS"
 
 # sound card
 #-soundhw hda \
+#-cpu $cpuinfo$existedcpufeatures \
 qemu-system-x86_64 --enable-kvm --name win11  \
-  -cpu $cpuinfo$existedcpufeatures \
   -smp sockets=1,cores=2,threads=2 \
   -machine pc,accel=kvm,hmat=on -m 8G -boot c \
   -drive file=${diskdir},format=qcow2,index=2,media=disk,cache=writethrough \
