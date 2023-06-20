@@ -309,7 +309,7 @@ exec --no-startup-id dunst
 exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id fcitx5 -r -d
 #exec --no-startup-id netrp w
-#exec --no-startup-id v2ray-nft T
+exec --no-startup-id v2ray-nft T
 exec --no-startup-id hdmi-hotplug.sh
 exec --no-startup-id picom -b
 

@@ -117,19 +117,17 @@ function create_v2ray() {
         echo "V2ray VPN policy routing is on($has_rpdb)..."
     fi
 
-    has_rpdb_route=$($cmd_ip route show type local 0.0.0.0/0 dev lo table $policy_routing_table_name)
-    if [ -z "$has_rpdb_route" ]; then
-        $cmd_ip route add local 0.0.0.0/0 dev lo table $policy_routing_table_name
-        if [ 0 -eq $? ]; then
-            echo "V2ray VPN init routing..."
-        else
-            echo "V2ray VPN fail to init routing(error code = $?)..."
-            res=5
-        fi
-
+    ## TODO: future fix as bug of iproute: treat fib no exists as error
+    ## https://lore.kernel.org/all/LaklAOJ--3-1@tutanota.com/T/#m9a1fa9409360b31debb6d05c646fe1e19e7cbf3c
+    $cmd_ip route show type local 0.0.0.0/0 dev lo table $policy_routing_table_name
+    $cmd_ip route add local 0.0.0.0/0 dev lo table $policy_routing_table_name
+    if [ 0 -eq $? ]; then
+        echo "V2ray VPN init routing..."
     else
-        echo "V2ray VPN routing is on($has_rpdb_route)..."
+        echo "V2ray VPN fail to init routing(error code = $?)..."
+        res=5
     fi
+
 
     ## 4. check final result value
     if [ 0 -eq $res ]; then
