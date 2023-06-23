@@ -171,7 +171,7 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-bindsym $mod+b bar hidden_state toggle
+bindsym $mod+b exec --no-startup-id polybar-msg cmd toggle
 # bindsym $mod+Shift+j move container to output left
 # bindsym $mod+Shift+r move container to output right
 
@@ -281,37 +281,17 @@ no_focus [class="(?i)thunderbird"]
 no_focus [class="(?i)claws-mail"] 
 
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-    status_command i3status --config ~/.i3/i3status.conf
-    mode hide
-    modifier none
-    position bottom
-    tray_output none
-    font pango:Source Code Pro 11pt
-    workspace_buttons yes
-    colors {
-      background         #393E46
-      statusline         #6D9886
-      separator          #F2E7D5
-      focused_workspace  #393E46 #EC9B3B #FFFFFF
-      urgent_workspace   #393E46 #F24C4C #293462
-      inactive_workspace #393E46 #EDEDED #3C2C3E
-      active_workspace   #393E46 #98D8AA #000000
-    }
-}
-
 ##### run after all config
 # auto startups
 #### systm service
 exec --no-startup-id dunst
 exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id fcitx5 -r -d
-#exec --no-startup-id netrp w
+exec --no-startup-id netrp w
 exec --no-startup-id v2ray-nft T
 exec --no-startup-id hdmi-hotplug.sh
 exec --no-startup-id picom -b
+exec --no-startup-id sh ~/.config/polybar/launch.sh
 
 #### end 
 exec --no-startup-id google-chrome-stable
