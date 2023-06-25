@@ -30,15 +30,23 @@ display_mode=
 _m=$1
 mode=${_m:=none}
 
+## args:
+##  except name
+function off_display_exclude() {
+    for display_name in $(xrandr --listmonitors | sed -r '1d' | cut -d ' ' -f 6)
+    do
+        $cmd_xrandr --output $display_name --off 
+    done
+}
 
 function display_extern() {
-    $cmd_xrandr --output $intern_name --off 
+    off_display_exclude $extern_name
     $cmd_xrandr --output $extern_name --primary --auto 
 
 }
 
 function display_local() {
-    $cmd_xrandr --output $extern_name --off
+    off_display_exclude $intern_name
     $cmd_xrandr --output $intern_name --primary --auto 
 }
 
@@ -101,4 +109,4 @@ else
 
 fi
 
-/usr/bin/notify-send -u low -t 1000 "Display Changed" "$display_mode"
+/usr/bin/notify-send -u low -t 5000 "Display Changed" "$display_mode"
