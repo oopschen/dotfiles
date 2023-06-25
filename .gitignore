@@ -2,3 +2,5 @@
 !dot-home/.*
 !dot-home/.local/bin/.nft
 **/tmp
+.*.swp
+.*.swo
