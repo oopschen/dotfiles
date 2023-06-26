@@ -27,6 +27,7 @@ Oopschen's workstation dotfiles repo.
 - [Rofi](https://github.com/davatorium/rofi)
 - [libinput](https://freedesktop.org/wiki/Software/libinput/)
 - [Fcitx](https://fcitx-im.org/)
+- [Polybar](https://github.com/polybar/polybar/wiki/)
 
 ## Usage
 
