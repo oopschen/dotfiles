@@ -24,13 +24,15 @@ qemu-system-x86_64 --enable-kvm --name win11  \
   -machine pc,accel=kvm,hmat=on -m 8G -boot c \
   -drive file=${diskdir},format=qcow2,index=2,media=disk,cache=writethrough \
   -nic user,ipv6=off,model=e1000e,smb=${sharedir} \
-  -display gtk,grab-on-hover=on -vga vmware \
+  -display gtk,zoom-to-fit=on -vga vmware \
   -usbdevice tablet \
-  -device qemu-xhci,id=xhci,p2=15,p3=12 \
+  -device qemu-xhci,id=xhci \
   -audiodev alsa,id=hda,out.frequency=48000,in.frequency=48000,in.buffer-length=20000,out.buffer-length=20000 -device intel-hda -device hda-duplex,audiodev=hda \
   $@
 
 ### backup
+  #-device qemu-xhci,id=xhci \
   #-device usb-host,vendorid=0x05ac,productid=0x12a8 \
   #-device usb-host,vendorid=0x1ff7,productid=0x0200 \
   #-device usb-host,vendorid=0x05ac,productid=0x12a8 \
+  ## ,p2=15,p3=12
