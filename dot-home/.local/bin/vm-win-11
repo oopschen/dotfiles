@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 basedir=/home/work/vm/win11
-diskdir=$(realpath $basedir/win11_base.qcow2)
+diskdir=$(realpath $basedir/win11_202307.qcow2)
 sharedir=$(realpath ~/share)
 
 cpufeaturesintel="pcid spec-ctrl stibp ssbd pdpe1gb md-clear mds-no taa-no tsx-ctrl"
@@ -20,14 +20,16 @@ cpuinfo="Skylake-Client-noTSX-IBRS"
 #-soundhw hda \
 #-cpu $cpuinfo$existedcpufeatures \
 qemu-system-x86_64 --enable-kvm --name win11  \
-  -smp sockets=1,cores=2,threads=2 \
-  -machine pc,accel=kvm,hmat=on -m 8G -boot c \
-  -drive file=${diskdir},format=qcow2,index=2,media=disk,cache=writethrough \
+  -smp sockets=1,cores=2,threads=2 -machine pc,accel=kvm,hmat=on -m 8G \
+  -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough \
   -nic user,ipv6=off,model=e1000e,smb=${sharedir} \
   -display gtk,zoom-to-fit=on -vga vmware \
   -usbdevice tablet \
   -device qemu-xhci,id=xhci \
-  -audiodev alsa,id=hda,out.frequency=48000,in.frequency=48000,in.buffer-length=20000,out.buffer-length=20000 -device intel-hda -device hda-duplex,audiodev=hda \
+  -audiodev alsa,id=hda,out.frequency=48000,in.frequency=48000,in.buffer-length=20000,out.buffer-length=20000 \
+  -device intel-hda -device hda-duplex,audiodev=hda \
+  -boot c \
+  \
   $@
 
 ### backup
@@ -36,3 +38,15 @@ qemu-system-x86_64 --enable-kvm --name win11  \
   #-device usb-host,vendorid=0x1ff7,productid=0x0200 \
   #-device usb-host,vendorid=0x05ac,productid=0x12a8 \
   ## ,p2=15,p3=12
+  #
+### boot install iso
+  #-drive file=/home/work/Downloads/G_WIN11_X64_22621.1928JJ.iso,media=cdrom,index=2 \
+  #-drive index=1,file=/home/work/vm/win11/WePE_64_V2.3.iso,media=cdrom \
+  #-boot d
+  #\
+  #-chardev socket,id=char0,path=/tmp/vfsd-qemu-doc.sock \
+  #-device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=docfs \
+  #-object memory-backend-file,id=mem,size=8G,mem-path=/dev/shm,share=on \
+  #-numa node,memdev=mem  \
+  # virtiofsd --syslog  --shared-dir /home/work/Documents --socket-path /tmp/vfsd-win11-doc.sock --socket-group work
+

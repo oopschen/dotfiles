@@ -208,8 +208,6 @@ focus_follows_mouse no
 title_align center
 mouse_warping output
 popup_during_fullscreen smart
-floating_minimum_size 0 x 0
-floating_maximum_size 1920 x 1080
 focus_wrapping yes
 
 ### ui custimize
@@ -230,7 +228,7 @@ for_window [class="(?i)chromium"] move --no-auto-back-and-forth window to worksp
 ### floating window center
 for_window [floating_from="user"] move position center
 ### dingtalk & weixin popup
-for_window [class="(?i)com.alibabainc.dingtalk" title="(?i).*(分享|预览|.doc|.docx|.ppt|.pptx|.xls|.xlsx).*"] floating enable, resize set 90 ppt 90 ppt
+for_window [class="(?i)com.alibabainc.dingtalk" title="(?i).*(?:分享|预览|.doc|.docx|.ppt|.pptx|.xls|.xlsx).*"] floating enable, resize set 90 ppt 80 ppt
 ### dia window settings: 1. float toolbox_window & dia ,set size to 800x200
 for_window [class="(?i)dia" window_role="toolbox_window"] floating enable,resize set 10 ppt 60 ppt
 
