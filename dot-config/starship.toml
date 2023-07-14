@@ -16,6 +16,7 @@ symbol = " "
 [directory]
 read_only = " "
 truncation_symbol = "󰍻 "
+truncation_length = 7
 [directory.substitutions]
 fish_style_pwd_dir_length = "2"
 
@@ -136,4 +137,4 @@ symbol = " "
 symbol = "🅢 "
 
 [[battery.display]]
-threshold =20
+threshold = 20
