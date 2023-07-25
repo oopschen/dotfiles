@@ -3,7 +3,7 @@
     "transports": {
         "docker": {
             "docker.io/openshift": [{"type": "insecureAcceptAnything"}],
-            "docker.io/library/*": [{"type": "insecureAcceptAnything"}],
+            "docker.io/library": [{"type": "insecureAcceptAnything"}],
             "docker.io/dpage/pgadmin4": [{"type": "insecureAcceptAnything"}],
             "docker.io/pandoc": [{"type": "insecureAcceptAnything"}]
         },
