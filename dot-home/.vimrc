@@ -14,7 +14,7 @@ Plug 'vim-airline/vim-airline'
 "Plug 'fatih/vim-go', { 'for': 'go'}
 
 "Plug 'pangloss/vim-javascript', { 'for': 'javascript'}
-"Plug 'mattn/emmet-vim', { 'for': ['javascript', 'markdown', 'javascript.jsx', 'html']}
+Plug 'mattn/emmet-vim', { 'for': ['javascript', 'markdown', 'javascript.jsx', 'html']}
 "Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx']}
 
 "Plug 'rust-lang/rust.vim', { 'for': 'rust'}
