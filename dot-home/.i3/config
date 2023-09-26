@@ -186,7 +186,7 @@ bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir 
 #bindsym $alt+Shift+0 [class="(?i)weixin"] move scratchpad 
 
 # main mode: move all workspace except 5 to primary
-bindsym $alt+Shift+1 [workspace=".*"] move workspace to output primary, [workspace="[58]"] move workspace to output eDP-1
+bindsym $alt+Shift+1 [workspace=".*"] move workspace to output primary, [workspace="[5]"] move workspace to output eDP-1
 # presentation mode: move  3 to primary
 bindsym $alt+Shift+2 [workspace=".*"] move workspace to output eDP-1, [workspace="9"] move workspace to output primary
 
