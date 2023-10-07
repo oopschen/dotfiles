@@ -65,9 +65,14 @@ function gen_scale_xrandr_param() {
     extern_dis_name_x=$(echo "$extern_dis_name_resolutin" | cut -d 'x' -f 1)
     extern_dis_name_y=$(echo "$extern_dis_name_resolutin" | cut -d 'x' -f 2)
 
-    scale_x=$(python -c "print(\"%0.2f\"  % ($intern_dis_name_x / $extern_dis_name_x))")
-    scale_y=$(python -c "print(\"%0.2f\"  % ($intern_dis_name_y / $extern_dis_name_y))")
-    echo "--scale ${scale_x}x${scale_y}"
+    if [[ "$intern_dis_name_x" -eq "$extern_dis_name_x" && \
+            "$intern_dis_name_y" -eq "$extern_dis_name_y" ]]; then
+        echo ""
+    else
+        scale_x=$(python -c "print(\"%0.2f\"  % ($intern_dis_name_x / $extern_dis_name_x))")
+        scale_y=$(python -c "print(\"%0.2f\"  % ($intern_dis_name_y / $extern_dis_name_y))")
+        echo "--scale ${scale_x}x${scale_y}"
+    fi
 }
 
 if [[ ! -z "$extern_status" && ! -z "$intern_status" ]]; then
