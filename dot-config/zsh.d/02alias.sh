@@ -56,7 +56,8 @@ alias rcs="sudo rc-service"
 
 ### dingtalk
 #alias dingfix="pgrep -f com.alibabainc.dingtalk | xargs -I{} kill -9 {};rm -rf /home/work/.config/DingTalk/userdata/dump"
-alias dingfix='kill -3 $(pgrep -f com.alibabainc.dingtalk -P $(pgrep -f Elevator.sh))'
+#alias dingfix='kill -3 $(pgrep -f com.alibabainc.dingtalk -P $(pgrep -f Elevator.sh))'
+alias dingfix='kill -3 $(pgrep -f com.alibabainc.dingtalk)'
 
 #### fix zsh can not suspend(ctrl+z) after zplug update
 alias zsusfix="rm ~/.zplug/log/job.lock"
