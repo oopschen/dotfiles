@@ -21,3 +21,4 @@ mkdir -p $dest_dir
 [[ ! -L  $dest_dir/i3-utils-base-term.sh ]] && ln -sv $src_dir/i3-utils-base-term.sh $dest_dir/
 [[ ! -L  ~/.config/nftables.d ]] && ln -sv $src_dir/.nft/nftables.d ~/.config
 [[ ! -L  $dest_dir/polybar-vpn.sh ]] && ln -sv $src_dir/polybar-vpn.sh $dest_dir/
+[[ ! -L  $dest_dir/vpn-ld.sh ]] && ln -sv $src_dir/vpn-ld.sh $dest_dir/
