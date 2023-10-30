@@ -189,6 +189,8 @@ bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir 
 bindsym $alt+Shift+1 [workspace=".*"] move workspace to output primary, [workspace="[5]"] move workspace to output eDP-1
 # presentation mode: move  3 to primary
 bindsym $alt+Shift+2 [workspace=".*"] move workspace to output eDP-1, [workspace="9"] move workspace to output primary
+# set output mode to auto 
+bindsym $alt+Shift+3 exec --no-startup-id hdmi-hotplug.sh
 
 ## cmd terminal settings
 bindsym $mod+Shift+slash exec i3-utils-base-term.sh
