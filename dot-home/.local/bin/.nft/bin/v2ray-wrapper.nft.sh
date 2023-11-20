@@ -169,7 +169,7 @@ function destroy_v2ray() {
 
 
 # main proccess
-echo -e "Estab sever=$v2rayserver,localport=$localport by mark $packet_mark($((packet_mark))) in $nft_table ignored by set named$nft_ipv4_set_whitelist_set_name"
+echo -e "Estab server=$v2rayserver,localport=$localport by mark $packet_mark($((packet_mark))) in $nft_table ignored by set named$nft_ipv4_set_whitelist_set_name"
 
 case $mode in
 	A)

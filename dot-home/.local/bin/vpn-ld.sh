@@ -27,6 +27,7 @@ case $mode in
         do
             output_status=$(sudo ipsec status $vpn_name | grep -i $vpn_name | grep -i establi)
             if [ -z "$output_status" ]; then
+                echo -e "retry($loop_i) ipsec up $vpn_name\n$output_status"
                 sleep 1
                 sudo ipsec up $vpn_name > /dev/null
                 loop_i=$(echo "$loop_i + 1" | bc)
