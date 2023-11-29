@@ -6,7 +6,7 @@ vpn_name=vpn-ld
 loop_max=6
 
 function add_routes() {
-    routes="192.168.70.0/24 192.168.254.0/24 10.88.200.0/24"
+    routes="192.168.70.0/24 192.168.254.0/24 10.88.0.0/16"
     for r in $routes
     do
         sudo ip r add $r dev $1
