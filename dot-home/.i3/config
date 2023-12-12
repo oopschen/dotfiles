@@ -128,8 +128,8 @@ bindsym $mod+Shift+0 move container to workspace 10
 bindsym $mod+Shift+r reload
 
 # screen saver
-bindsym $mod+Shift+y exec "xset +dpms && xset s on"
-bindsym $mod+Shift+n exec "xset -dpms && xset s off"
+bindsym $alt+F11 exec "xset +dpms && xset s on"
+bindsym $alt+F12 exec "xset -dpms && xset s off"
 
 # monitor
 bindsym $alt+p move workspace to output primary
@@ -185,12 +185,12 @@ bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir 
 #bindsym $alt+Shift+9 [class="(?i)weixin"]  move scratchpad, workspace --no-auto-back-and-forth 8, split h, scratchpad show, floating disable
 #bindsym $alt+Shift+0 [class="(?i)weixin"] move scratchpad 
 
-# main mode: move all workspace except 5 to primary
-bindsym $alt+F1 [workspace=".*"] move workspace to output primary, [workspace="[5]"] move workspace to output eDP-1
-# presentation mode: move  3 to primary
-bindsym $alt+F2 [workspace=".*"] move workspace to output eDP-1, [workspace="9"] move workspace to output primary
 # set output mode to auto 
-bindsym $alt+F3 exec --no-startup-id hdmi-hotplug.sh
+bindsym $alt+F1 exec --no-startup-id hdmi-hotplug.sh
+# main mode: move all workspace except 5 to primary
+bindsym $alt+F2 [workspace=".*"] move workspace to output primary, [workspace="[5]"] move workspace to output eDP-1
+# presentation mode: move  3 to primary
+bindsym $alt+F3 [workspace=".*"] move workspace to output eDP-1, [workspace="9"] move workspace to output primary
 
 ## cmd terminal settings
 bindsym $mod+Shift+slash exec i3-utils-base-term.sh
@@ -241,13 +241,13 @@ assign [class="(?i)browser"] 1
 assign [class="(?i)firefox"] 1
 assign [class="(?i)chromium"] 1
 ## w2 designer
-assign [title="(?i)dia"] 2
+assign [title="(?i)dia\b"] 2
 assign [title="(?i)umlet"] 2
 assign [title="(?i)xmind"] 2
 ## w3 office
-assign [class="(?i)^wps$"] 3
-assign [class="(?i)^et$"] 3
-assign [class="(?i)^wpp$"] 3
+assign [class="(?i)^wps\b"] 3
+assign [class="(?i)^et\b"] 3
+assign [class="(?i)^wpp\b"] 3
 ## w4 media
 assign [class="(?i)mpv"] 4
 assign [class="(?i)^mupdf"] 4

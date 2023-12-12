@@ -47,5 +47,5 @@ URxvt.keysym.C-S-U: perl:matcher:select
 !*color15: #EEEEEC
 !
 
-Xcursor.theme: macOS-Monterey-White
-Xcursor.size: 48
+Xcursor.theme: Bibata-Modern-Amber
+Xcursor.size: 32
