@@ -1,7 +1,8 @@
 #!/bin/bash
+usage_text="mode: A add | D delete | S status | T toggle | I update ignore ip from file | ig ip, ignore specific ip"
 
 if [ "$#" -lt 1 ]; then
-    echo -e "mode: A add | D delete | T toggle temporary | S status | I init"
+    echo -e $usage_text
 	exit 1
 fi
 
@@ -36,8 +37,8 @@ function generate_uniq_rand() {
 function has_ip_whitelist() {
     table_name=$1
     set_name=$2
-    $cmd_table get element ip $1 $2 "{ $v2rayserver }" > /dev/null 2>&1
-    if [ 0 -eq $? ]; then
+    $cmd_table list set $1 $2 > /dev/null 2>&1
+    if [ 0 == $? ]; then
         echo "y"
     else
         echo "n"
@@ -66,10 +67,9 @@ EOF
     fi
 
     # clean ip whitelist settings
-    if [ "y" == "$(has_ip_whitelist \"$nft_table\" \"$nft_ipv4_set_whitelist_set_name\")" ];then
+    if [ "y" == "$(has_ip_whitelist $nft_table $nft_ipv4_set_whitelist_set_name)" ];then
         echo "clean ignore ips"
         $cmd_table flush set ip $nft_table $nft_ipv4_set_whitelist_set_name
-        $cmd_table delete set ip $nft_table $nft_ipv4_set_whitelist_set_name
     fi
 
     # init ip whitelist set
@@ -228,9 +228,33 @@ case $mode in
             echo "V2ray ignore ip updating fail(error code = $?)..."
             exit 1
         fi
-  ;;
+    ;;
+
+    ig)
+        ig_ip=$2
+
+        if [ -z "$ig_ip" ]; then
+            echo -e $usage_text
+            exit 1
+        fi
+
+        if [ "n" == "$(has_ip_whitelist $nft_table $nft_ipv4_set_whitelist_set_name)" ];then
+            echo "no set($nft_ipv4_set_whitelist_set_name) setup"
+            exit 2 
+        fi
+
+        $cmd_table add element ip $nft_table $nft_ipv4_set_whitelist_set_name { $ig_ip }
+
+        if [ 0 -eq $? ]; then
+            echo "V2ray ignore ip($ig_ip) updated..."
+        else
+            echo "V2ray ignore ip($ig_ip) updating fail(error code = $?)..."
+            exit 1
+        fi
+    ;;
 
     *)
-        echo -e "mode: A add | D delete | S status | T toggle | I update iip"
+        echo -e $usage_text
 	;;
+
 esac

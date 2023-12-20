@@ -16,13 +16,14 @@ args=$@
 
 ## container setups, --user $(id -u):$(id -g)
 container_cmd=podman
-runargs="--rm --userns=keep-id -v $(pwd):/data -v /tmp:/tmp "
+runargs="--rm --userns=keep-id $EXTRA_RUN_ARGS "
 
 ## end
 
 case $cmd in
     pandoc)
-        $container_cmd run $runargs -v ~/.pandoc/:/data/.pandoc docker.io/pandoc/core:latest-alpine $args 
+        $container_cmd run $runargs -v $(pwd):/data -v /tmp:/data/.tmp \
+            docker.io/pandoc/extra:latest-alpine $args 
         exit $?
         ;;
 
