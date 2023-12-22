@@ -6,6 +6,27 @@ vpn_name=vpn-ld
 loop_max=6
 
 function add_routes() {
+    # wait for interface 
+    while true
+    do
+        output=$(ip l | grep ppp | head -n 1 |  cut -d ':' -f 2 | tr -d ' ')
+        if [ -z "$output" ]; then
+            echo -e "retry($loop_i) check vpn interface is up?"
+            sleep 1
+
+            output=$(ip l | grep ppp | head -n 1 |  cut -d ':' -f 2 | tr -d ' ')
+            loop_i=$(echo "$loop_i + 1" | bc)
+            if [ $loop_max -ge $loop_i ]; then
+                continue
+            else
+                exit 5
+            fi
+        fi
+
+        break
+    done
+
+    # insert routes
     routes="192.168.70.0/24 192.168.254.0/24 10.88.0.0/16"
     for r in $routes
     do
@@ -16,6 +37,11 @@ function add_routes() {
 
 case $mode in
     start)
+        ## add ignores to nftable if exists
+        #if [ "on" == $(v2ray-nft S | grep -i status | cut -d " " -f 4 | tr -d " ") ]; then
+        #    v2ray-nft T
+        #fi
+        
         $rcs ipsec start
         $rcs xl2tpd start
 
@@ -63,10 +89,12 @@ case $mode in
             break
         done
 
+
+        ## insert routings
         interface_name=$(ip l | grep ppp | head -n 1 |  cut -d ':' -f 2 | tr -d ' ')
         add_routes $interface_name
-
         ip a
+
         ;;
     stop)
         sudo xl2tpd-control disconnect-lac $vpn_name

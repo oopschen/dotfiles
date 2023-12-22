@@ -212,9 +212,9 @@ case $mode in
 	S)
 		has_table=$($cmd_table list tables ip| grep $nft_table)
 		if [ ! -z "$has_table" ]; then
-			echo "V2ray Status is on..."
+			echo "V2ray Status is on ..."
 		else
-			echo "V2ray Status is off..."
+			echo "V2ray Status is off ..."
             exit 1
 		fi
 	;;
