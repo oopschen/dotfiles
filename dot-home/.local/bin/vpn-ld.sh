@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+#
+# *IMPORTANT*
+# 1. work with strongswan
+# 2. change "/etc/strongswan.d/charon.conf"'s interfaces_use = eth0,wlan0
 
 mode=$1
 rcs="sudo rc-service"
@@ -37,10 +41,6 @@ function add_routes() {
 
 case $mode in
     start)
-        ## add ignores to nftable if exists
-        #if [ "on" == $(v2ray-nft S | grep -i status | cut -d " " -f 4 | tr -d " ") ]; then
-        #    v2ray-nft T
-        #fi
         
         $rcs ipsec start
         $rcs xl2tpd start
