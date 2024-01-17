@@ -42,3 +42,4 @@ link_file container_run_as_cmd.sh container_as_cmd
 
 link_file init-doc.sh
 link_file init-glfs-doc.sh
+link_file init-project-doc.sh
