@@ -37,14 +37,19 @@
 [credential "http://ddns.wzxjkj.com"]
 	username = worksangeshitou@163.com
 
-[credential "http://work.lidig.com:8088"]
-	username = chenlei@lidig.com
-
 [diff "pandoc"]
   textconv=pandoc --to=markdown
   prompt = false
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+[http "https://gitlab.lidig.com"]
+    sslCAInfo = ~/.local/share/ca-certificates/Root_CA_LD.crt
+
+[credential "https://gitlab.lidig.com"]
+	username = chenlei
+
