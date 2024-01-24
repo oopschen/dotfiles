@@ -180,8 +180,10 @@ bindsym $mod+b exec --no-startup-id polybar-msg cmd toggle
 bindsym $mod+d exec "rofi -show combi"
 bindsym $mod+Tab exec "rofi -show window"
 bindsym --release $mod+Shift+p exec "scrot -s -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; sxiv /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
+bindsym --release $mod+Shift+s exec "scrot -s -q 100 -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/;' %Y-%m-%d-%H-%M-%S.jpeg"
 bindsym --release $mod+Shift+u exec "scrot -u -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; sxiv /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
 bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; sxiv /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
+
 #bindsym $alt+Shift+9 [class="(?i)weixin"]  move scratchpad, workspace --no-auto-back-and-forth 8, split h, scratchpad show, floating disable
 #bindsym $alt+Shift+0 [class="(?i)weixin"] move scratchpad 
 
@@ -211,6 +213,8 @@ title_align center
 mouse_warping output
 popup_during_fullscreen smart
 focus_wrapping yes
+
+floating_minimum_size 200 x 150
 
 ### ui custimize
 client.background #272827

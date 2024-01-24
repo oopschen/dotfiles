@@ -48,7 +48,8 @@
 	required = true
 
 [http "https://gitlab.lidig.com"]
-    sslCAInfo = ~/.local/share/ca-certificates/Root_CA_LD.crt
+    sslCAInfo = /home/work/.local/share/ca-certificates/Root_CA_LD.crt
+    #sslVerify = false
 
 [credential "https://gitlab.lidig.com"]
 	username = chenlei
