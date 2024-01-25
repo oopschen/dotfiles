@@ -1,56 +1,43 @@
 [core]
-  quotepath = false
-[user]
-	email = linxray@gmail.com
-	name = Ray
+    quotepath = false
 [push]
-	default           = simple
-  recurseSubmodules = on-demand
+    default           = simple
+    recurseSubmodules = on-demand
 [color]
-	ui = auto
+    ui = auto
 
 [pretty]
-  tree = %C(auto) %h %d %C(blue) %s %C(reset)BY %cn [%cr]
+    tree = %C(auto) %h %d %C(blue) %s %C(reset)BY %cn [%cr]
 
 [alias]
-  lg   = log --color --pretty=tree --graph
-  lgf  = lg  --name-only --summary --author
-  st   = status
-  ci   = commit -m
-  camd = commit --amend
-  co   = checkout
-  pr   = pull --rebase
-  # 8 hrs
-  cc   = config credential.helper 'cache --timeout=28800'
-  au   = add -u
-  aa   = add -A
-  df   = diff
-  pu   = push
-  br   = branch
-  mg   = merge
-  sh   = stash
-
-
-[credential "https://github.com"]
-	username = linxray@gmail.com
-
-[credential "http://ddns.wzxjkj.com"]
-	username = worksangeshitou@163.com
-
-[diff "pandoc"]
-  textconv=pandoc --to=markdown
-  prompt = false
+    lg   = log --color --pretty=tree --graph
+    lgf  = lg  --name-only --summary --author
+    st   = status
+    ci   = commit -m
+    camd = commit --amend
+    co   = checkout
+    pr   = pull --rebase
+    # 8 hrs
+    cc   = config credential.helper 'cache --timeout=28800'
+    au   = add -u
+    aa   = add -A
+    df   = diff
+    pu   = push
+    br   = branch
+    mg   = merge
+    sh   = stash
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 
-[http "https://gitlab.lidig.com"]
-    sslCAInfo = /home/work/.local/share/ca-certificates/Root_CA_LD.crt
-    #sslVerify = false
-
-[credential "https://gitlab.lidig.com"]
-	username = chenlei
-
+[includeIf "hasconfig:remote.*.url:https://gitlab.lidig.com/**"]
+	path = ~/.config/git/git-ld
+[includeIf "hasconfig:remote.*.url:git@gitlab.lidig.com:*/**"]
+	path = ~/.config/git/git-ld
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+	path = ~/.config/git/git-github
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
+	path = ~/.config/git/git-github
