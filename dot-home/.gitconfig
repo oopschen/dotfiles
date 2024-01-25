@@ -35,7 +35,7 @@
 
 [includeIf "hasconfig:remote.*.url:https://gitlab.lidig.com/**"]
 	path = ~/.config/git/git-ld
-[includeIf "hasconfig:remote.*.url:git@gitlab.lidig.com:*/**"]
+[includeIf "hasconfig:remote.*.url:git@git.lidig.com:*/**"]
 	path = ~/.config/git/git-ld
 [includeIf "hasconfig:remote.*.url:https://github.com/**"]
 	path = ~/.config/git/git-github
