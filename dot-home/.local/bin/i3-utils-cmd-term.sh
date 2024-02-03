@@ -56,10 +56,10 @@ function i3wm_is_window_focus() {
 }
 
 function i3wm_display_window() {
-    i3-msg "[instance=\"(?i)$1\"] exec i3-move-position.sh cur-float-cmd-by-instance '(i?)$1' 49 64, resize set 50 ppt 35 ppt, scratchpad show"
+    i3-msg "[instance=\"(?i)$1\"] exec i3-move-position.sh cur-float-cmd-by-instance '(i?)$1' 50 5; scratchpad show;resize set 50 ppt 90 ppt; "
 }
 
-function i3wm_indisplay_window() {
+function i3wm_hide_window() {
     i3-msg "[instance=\"(?i)$1\"] move scratchpad"
 }
 
@@ -124,7 +124,7 @@ if [ "1" = "$has_prog_exists" ]; then
             i3wm_display_window "$wm_instance"
         elif [ "toggle" = "$mode" ]; then
             echo "command term displays(T)"
-            i3wm_indisplay_window "$wm_instance"
+            i3wm_hide_window "$wm_instance"
         else
             echo "command term already display $has_window_display"
             i3wm_focus_window "$wm_instance"

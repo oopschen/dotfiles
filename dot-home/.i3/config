@@ -273,6 +273,8 @@ assign [class="(?i)weixin"] 8
 assign [title="(?i)baidunetdisk"] 9
 assign [title="(?i)百度网盘"] 9
 assign [title="(?i)qqmusic"] 9
+assign [title="(?i)qbittorrent"] 9
+assign [title="(?i)^transmission-.*"] 9
 # w0 dev
 assign [class="(?i)jetbrains.*"] 10
 assign [class="(?i)mysql-workbench-bin"] 10
@@ -299,7 +301,7 @@ exec --no-startup-id sh ~/.config/polybar/launch.sh
 
 #### end 
 exec --no-startup-id google-chrome-stable
-exec --no-startup-id gtk-launch claws-mail
+#exec --no-startup-id gtk-launch claws-mail
 exec --no-startup-id i3-utils-cmd-term.sh
 
 #exec --no-startup-id firefox-bin
