@@ -187,12 +187,7 @@ bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir 
 #bindsym $alt+Shift+9 [class="(?i)weixin"]  move scratchpad, workspace --no-auto-back-and-forth 8, split h, scratchpad show, floating disable
 #bindsym $alt+Shift+0 [class="(?i)weixin"] move scratchpad 
 
-# set output mode to auto 
-bindsym $alt+F1 exec --no-startup-id hdmi-hotplug.sh
-# presentation mode: move  3 to primary
-bindsym $alt+F3 [workspace=".*"] move workspace to output eDP-1, [workspace="9"] move workspace to output primary
-
-## cmd terminal settings
+#### Terminal Settings
 bindsym $mod+Shift+slash exec i3-utils-base-term.sh
 bindsym $mod+slash exec i3-utils-cmd-term.sh toggle
 ## key bindgs for media keys
@@ -203,9 +198,9 @@ bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ t
 
 ### make termial on startup move to scratchpad
 for_window [instance="(?i)cmdterm"] move scratchpad, exec i3-utils-cmd-term.sh toggle
-## end 
 
-# workspace
+
+#### Workspace Settings
 default_orientation auto
 workspace_layout stacking
 workspace_auto_back_and_forth yes
@@ -220,7 +215,7 @@ focus_wrapping yes
 
 floating_minimum_size 200 x 150
 
-### ui custimize
+#### UI Settings
 client.background #272827
 client.focused          #657b83 #272827 #B06534 #B06534   #657b83
 client.unfocused        #657b83 #272827 #E7F5E0 #E7F5E0   #657b83
@@ -228,7 +223,8 @@ client.focused_inactive #657b83 #272827 #E7F5E0 #E7F5E0   #657b83
 client.urgent           #657b83 #272827 #EB3F46 #E7F5E0   #657b83
 client.placeholder      #657b83 #272827 #E7F5E0 #E7F5E0   #657b83
 
-### window assigment
+#### Window Assigment
+
 for_window [class="(?i)mpv"] fullscreen
 for_window [class="(?i)qemu-system"] fullscreen
 #### fix chrome popup to wrong workspace
@@ -292,6 +288,14 @@ no_focus [class="(?i)claws-mail"]
 
 
 #### Workspace and Monitors
+##### set output mode to auto 
+bindsym $alt+F1 exec --no-startup-id hdmi-hotplug.sh
+# main mode: move all workspace except 5 to primary
+bindsym $alt+F2 [workspace=".*"] move workspace to output primary; \
+# presentation mode: move  3 to primary
+bindsym $alt+F3 [workspace=".*"] move workspace to output eDP-1;\
+                                    [workspace="9"] move workspace to output primary;
+###### auto output assign
 workspace   1    output   primary
 workspace   2    output   primary
 workspace   3    output   primary
@@ -304,21 +308,22 @@ workspace   9    output   primary
 workspace   10   output   primary
 
 
-##### run after all config
-# auto startups
-#### systm service
-exec --no-startup-id dunst
+#### App Auto Startups.
+##### service
+exec --no-startup-id picom -b
+exec --no-startup-id gentoo-pipewire-launcher
 exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id fcitx5 -r -d
+
+exec sh ~/.config/polybar/launch.sh
+
+exec --no-startup-id dunst
 exec --no-startup-id netrp w
 exec --no-startup-id v2ray-nft T
-#exec --no-startup-id hdmi-hotplug.sh
-exec --no-startup-id picom -b
-exec --no-startup-id sh ~/.config/polybar/launch.sh
-exec --no-startup-id gentoo-pipewire-launcher
 
-#### end 
-exec --no-startup-id google-chrome-stable
+
+##### desktop app
+exec google-chrome-stable
 #exec --no-startup-id gtk-launch claws-mail
 exec --no-startup-id i3-utils-cmd-term.sh
 
