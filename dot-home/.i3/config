@@ -292,6 +292,7 @@ no_focus [class="(?i)claws-mail"]
 bindsym $alt+F1 exec --no-startup-id hdmi-hotplug.sh
 # main mode: move all workspace except 5 to primary
 bindsym $alt+F2 [workspace=".*"] move workspace to output primary; \
+    [workspace="[5]"] move workspace to output eDP-1
 # presentation mode: move  3 to primary
 bindsym $alt+F3 [workspace=".*"] move workspace to output eDP-1;\
                                     [workspace="9"] move workspace to output primary;
