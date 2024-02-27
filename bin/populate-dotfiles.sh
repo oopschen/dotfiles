@@ -65,13 +65,16 @@ do
                 sh $dotfile_path/populate-dotfiles.sh
                 continue
 
-            elif [[ -d "$dest_filename" ]]; then
+            elif [[ -L "$dest_filename" ]]; then
                 prompt4_removal "$dest_filename"
                 if [[ 0 -eq $? ]]; then
                     rm -i "$dest_filename"
                 else
                     continue
                 fi
+            elif [[ -d "$dest_filename" ]]; then
+                echo "Directory($dest_filename) exists and not a symbollink, can not deal with it, please manually rm it."
+                exit 1
             else
                 mkdir -p $(dirname "$dest_filename")
             fi
