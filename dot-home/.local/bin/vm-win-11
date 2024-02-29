@@ -2,6 +2,11 @@
 basedir=/home/work/vm/win11
 diskdir=$(realpath $basedir/win11_202307.qcow2)
 sharedir=$(realpath ~/share)
+cpuinfo="Skylake-Client-noTSX-IBRS"
+mem_size=8G
+virtiofsd_sock_path=/tmp/virtiofsd-w11.sock
+qmp_server=unix:/tmp/qmp-win11.sock
+
 
 cpufeaturesintel="pcid spec-ctrl stibp ssbd pdpe1gb md-clear mds-no taa-no tsx-ctrl"
 
@@ -14,13 +19,22 @@ do
   fi
 done
 
-cpuinfo="Skylake-Client-noTSX-IBRS"
+## prepare virtiofsd share directory
+virtiofsd_dir_base=/tmp/vm11_virtiofs_share
+mkdir -p $virtiofsd_dir_base/{share,documents}
+sudo mount -o bind ~/Documents $virtiofsd_dir_base/documents
+sudo mount -o bind ~/share $virtiofsd_dir_base/share
+## end
 
-# sound card
-#-soundhw hda \
-#-cpu $cpuinfo$existedcpufeatures \
+## start virtiofsd daemon
+nohup podman unshare -- /usr/libexec/virtiofsd \
+    --socket-path=$virtiofsd_sock_path \
+    --shared-dir $virtiofsd_dir_base \
+    --announce-submounts --sandbox chroot > /tmp/vm11_virtiofsd.log 2>&1 &
+
+## start qemu
 qemu-system-x86_64 --enable-kvm --name win11  \
-  -smp sockets=1,cores=2,threads=2 -machine pc,accel=kvm,hmat=on -m 8G \
+  -smp sockets=1,cores=2,threads=2 -machine pc,accel=kvm,hmat=on,memory-backend=mem0 -m $mem_size \
   -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough \
   -nic user,ipv6=off,model=e1000e,smb=${sharedir} \
   -display gtk,zoom-to-fit=on -vga vmware \
@@ -28,11 +42,17 @@ qemu-system-x86_64 --enable-kvm --name win11  \
   -device intel-hda -device hda-duplex,audiodev=audio0 \
   -audiodev pipewire,id=audio0 \
   -boot c \
-  -qmp unix:/tmp/qmp-win11.sock,server=on,wait=off \
+  -qmp $qmp_server,server=on,wait=off \
+  -object memory-backend-memfd,id=mem0,share=on,size=$mem_size \
+  -chardev socket,id=char0,path=$virtiofsd_sock_path \
+  -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=hostshare \
   \
   $@
 
 ### backup
+    # sound card
+    #-soundhw hda \
+    #-cpu $cpuinfo$existedcpufeatures \
   #-device intel-hda -device hda-duplex,audiodev=hda \
   #-audiodev alsa,id=hda,out.frequency=48000,in.frequency=48000,in.buffer-length=20000,out.buffer-length=20000 \
   #-usbdevice tablet \
