@@ -296,7 +296,7 @@ bindsym $alt+F2 [workspace=".*"] move workspace to output primary; \
 # presentation mode: move  3 to primary
 bindsym $alt+F3 [workspace=".*"] move workspace to output eDP-1;\
                                     [workspace="9"] move workspace to output primary;
-###### auto output assign
+###### auto workspace output assign
 workspace   1    output   primary
 workspace   2    output   primary
 workspace   3    output   primary
@@ -307,6 +307,9 @@ workspace   7    output   primary
 workspace   8    output   primary
 workspace   9    output   primary
 workspace   10   output   primary
+
+###### workspace layout settings
+for_window [workspace="1"] layout tabbed
 
 
 #### App Auto Startups.
