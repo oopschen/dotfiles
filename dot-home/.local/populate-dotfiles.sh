@@ -44,3 +44,4 @@ link_file init-doc.sh
 link_file init-glfs-doc.sh
 link_file init-project-doc.sh
 link_file qemu-wrapper.sh
+link_file ff_extract_audio_from_video.sh
