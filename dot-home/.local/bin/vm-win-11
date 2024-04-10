@@ -83,7 +83,7 @@ echo "Starting VM($rnd_val)."
 qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
   -smp sockets=1,cores=2,threads=2 -machine pc,accel=kvm,hmat=on -m $mem_size \
   -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough \
-  -nic user,ipv6=off,model=e1000e,smb=${sharedir} \
+  -nic user,ipv6=off,model=e1000e \
   -display gtk,zoom-to-fit=on -vga vmware \
   -device qemu-xhci,id=xhci \
   -device intel-hda -device hda-duplex,audiodev=audio0 \

@@ -46,7 +46,6 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 :nmap <C-n> :Rg<CR>
 :nmap <C-b> :Buffers<CR>
 
-" pandoc
 function! FnPandocOpen(file)
 	let file = shellescape(fnamemodify(a:file, ':p'))
 	let file_extension = fnamemodify(a:file, ':e')
@@ -78,6 +77,7 @@ function! FnPandocOpen(file)
 		return 'xdg-open ' . file
 	endif
 endfunction 
+let g:pandoc#command#custom_open="FnPandocOpen"
 " end
 
 " UltiSnips
