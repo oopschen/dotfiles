@@ -2,7 +2,7 @@
 basedir=/home/work/vm/win11
 diskdir=$(realpath $basedir/win11_202307.qcow2)
 sharedir=$(realpath ~/share)
-cpuinfo="Skylake-Client-noTSX-IBRS"
+cpuinfo="host"
 mem_size=8G
 pidfile="/tmp/.vm.win11.pid"
 
@@ -11,16 +11,8 @@ gen_random_value() {
     echo $val
 }
 
-## check cpu features
-cpufeaturesintel="pcid spec-ctrl stibp ssbd pdpe1gb md-clear mds-no taa-no tsx-ctrl"
-existedcpufeatures=""
-for f in $cpufeaturesintel
-do
-  finfo=$(grep "$f" /proc/cpuinfo)
-  if [ ! -z "$finfo" ]; then
-    existedcpufeatures="$existedcpufeatures,+$f"
-  fi
-done
+### add enlightenments
+enlightenments="hv-relaxed,hv-frequencies,hv-reenlightenment"
 
 ## prepare virtiofsd share directory
 rnd_val=$(gen_random_value)
@@ -81,7 +73,8 @@ echo "Virtiofs Started($(cat $virtiofs_pidfile))."
 echo "Starting VM($rnd_val)."
 
 qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
-  -smp sockets=1,cores=2,threads=2 -machine pc,accel=kvm,hmat=on -m $mem_size \
+  -cpu $cpuinfo,$enlightenments \
+  -smp sockets=1,cores=4,threads=2 -machine pc,accel=kvm,hmat=on -m $mem_size \
   -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough \
   -nic user,ipv6=off,model=e1000e \
   -display gtk,zoom-to-fit=on -vga vmware \
@@ -110,7 +103,6 @@ echo "Virtiofs Daemon Quit ."
 ### backup
     # sound card
     #-soundhw hda \
-    #-cpu $cpuinfo$existedcpufeatures \
   #-device intel-hda -device hda-duplex,audiodev=hda \
   #-audiodev alsa,id=hda,out.frequency=48000,in.frequency=48000,in.buffer-length=20000,out.buffer-length=20000 \
   #-usbdevice tablet \
