@@ -76,8 +76,8 @@ qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
   -cpu $cpuinfo,$enlightenments \
   -smp sockets=1,cores=4,threads=2 -machine pc,accel=kvm,hmat=on -m $mem_size \
   -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough \
-  -nic user,ipv6=off,model=e1000e \
-  -display gtk,zoom-to-fit=on -vga vmware \
+  -nic user,ipv6=off,model=e1000e,hostfwd=udp:127.0.0.1:13389-:3389,hostfwd=tcp:127.0.0.1:13389-:3389 \
+  -nographic \
   -device qemu-xhci,id=xhci \
   -device intel-hda -device hda-duplex,audiodev=audio0 \
   -audiodev pipewire,id=audio0 \
@@ -101,6 +101,7 @@ echo "Virtiofs Daemon Quit ."
 
 
 ### backup
+  #-display gtk,zoom-to-fit=on -vga vmware 
     # sound card
     #-soundhw hda \
   #-device intel-hda -device hda-duplex,audiodev=hda \

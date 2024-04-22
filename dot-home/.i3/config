@@ -238,7 +238,6 @@ for_window [class="(?i)com.alibabainc.dingtalk" title="(?i).*(?:分享|预览|.d
 ### dia window settings: 1. float toolbox_window & dia ,set size to 800x200
 for_window [class="(?i)dia" window_role="toolbox_window"] floating enable,resize set 10 ppt 60 ppt
 
-
 ## w1 web: chrome
 assign [class="(?i)google-chrome"] 1
 assign [class="(?i)browser"] 1
