@@ -5,6 +5,7 @@ sharedir=$(realpath ~/share)
 cpuinfo="host"
 mem_size=8G
 pidfile="/tmp/.vm.win11.pid"
+cmd_notify="notify-send -u normal aa -t 2000"
 
 gen_random_value() {
     val=$(echo "$RANDOM % 10000 + 1" | awk '{printf "%.4d", $0}')
@@ -72,6 +73,10 @@ echo "Virtiofs Started($(cat $virtiofs_pidfile))."
 ## start qemu
 echo "Starting VM($rnd_val)."
 
+if [ ! -z "$NOTIFY_SND" ]; then
+    $cmd_notify "VM($rnd_val) Start."
+fi
+
 qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
   -boot c \
   -cpu $cpuinfo,$enlightenments \
@@ -95,11 +100,15 @@ rm $pidfile > /dev/null 2>&1
 ## echo quit
 echo "VM Quit with code($?)."
 
+
 ### clean virtiofs daemon
 kill -3 $(cat $virtiofs_pidfile) > /dev/null 2>&1
 podman unshare mount -l | grep -i $prefix_name | cut -d ' ' -f 3 | tr -d ' ' | xargs -I{} podman unshare umount {}
 echo "Virtiofs Daemon Quit ."
 
+if [ ! -z "$NOTIFY_SND" ]; then
+    $cmd_notify "VM($rnd_val) Quit."
+fi
 
 ### backup
   #-display gtk,zoom-to-fit=on -vga vmware 
