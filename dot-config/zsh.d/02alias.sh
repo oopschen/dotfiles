@@ -70,3 +70,6 @@ alias sys-rm="sudo emerge --depclean -q"
 
 ### python virtual env management
 alias activenv="source /usr/bin/virtualenvwrapper.sh"
+
+### rdp 
+alias rdpc="xfreerdp  /cert:ignore /dynamic-resolution /scale:100 /scale-desktop:192 +async-update +async-input  +clipboard /video /network:auto"
