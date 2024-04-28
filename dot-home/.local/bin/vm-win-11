@@ -5,7 +5,8 @@ sharedir=$(realpath ~/share)
 cpuinfo="host"
 mem_size=8G
 pidfile="/tmp/.vm.win11.pid"
-cmd_notify="notify-send -u normal aa -t 2000"
+prefix_name=vmwrk-w11
+cmd_notify="notify-send -u normal 'VM($prefix_name)' -t 2000"
 
 gen_random_value() {
     val=$(echo "$RANDOM % 10000 + 1" | awk '{printf "%.4d", $0}')
@@ -17,7 +18,6 @@ enlightenments="hv-relaxed,hv-frequencies,hv-reenlightenment"
 
 ## prepare virtiofsd share directory
 rnd_val=$(gen_random_value)
-prefix_name=vmwrk-w11
 workingdir=/tmp/.$prefix_name.$rnd_val
 virtiofsd_dir_base=$workingdir/.fsmounts
 current_shortcut_path=/tmp/.$prefix_name.current
