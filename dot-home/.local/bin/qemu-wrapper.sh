@@ -3,60 +3,148 @@
 USAGE="$0 command options.\n\tcommand list:\n\t\t1. usb-p passthrough usb device to vm \n\t\t2. usb-d del usb device from vm"
 
 cmd=$1
-qmp_cmd="qmp-shell -H ${QMP_SERVER:=/tmp/qmp-shell.sock}"
+qmp_sock=${QMP_SERVER:=/tmp/qmp-shell.sock}
+qmp_cmd="qmp-shell -H $qmp_sock"
+
+if [ ! -e $qmp_sock ]; then
+    echo -e "QMP sock path not found: $qmp_sock"
+    exit 100
+fi
+
+## arg1: result
+## arg2: command
+function call_qmp() {
+    declare -n res=$1
+    res=$(echo "$2" | qmp-shell -H $qmp_sock)
+}
 
 gen_random_value() {
     val=$(echo "$RANDOM % 10000 + 1" | awk '{printf "%.4d", $0}')
-    echo $val
+    echo -n $val
+}
+
+fetch_usb_info_from_vm() {
+    declare -n res=$1
+    
+    dev_info=$(echo "info usbhost" | $qmp_cmd)
+    ## vendorid:productid, name
+    ## vendorid:productid
+    ## 2 formats
+    res=$(echo -en "$dev_info" | grep -iE "usb\s+device" | sed -r 's/^.+usb\s+device\s+(.+)$/\1/ig' | sort -d -b -f)
+}
+
+## param: one raw device info line
+## vendorid:productid, name
+## vendorid:productid
+get_device_vendorid() {
+    declare -n res=$1
+
+    info_line=$(echo $2 | tr -d '\r\n' )
+    res=$(echo -en ${info_line%%:*})
+}
+
+## param: one raw device info line
+## vendorid:productid, name
+## vendorid:productid
+get_device_productid() {
+    declare -n res=$1
+
+    info_line=$(echo "$2" | tr -d '\r\n' | cut -d ',' -f 1)
+    res=$(echo -en ${info_line#*:})
+}
+
+## param: one raw device info line
+## vendorid:productid, name
+## vendorid:productid
+get_device_name() {
+    declare -n res=$1
+
+    pname=$(echo "$2" | tr -d '\r\n')
+    name_part=$(echo -e "$pname" | cut -d ',' -f 2)
+    if [ -z $(echo -e $pname | grep -i ',') ]; then
+        res="unamed[${pname}]"
+    else
+        trimed_name=$(echo -en "$name_part" | sed -r 's/^\s+//ig')
+        res="$trimed_name"
+    fi
 }
 
 case $cmd in
     ### usb passthrough
     usb-p)
-        # list usb 
-        dev_info=$(echo "info usbhost" | $qmp_cmd)
         ## vendorid:productid
-        dev_vendor_product_info=$(echo -e "$dev_info" | grep -i "usb device" | sed -r 's/^.*class.+device\s+([^ ,]+).+/\1/i' | sort -d -b -f)
+        dev_vendor_product_info=
+        fetch_usb_info_from_vm dev_vendor_product_info
+
         # prompt device
-        echo -e "Host usb devices:"
         i=1
+        IFS=$'\n'
+        prompt_text=
         for usb in $dev_vendor_product_info
         do
-            dev_name=$(echo -e "$dev_info" | grep -i "$usb" | sed -r "s/^.+${usb},*\s*//i")
-            if [ -z "$dev_name" ]; then
-                dev_name=$usb
+            dev_name=
+            get_device_name dev_name "$usb"
+
+            if [ -z "$prompt_text" ]; then
+                prompt_text="\t$i. $dev_name"
+            else
+                prompt_text="${prompt_text}\n\t$i. $dev_name"
             fi
-            echo -e "\t$i. $dev_name"
             i=$(echo "$i + 1" | bc)
         done
+        echo -e $prompt_text
         # choose
         read -p "Please input device number: " chosen_index
 
-        chosen_item=$(echo -e "$dev_vendor_product_info" | head -n $chosen_index | tail -1)
+        chosen_item=
+        i=1
+        IFS=$'\n'
+        for usb in $dev_vendor_product_info
+        do
+            if [ $i -eq $chosen_index ]; then
+                chosen_item=$usb
+            fi
+            i=$(echo "$i + 1" | bc)
+        done
+
         if [ -z "$chosen_item" ]; then
             echo "No device chosen."
             exit 1
         fi
 
-        chosen_dev_name=$(echo -e "$dev_info" | grep -i "$chosen_item" | sed -r "s/^.+${usb},*\s*//i")
-        echo -e "Choose $chosen_item, $chosen_dev_name"
+        chosen_dev_name=
+        get_device_name chosen_dev_name "$chosen_item"
 
-        # call api
-        vendor_id="$(echo "$chosen_item" | cut -d ':' -f 1)"
-        product_id="$(echo "$chosen_item" | cut -d ':' -f 2)"
+        ## remove name part in line
+        chosen_item=${chosen_item%%,*}
+
+        vendor_id=
+        get_device_vendorid vendor_id "$chosen_item"
+
+        product_id=
+        get_device_productid product_id "$chosen_item"
+
         dev_id="d$(gen_random_value)"
 
-        echo "device_add id=$dev_id,driver=usb-host,vendorid=0x$vendor_id,productid=0x$product_id" | $qmp_cmd
+        echo -e "Add device: dev-name=$chosen_dev_name, vendor-product=$vendor_id:$product_id, device-id=$dev_id."
+        # call api
+        call_res=
+        call_qmp call_res "device_add id=$dev_id,driver=usb-host,vendorid=0x$vendor_id,productid=0x$product_id"
+        echo $call_res
         ;;
 
     usb-d)
         # list usb 
-        dev_info=$(echo "info usb" | $qmp_cmd | grep -i "id:") 
-        ## vm usb id list
-        dev_id_list=$(echo -e "$dev_info" | sed -r 's/.+id:\s*([^\s]+)/\1/ig' | sort -d -b -f)
+        ## vm usb id list, format name,id
+        dev_id_list=$(echo "info usb" | $qmp_cmd | grep -i "id:" | sed -r 's/.+product\s*([^,]+).+id:\s*([^\s]+)/\1,\2/ig' | tr -d '\r' |sort -d -b -f)
+        if [ -z "$dev_id_list" ]; then
+            echo -e "No usb device found"
+            exit 0
+        fi
         # prompt device
         echo -e "VM usb devices:"
         i=1
+        IFS=$'\n'
         for usb in $dev_id_list
         do
             echo "$i. $usb"
@@ -65,8 +153,16 @@ case $cmd in
         # choose
         read -p "Please input device number: " chosen_index
 
-        chosen_item=$(echo "info usb" | $qmp_cmd | grep -i "id:"| sed -r 's/.+id:\s*([^\s]+)/\1/ig' | sort -d -b -f | head -n $chosen_index | tail -1)
-        chosen_item=$(echo "info usb" | $qmp_cmd | grep -i "id:"| sed -r 's/.+id:\s*([^\s]+)/\1/ig' | sort -d -b -f | head -n $chosen_index | tail -1)
+        i=1
+        chosen_item=
+        for dev in $dev_id_list
+        do
+            if [ $i -eq $chosen_index ]; then
+                chosen_item=$dev
+                break
+            fi
+            i=$(echo "$i + 1" | bc)
+        done
 
         if [ -z "$chosen_item" ]; then
             echo "No device chosen."
@@ -74,7 +170,9 @@ case $cmd in
         fi
 
         # call api
-        echo "device_del $chosen_item" | $qmp_cmd
+        call_res=
+        call_qmp call_res "device_del ${chosen_item##*,}" 
+        echo -e $call_res
         ;;
     *)
         echo -e $USAGE
