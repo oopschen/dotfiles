@@ -4,7 +4,6 @@ USAGE="$0 command options.\n\tcommand list:\n\t\t1. usb-p passthrough usb device
 
 cmd=$1
 qmp_sock=${QMP_SERVER:=/tmp/qmp-shell.sock}
-qmp_cmd="qmp-shell -H $qmp_sock"
 
 if [ ! -e $qmp_sock ]; then
     echo -e "QMP sock path not found: $qmp_sock"
@@ -18,15 +17,16 @@ function call_qmp() {
     res=$(echo "$2" | qmp-shell -H $qmp_sock)
 }
 
-gen_random_value() {
+function gen_random_value() {
     val=$(echo "$RANDOM % 10000 + 1" | awk '{printf "%.4d", $0}')
     echo -n $val
 }
 
-fetch_usb_info_from_vm() {
+function fetch_usb_info_from_vm() {
     declare -n res=$1
     
-    dev_info=$(echo "info usbhost" | $qmp_cmd)
+    dev_info=
+    call_qmp dev_info "info usbhost"
     ## vendorid:productid, name
     ## vendorid:productid
     ## 2 formats
@@ -36,7 +36,7 @@ fetch_usb_info_from_vm() {
 ## param: one raw device info line
 ## vendorid:productid, name
 ## vendorid:productid
-get_device_vendorid() {
+function get_device_vendorid() {
     declare -n res=$1
 
     info_line=$(echo $2 | tr -d '\r\n' )
@@ -46,7 +46,7 @@ get_device_vendorid() {
 ## param: one raw device info line
 ## vendorid:productid, name
 ## vendorid:productid
-get_device_productid() {
+function get_device_productid() {
     declare -n res=$1
 
     info_line=$(echo "$2" | tr -d '\r\n' | cut -d ',' -f 1)
@@ -56,7 +56,7 @@ get_device_productid() {
 ## param: one raw device info line
 ## vendorid:productid, name
 ## vendorid:productid
-get_device_name() {
+function get_device_name() {
     declare -n res=$1
 
     pname=$(echo "$2" | tr -d '\r\n')
@@ -135,8 +135,11 @@ case $cmd in
 
     usb-d)
         # list usb 
+        raw_dev_list=
+        call_qmp raw_dev_list "info usb"
         ## vm usb id list, format name,id
-        dev_id_list=$(echo "info usb" | $qmp_cmd | grep -i "id:" | sed -r 's/.+product\s*([^,]+).+id:\s*([^\s]+)/\1,\2/ig' | tr -d '\r' |sort -d -b -f)
+        dev_id_list=$( echo "$raw_dev_list" | grep -i "id:" \
+            | sed -r 's/.+product\s*([^,]+).+id:\s*([^\s]+)/\1,\2/ig' | tr -d '\r' |sort -d -b -f)
         if [ -z "$dev_id_list" ]; then
             echo -e "No usb device found"
             exit 0

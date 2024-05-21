@@ -73,3 +73,6 @@ alias activenv="source /usr/bin/virtualenvwrapper.sh"
 
 ### rdp 
 alias rdpc="xfreerdp  /cert:ignore /dynamic-resolution /scale:100 /scale-desktop:192 +async-update +async-input  +clipboard /video /network:auto"
+
+### local vm win11
+alias vm-win11-usb="QMP_SERVER='/tmp/.vmwrk-w11.current/qmp-shell.sock' qemu-wrapper.sh"
