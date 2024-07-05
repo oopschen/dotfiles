@@ -9,7 +9,7 @@ export WORKON_HOME=$HOME/.virtualenvs
 path+=($HOME/.local/bin)
 
 #### node bin
-NODE_HOME=~/opt/node-v14.15.1-linux-x64
+NODE_HOME=~/opt/nodejs
 path+=($NODE_HOME/bin)
 
 

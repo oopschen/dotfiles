@@ -31,17 +31,6 @@ endf
 :nnoremap ssr :call g:SSR(,, "")<LEFT><LEFT>
 
 " fzf
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always -i -L -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--disabled', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  let spec = fzf#vim#with_preview(spec, 'right', 'ctrl-/')
-  call fzf#vim#grep(initial_command, 1, spec, a:fullscreen)
-endfunction
-
-command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
-
 :nmap <C-o> :Files<CR>
 :nmap <C-n> :Rg<CR>
 :nmap <C-b> :Buffers<CR>
