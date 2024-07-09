@@ -265,6 +265,7 @@ assign [class="(?i)vmware.*"] 7
 assign [class="(?i)qemu-system.+"] 7
 assign [class="(?i)rdesktop"] 7
 assign [class="(?i).*xfreerdp.*"] 7
+assign [class="(?i).*remote-viewer.*"] 7
 # w8 empty
 assign [class="(?i)com.alibabainc.dingtalk"] 8
 assign [class="(?i)weixin"] 8
