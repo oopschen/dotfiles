@@ -2,11 +2,11 @@ alias ll='ls -lh --color'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-alias dkc-db='dkc exec ${DBSERVICE:-db} mysql -h ${DBHOST:-127.0.0.1} -u ${DBUSER:-dev} -p${DBPWD:-123456} ${DBNAME:-dev}'
-alias dkc-reup='dkc stop $p; dkc rm -v $p; dkc up -d $p; dkc logs -f $p;'
+#alias dkc-db='dkc exec ${DBSERVICE:-db} mysql -h ${DBHOST:-127.0.0.1} -u ${DBUSER:-dev} -p${DBPWD:-123456} ${DBNAME:-dev}'
+#alias dkc-reup='dkc stop $p; dkc rm -v $p; dkc up -d $p; dkc logs -f $p;'
 alias g='git'
 alias x='startx'
-alias wip='watch -n 1 ip addr show dev wlan0'
+#alias wip='watch -n 1 ip addr show dev wlan0'
 
 ## alias suffix
 alias -s html=google-chrome-stable \
@@ -25,10 +25,19 @@ alias -s html=google-chrome-stable \
   md=vim \
   conf=vim \
   svg=google-chrome-stable \
-  log=vim
+  log=vim \
+  mov=mpv \
+  mp4=mpv \
+  avi=mpv \
+  rmvb=mpv \
+  mp3=mpv \
+  zip="unzip -l" \
+  tar.xz="tar -tf" \
+  tar="tar -tf" \
 
-alias swf="sudo rc-service net.wlan0 start"
-alias rswf="sudo rc-service net.wlan0 restart"
+
+#alias swf="sudo rc-service net.wlan0 start"
+#alias rswf="sudo rc-service net.wlan0 restart"
 
 alias vpntoggle="v2ray-nft T"
 alias vpnoff="v2ray-nft D"
@@ -38,10 +47,10 @@ alias hdm="hdmi-hotplug.sh mirror"
 alias hdauto="hdmi-hotplug.sh"
 
 alias gw="./gradlew"
-alias cuzp="unzip -O cp936"
-alias mnt="sudo mount"
-alias mntw="sudo mount -o uid=work,iocharset=utf8"
-alias umt="sudo umount"
+alias unzip-cn="unzip -O cp936"
+alias mt="sudo mount"
+alias mt8="sudo mount -o uid=work,iocharset=utf8"
+alias ut="sudo umount"
 
 ### wpa_cli commands alias
 alias ws="sudo wpa_cli -i wlan0"
@@ -64,9 +73,9 @@ alias zsusfix="rm ~/.zplug/log/job.lock"
 alias pdm="podman"
 
 ### system tool alias
-alias sys-upworld="sudo emerge -uDNq @world"
-alias sys-cln-aftup="sudo emerge -q --depclean"
-alias sys-rm="sudo emerge --depclean -q"
+#alias sys-upworld="sudo emerge -uDNq @world"
+#alias sys-cln-aftup="sudo emerge -q --depclean"
+#alias sys-rm="sudo emerge --depclean -q"
 
 ### python virtual env management
 alias activenv="source /usr/bin/virtualenvwrapper.sh"
