@@ -33,6 +33,7 @@ alias -s html=google-chrome-stable \
   mp3=mpv \
   zip="unzip -l" \
   tar.xz="tar -tf" \
+  tar.gz="tar -tf" \
   tar="tar -tf" \
 
 

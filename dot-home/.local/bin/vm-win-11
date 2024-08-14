@@ -80,7 +80,7 @@ if [ ! -z "$NOTIFY_SND" ]; then
 fi
 
 qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
-  -boot c \
+  -boot c -rtc base=localtime \
   -cpu $cpuinfo,$enlightenments -m $mem_size \
   -smp sockets=1,cores=2,threads=2 \
   -machine pc,accel=kvm,vmport=off \
