@@ -49,7 +49,7 @@ alias hdauto="hdmi-hotplug.sh"
 
 alias gw="./gradlew"
 alias unzip-cn="unzip -O cp936"
-alias mt="sudo mount"
+alias mt="sudo mount -o uid=work,"
 alias mt8="sudo mount -o uid=work,iocharset=utf8"
 alias ut="sudo umount"
 

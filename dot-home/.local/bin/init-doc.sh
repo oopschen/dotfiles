@@ -19,6 +19,7 @@ cat>.gitattributes<<EOF
 *.xlsx binary
 *.xls binary
 *.doc binary
+*.eddx binary
 EOF
 
 
