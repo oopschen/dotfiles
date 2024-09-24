@@ -1,6 +1,8 @@
-!dot-config/.*
-!dot-home/.*
+!dot-config/**/.*
+!dot-home/**/.*
 !dot-home/.local/bin/.nft
-**/tmp
-.*.swp
-.*.swo
+
+**/.vim/plugged
+
+.*swp
+.*swo

@@ -1,0 +1,17 @@
+.*
+!.gitignore
+!.gitattributes
+
+## langs
+**/build/
+**/target/
+**/targets/
+**/node_modules/
+**/__pycache__
+
+## common dirs
+**/temp
+**/tmp
+
+## some common 
+*.log

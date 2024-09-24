@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/opt/kingsoft/wps-office/office6/mui/default'
+let g:netrw_dirhist_8='/home/work/Documents/50doc4R/epassport/EPassportNFCReader-master/app/src'
+let g:netrw_dirhist_7='/home/work/Documents/50doc4R/epassport/EPassportNFCReader-master'
+let g:netrw_dirhist_6='/tmp'
+let g:netrw_dirhist_5='/home/work/.config/polybar'
+let g:netrw_dirhist_4='/lib/dhcpcd/dhcpcd-hooks'
+let g:netrw_dirhist_3='/home/work/.config/rofi'
+let g:netrw_dirhist_2='/home/work/.zfunc'
+let g:netrw_dirhist_1='/home/work/project/repo/dotfiles/dot-home'
