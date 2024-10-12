@@ -1,0 +1,7 @@
+[user]
+	email = linxray@gmail.com
+	name = Ray
+
+[credential "*"]
+    username = Ray
+

@@ -33,6 +33,9 @@
     process = git-lfs filter-process
     required = true
 
+[include]
+    path = ~/.config/git/git-local
+
 [includeIf "hasconfig:remote.*.url:https://gitlab.lidig.com/**"]
 	path = ~/.config/git/git-ld
 [includeIf "hasconfig:remote.*.url:git@git.lidig.com:*/**"]

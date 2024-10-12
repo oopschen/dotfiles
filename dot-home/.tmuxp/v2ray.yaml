@@ -1,0 +1,25 @@
+session_name: v2ray
+windows:
+- window_name: ssh
+  start_directory: ~/.ssh/
+  panes:
+    - echo "here config ssh"
+
+- window_name: v2ray
+  start_directory: ~/.config/v2ray
+  layout: main-vertical
+  panes:
+    - echo "here config v2ray"
+    - shell_command:
+      - echo "here tail locol log"
+      - su -l -c  "tail /var/log/v2ray* -f "
+    - shell_command:
+      - echo "here tail remote log"
+      - ssh ss-vpn tail -f /var/log/v2ray*
+
+- window_name: vps
+  start_directory: ~/
+  panes:
+    - shell_command:
+      - echo "here ssh remote"
+      - ssh ss-vpn
