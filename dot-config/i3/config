@@ -329,7 +329,7 @@ exec --no-startup-id v2ray-nft T
 
 
 ##### desktop app
-exec google-chrome-stable
+#exec google-chrome-stable
 #exec --no-startup-id gtk-launch claws-mail
 exec --no-startup-id i3-utils-cmd-term.sh
 

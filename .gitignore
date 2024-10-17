@@ -3,6 +3,7 @@
 !dot-home/.local/bin/.nft
 
 **/.vim/plugged
+**/.vim/.netrwhist
 
 .*swp
 .*swo
