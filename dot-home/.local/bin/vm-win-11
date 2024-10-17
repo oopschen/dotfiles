@@ -13,6 +13,13 @@ gen_random_value() {
     echo $val
 }
 
+startup_clients() {
+    until $(remote-viewer -f -t vm-windows11 -- spice://localhost:3001 2>/dev/null);
+    do
+        sleep 1
+    done
+}
+
 ### add enlightenments
 enlightenments="hv-relaxed,hv-frequencies,hv-reenlightenment"
 
@@ -71,6 +78,9 @@ done
 
 
 echo "Virtiofs Started($(cat $virtiofs_pidfile))."
+## start client first
+echo "Starting VM client."
+startup_clients &
 
 ## start qemu
 echo "Starting VM($rnd_val)."
