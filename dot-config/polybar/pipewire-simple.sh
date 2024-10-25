@@ -24,5 +24,5 @@ VOLUME_PERCENTAGE="$(echo "($VOLUME * 100)/1" | bc)%"
 if [ -z "$MUTE_STATE" ]; then
     echo -e "%{T2}\UF028%{T-} %{T1}${VOLUME_PERCENTAGE}%{T-}"
 else
-    echo -e "%{F#A54242}%{T2}\UF075F%{T-} %{T1}${VOLUME_PERCENTAGE}%{T-}%{F-}"
+    echo -e "%{F#A54242}%{T2}\UF026%{T-} %{T1}${VOLUME_PERCENTAGE}%{T-}%{F-}"
 fi
