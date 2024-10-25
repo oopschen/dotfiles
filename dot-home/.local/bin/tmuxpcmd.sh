@@ -9,7 +9,7 @@ function print_help {
 print_help
 
 isStop=0
-cfgfiles=$(find ~/.tmuxp/ -type f -iname '*.yaml' | sed -re 's@^.*/([^.]+).yaml@\1@ig' | sort -d)
+cfgfiles=$(find ~/.tmuxp/ ! -ipath '**/depressed/**' -type f -iname '*.yaml' | sed -re 's@^.*/([^.]+).yaml@\1@ig' | sort -d)
 
 while [[ "0" == "$isStop" ]]; do
   echo -e "Input command: "
