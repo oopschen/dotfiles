@@ -16,8 +16,33 @@ case $1 in
         ;;
 esac
 
-MUTE_STATE=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -i muted)
-VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed -r 's/.*([0-9]\.[0-9]+).*/\1/ig' | tr -d ' ')
+
+MUTE_STATE=
+VOLUME=
+
+while [[ -z "$MUTE_STATE" ]]; do
+    MUTE_STATE=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+    if [ $? -eq 0 ];then
+        MUTE_STATE=$(echo $MUTE_STATE | grep -i muted)
+        break
+    fi
+
+    sleep 1
+    MUTE_STATE=
+done
+
+
+while [[ -z "$VOLUME" ]]; do
+    VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+    if [ $? -eq 0 ];then
+        VOLUME=$(echo $VOLUME | sed -r 's/.*([0-9]\.[0-9]+).*/\1/ig' | tr -d ' ')
+        break
+    fi
+
+    sleep 1
+    VOLUME=
+done
+
 #SINK=$(getDefaultSink)
 VOLUME_PERCENTAGE="$(echo "($VOLUME * 100)/1" | bc)%" 
 
