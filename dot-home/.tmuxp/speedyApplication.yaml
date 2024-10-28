@@ -1,0 +1,20 @@
+session_name: speedy-app
+windows:
+- window_name: proj
+  options:
+    main-pane-width: 120
+  focus: true
+  layout: main-vertical
+  start_directory: ~/Documents/10codebase/01speedy-application
+  panes:
+    - shell_command:
+      - echo "This is editor window"
+      focus: true
+    - shell_command:
+      - echo "This is command window"
+
+- window_name: doc
+  start_directory: ~/Documents/50doc4R/idea/base-framework
+  panes:
+    - echo "This is document window"
+
