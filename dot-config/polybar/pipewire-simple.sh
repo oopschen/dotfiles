@@ -20,28 +20,21 @@ esac
 MUTE_STATE=
 VOLUME=
 
-while [[ -z "$MUTE_STATE" ]]; do
-    MUTE_STATE=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
-    if [ $? -eq 0 ];then
-        MUTE_STATE=$(echo $MUTE_STATE | grep -i muted)
-        break
-    fi
-
+## wait for pipewired starting
+is_pipewiere_started=
+loop=0
+while [ ! -z "$(is_pipewiere_started=;wpctl status 2>&1| grep -i 'not connect to pipewire' )" ] && [ 3 -gt $loop ]; do
     sleep 1
-    MUTE_STATE=
+    loop=$(echo "1 + $loop" | bc)
+    is_pipewiere_started=1
 done
 
-
-while [[ -z "$VOLUME" ]]; do
-    VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
-    if [ $? -eq 0 ];then
-        VOLUME=$(echo $VOLUME | sed -r 's/.*([0-9]\.[0-9]+).*/\1/ig' | tr -d ' ')
-        break
-    fi
-
-    sleep 1
-    VOLUME=
-done
+MUTE_STATE=muted
+VOLUME=0
+if [ -z "$is_pipewiere_started" ]; then
+    MUTE_STATE=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -i muted)
+    VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed -r 's/.*([0-9]\.[0-9]+).*/\1/ig' | tr -d ' ')
+fi
 
 #SINK=$(getDefaultSink)
 VOLUME_PERCENTAGE="$(echo "($VOLUME * 100)/1" | bc)%" 
