@@ -1,5 +1,6 @@
 allprojects{
     repositories {
+        mavenLocal()
         maven {
             url = uri("https://maven.aliyun.com/repository/public/")
         }
@@ -9,7 +10,6 @@ allprojects{
         maven {
             url = uri("https://maven.aliyun.com/repository/spring")
         }
-        mavenLocal()
         mavenCentral()
     }
 
