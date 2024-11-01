@@ -316,22 +316,21 @@ for_window [workspace="3"] layout tabbed
 
 #### App Auto Startups.
 ##### service
-exec --no-startup-id picom -b
 exec --no-startup-id gentoo-pipewire-launcher
 exec --no-startup-id libinput-gestures-setup autostart start
-exec --no-startup-id fcitx5 -r -d
-
-exec sh ~/.config/polybar/launch.sh
-
+exec --no-startup-id picom -b
 exec --no-startup-id dunst
-exec --no-startup-id netrp w
+#exec --no-startup-id netrp w
 exec --no-startup-id v2ray-nft T
-
 
 ##### desktop app
 #exec --no-startup-id gtk-launch claws-mail
 exec --no-startup-id i3-utils-cmd-term.sh
 exec google-chrome-stable
+
+## make bar lauch last, as some service needs to start up first
+exec sh ~/.config/polybar/launch.sh
+exec --no-startup-id fcitx5 -r -d
 
 #exec --no-startup-id firefox-bin
 #exec --no-startup-id gtk-launch weixin-uos
