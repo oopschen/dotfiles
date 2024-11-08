@@ -86,3 +86,5 @@ alias rdpc="xfreerdp  /cert:ignore /dynamic-resolution /scale:100 /scale-desktop
 
 ### local vm win11
 alias vm-win11-usb="QMP_SERVER='/tmp/.vmwrk-w11.current/qmp-shell.sock' qemu-wrapper.sh"
+
+alias init-java-dirs="mkdir -p ./src/{main,test}/{java,resources}"
