@@ -179,10 +179,10 @@ bindsym $mod+b exec --no-startup-id polybar-msg cmd toggle
 #bindsym $mod+g exec "i3-input -F '[con_mark=%s] focus' -l 3 -P 'Go to: '"
 bindsym $mod+d exec "rofi -show combi"
 bindsym $mod+Tab exec "rofi -show window"
-bindsym --release $mod+Shift+p exec "scrot -s -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; sxiv /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
-bindsym --release $mod+Shift+s exec "scrot -s -q 100 -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/;' %Y-%m-%d-%H-%M-%S.jpeg"
-bindsym --release $mod+Shift+u exec "scrot -u -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; sxiv /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
-bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; sxiv /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
+bindsym --release $mod+Shift+p exec "scrot -s -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
+bindsym --release $mod+Shift+s exec "scrot -s -q 100 -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
+bindsym --release $mod+Shift+u exec "scrot -u -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
+bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
 
 #bindsym $alt+Shift+9 [class="(?i)weixin"]  move scratchpad, workspace --no-auto-back-and-forth 8, split h, scratchpad show, floating disable
 #bindsym $alt+Shift+0 [class="(?i)weixin"] move scratchpad 
@@ -237,6 +237,8 @@ for_window [floating_from="user"] move position center
 for_window [class="(?i)com.alibabainc.dingtalk" title="(?i).*(?:分享|预览|.doc|.docx|.ppt|.pptx|.xls|.xlsx).*"] floating enable, resize set 90 ppt 80 ppt
 ### dia window settings: 1. float toolbox_window & dia ,set size to 800x200
 for_window [class="(?i)dia" window_role="toolbox_window"] floating enable,resize set 10 ppt 60 ppt
+### preview scrot by feh
+for_window [class="(?i)feh" title=".*/tmp/scrot/.*"] floating enable,resize set 80 ppt 60 ppt
 
 ## w1 web: chrome
 assign [class="(?i)google-chrome"] 1
