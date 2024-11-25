@@ -4,7 +4,7 @@ diskdir=$(realpath $basedir/win11_202307.qcow2)
 diskdata=$(realpath $basedir/win11_202410_data.qcow2)
 sharedir=$(realpath ~/share)
 cpuinfo="host"
-mem_size=4G
+mem_size=8G
 pidfile="/tmp/.vm.win11.pid"
 prefix_name=vmwrk-w11
 cmd_notify="notify-send -u normal 'VM($prefix_name)' -t 2000"
@@ -93,7 +93,7 @@ fi
 qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
   -boot c -rtc base=localtime \
   -cpu $cpuinfo,$enlightenments -m $mem_size \
-  -smp sockets=1,cores=2 \
+  -smp sockets=1,cores=2,threads=4 \
   -machine pc,accel=kvm,vmport=off \
   -vga qxl \
   -spice port=3001,disable-ticketing=on \
