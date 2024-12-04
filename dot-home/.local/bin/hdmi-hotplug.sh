@@ -79,9 +79,10 @@ if [[ ! -z "$extern_status" && ! -z "$intern_status" ]]; then
     case $mode in 
         mirror) 
             echo "Mirror Display"
-            $cmd_xrandr --output $extern_name --primary --auto \
-                $(gen_scale_xrandr_param $intern_name $extern_name) \
-                --output $intern_name --auto --same-as $extern_name
+            $cmd_xrandr \
+                --output $intern_name --primary --auto \
+                --output $extern_name  --auto --same-as $intern_name \
+                    $(gen_scale_xrandr_param $intern_name $extern_name)
             display_mode="$extern_name[*],$intern_name[*]"
             ;;
         off) 
@@ -91,9 +92,10 @@ if [[ ! -z "$extern_status" && ! -z "$intern_status" ]]; then
             ;;
         *)
             echo "Multiple Display : $intern_name, $extern_name"
-            $cmd_xrandr --output $extern_name --primary --auto \
-                $(gen_scale_xrandr_param $intern_name $extern_name) \
-                --output $intern_name --auto --left-of $extern_name
+            $cmd_xrandr  \
+                --output $intern_name --auto  \
+                --output $extern_name --primary --auto --right-of $intern_name \
+                $(gen_scale_xrandr_param $intern_name $extern_name)
             display_mode="$extern_name[*],$intern_name"
             ;;
 
