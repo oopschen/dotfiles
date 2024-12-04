@@ -293,11 +293,12 @@ no_focus [class="(?i)claws-mail"]
 #### Workspace and Monitors
 ##### set output mode to auto 
 bindsym $alt+F1 exec --no-startup-id hdmi-hotplug.sh
+bindsym $alt+F2 exec --no-startup-id hdmi-hotplug.sh mirror
 # main mode: move all workspace except 5 to primary
-bindsym $alt+F2 [workspace=".*"] move workspace to output primary; \
+bindsym $alt+F3 [workspace=".*"] move workspace to output primary; \
     [workspace="[5]"] move workspace to output eDP-1
 # presentation mode: move  3 to primary
-bindsym $alt+F3 [workspace=".*"] move workspace to output eDP-1;\
+bindsym $alt+F4 [workspace=".*"] move workspace to output eDP-1;\
                                     [workspace="9"] move workspace to output primary;
 ###### auto workspace output assign
 workspace   1    output   primary
