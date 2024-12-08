@@ -133,4 +133,12 @@ if [ "1" = "$has_prog_exists" ]; then
 else
     echo "command term launches..."
     i3-utils-base-term.sh "-n $wm_instance -e tmuxp load normal"
+
+    case $mode in
+        launch)
+            # as i3wm auto move term to scrath, so it will not show
+            ;;
+        *)
+            ;;
+    esac
 fi

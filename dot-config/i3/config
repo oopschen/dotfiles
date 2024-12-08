@@ -197,7 +197,7 @@ bindsym XF86AudioMute exec --no-startup-id polybar-msg action pipewire-simple ho
 
 
 ### make termial on startup move to scratchpad
-for_window [instance="(?i)cmdterm"] move scratchpad, exec i3-utils-cmd-term.sh toggle
+for_window [instance="(?i)cmdterm"] move scratchpad
 
 
 #### Workspace Settings
@@ -328,7 +328,7 @@ exec --no-startup-id v2ray-nft T
 
 ##### desktop app
 #exec --no-startup-id gtk-launch claws-mail
-exec --no-startup-id i3-utils-cmd-term.sh
+exec --no-startup-id i3-utils-cmd-term.sh launch
 exec google-chrome-stable
 
 ## make bar lauch last, as some service needs to start up first
