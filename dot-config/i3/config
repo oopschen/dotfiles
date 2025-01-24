@@ -239,6 +239,7 @@ for_window [class="(?i)com.alibabainc.dingtalk" title="(?i).*(?:分享|预览|.d
 for_window [class="(?i)dia" window_role="toolbox_window"] floating enable,resize set 10 ppt 60 ppt
 ### preview scrot by feh
 for_window [class="(?i)feh" title=".*/tmp/scrot/.*"] floating enable,resize set 80 ppt 60 ppt
+for_window [class="(?i)feh" floating]border pixel 3
 
 ## w1 web: chrome
 assign [class="(?i)google-chrome"] 1
@@ -278,6 +279,7 @@ assign [title="(?i)百度网盘"] 9
 assign [class="(?i)qqmusic"] 9
 assign [class="(?i)qbittorrent"] 9
 assign [class="(?i)^transmission-*"] 9
+assign [class="(?i)^UniVPN*"] 9
 # w0 dev
 assign [class="(?i)jetbrains.*"] 10
 assign [class="(?i)mysql-workbench-bin"] 10

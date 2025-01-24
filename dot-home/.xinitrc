@@ -10,7 +10,7 @@ machineid=$(cat /etc/machine-id)
 
 ## nvidia setting
 #xrandr --setprovideroutputsource modesetting NVIDIA-0
-xrandr --auto
+#xrandr --auto
 hdmi-hotplug.sh
 
 ## start desktop env
