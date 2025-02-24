@@ -8,9 +8,6 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 zplug "zsh-users/zsh-syntax-highlighting", use:"zsh-syntax-highlighting.zsh", defer:2
 
-# fzf
-zplug "junegunn/fzf", from:gh-r, as:command, hook-build: "sh install --no-fish --no-update-rc" 
-
 # z
 zplug "plugins/z", from:oh-my-zsh
 
