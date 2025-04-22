@@ -240,6 +240,7 @@ for_window [class="(?i)dia" window_role="toolbox_window"] floating enable,resize
 ### preview scrot by feh
 for_window [class="(?i)feh" title=".*/tmp/scrot/.*"] floating enable,resize set 80 ppt 60 ppt
 for_window [class="(?i)feh" floating]border pixel 3
+for_window [class="(?i)simplescreenrecorder"]floating enable,resize set 10 ppt 50 ppt
 
 ## w1 web: chrome
 assign [class="(?i)google-chrome"] 1
@@ -270,6 +271,7 @@ assign [class="(?i)qemu-system.+"] 7
 assign [class="(?i)rdesktop"] 7
 assign [class="(?i).*xfreerdp.*"] 7
 assign [class="(?i).*remote-viewer.*"] 7
+assign [class="(?i).*remmina.*"] 7
 # w8 empty
 assign [class="(?i)com.alibabainc.dingtalk"] 8
 assign [class="(?i)weixin"] 8
