@@ -84,11 +84,11 @@ alias pdm="podman"
 #alias sys-cln-aftup="sudo emerge -q --depclean"
 #alias sys-rm="sudo emerge --depclean -q"
 
-### python virtual env management
-alias activenv="source /usr/bin/virtualenvwrapper.sh"
+### python virtual env management, use uv instead
+#alias activenv="source /usr/bin/virtualenvwrapper.sh"
 
 ### rdp 
-alias rdpc="xfreerdp  /cert:ignore /dynamic-resolution /scale:100 /scale-desktop:192 +async-update +async-input  +clipboard /video /network:auto"
+#alias rdpc="xfreerdp  /cert:ignore /dynamic-resolution /scale:100 /scale-desktop:192 +async-update +async-input  +clipboard /video /network:auto"
 
 ### local vm win11
 alias vm-win11-usb="QMP_SERVER='/tmp/.vmwrk-w11.current/qmp-shell.sock' qemu-wrapper.sh"

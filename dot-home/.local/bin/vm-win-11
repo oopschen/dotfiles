@@ -102,15 +102,20 @@ qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
   -cpu $cpuinfo,$enlightenments -m $mem_size \
   -smp sockets=1,cores=2,threads=4 \
   -machine pc,accel=kvm,vmport=off \
+  -k en-us \
   -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough \
   -drive file=${diskdata},format=qcow2,media=disk,cache=writethrough \
-  -display none \
-  -nic user,model=virtio-net-pci,hostfwd=udp:127.0.0.1:13389-:3389,hostfwd=tcp:127.0.0.1:13389-:3389 \
+  -display gtk,zoom-to-fit=on,full-screen=off,gl=on,grab-on-hover=on,window-close=on,show-menubar=off\
+  -vga virtio \
+  -device virtio-serial,packed=on,ioeventfd=on \
+  -device virtserialport,name=com.redhat.spice.0,chardev=vdagent0 \
+  -chardev qemu-vdagent,id=vdagent0,name=vdagent,clipboard=on,mouse=off \
   -qmp unix:$workingdir/qmp-shell.sock,server=on,wait=off \
   -device qemu-xhci,id=xhci \
+  -usbdevice tablet \
   -audiodev pipewire,id=audio0 \
   -device intel-hda -device hda-duplex,audiodev=audio0 \
-  -chardev socket,id=char0,path=$virtiofsd_sock_path \
+  -chardev socket,id=char0,path=${virtiofsd_sock_path} \
   -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=host-share \
   -object memory-backend-memfd,id=mem0,share=on,size=$mem_size \
   -numa node,memdev=mem0 \
@@ -163,11 +168,19 @@ fi
 
   ### vnc
   #-vnc unix:${vnc_unix_sock},power-control=on \
+  #-vnc unix:${vnc_unix_sock},power-control=on,share=allow-exclusive,lossy=on \
 
   ### rdp
   # -display none
   # ,hostfwd=udp:127.0.0.1:13389-:3389,hostfwd=tcp:127.0.0.1:13389-:3389
+  #-nic user,model=virtio,hostfwd=udp:127.0.0.1:3389-:3389,hostfwd=tcp:127.0.0.1:3389-:3389 \
+
 
 ### images
 ## qemu-img create -f qcow2 -o compression_type=zstd,preallocation=full win11_202410_data.qcow2 20G
 
+
+### clipboard sync qemu-vdagent gtk enable-gtk-clipboard
+  #-device virtio-serial,packed=on,ioeventfd=on \
+  #-device virtserialport,name=com.redhat.spice.0,chardev=vdagent0 \
+  #-chardev qemu-vdagent,id=vdagent0,name=vdagent,clipboard=on,mouse=off \

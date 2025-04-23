@@ -226,7 +226,7 @@ client.placeholder      #657b83 #272827 #E7F5E0 #E7F5E0   #657b83
 #### Window Assigment
 
 for_window [class="(?i)mpv"] fullscreen
-for_window [class="(?i)qemu-system"] fullscreen
+#for_window [class="(?i)qemu-system"] fullscreen
 #### fix chrome popup to wrong workspace
 for_window [class="(?i)firefox"] move --no-auto-back-and-forth window to workspace 1
 for_window [class="(?i)google-chrome"] move --no-auto-back-and-forth window to workspace 1
