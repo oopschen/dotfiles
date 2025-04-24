@@ -119,6 +119,7 @@ qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
   -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=host-share \
   -object memory-backend-memfd,id=mem0,share=on,size=$mem_size \
   -numa node,memdev=mem0 \
+  -nic user,model=virtio-net-pci \
   \
   $@ > $log_dir/qemu.log 2>&1
 
