@@ -305,6 +305,12 @@ bindsym $alt+F3 [workspace=".*"] move workspace to output primary; \
 # presentation mode: move  3 to primary
 bindsym $alt+F4 [workspace=".*"] move workspace to output eDP-1;\
                                     [workspace="9"] move workspace to output primary;
+#### profile for work desktop mode
+bindsym $alt+F5 exec --no-startup-id vm-w11; \
+    exec --no-startup-id claws-mail; \
+    exec --no-startup-id google-chrome-stable; \
+    exec --no-startup-id gtk-launch network-management-wlan0-restart;
+
 ###### auto workspace output assign
 workspace   1    output   primary
 workspace   2    output   primary
@@ -334,11 +340,11 @@ exec --no-startup-id v2ray-nft T
 ##### desktop app
 #exec --no-startup-id gtk-launch claws-mail
 exec --no-startup-id i3-utils-cmd-term.sh launch
-exec google-chrome-stable
 
-## make bar lauch last, as some service needs to start up first
-exec sh ~/.config/polybar/launch.sh
 exec --no-startup-id fcitx5 -r -d
+
+## **IMPORTANT** make bar lauch last, as some service needs to start up first
+exec sh ~/.config/polybar/launch.sh
 
 #exec --no-startup-id firefox-bin
 #exec --no-startup-id gtk-launch weixin-uos
