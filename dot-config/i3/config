@@ -128,8 +128,10 @@ bindsym $mod+Shift+0 move container to workspace 10
 bindsym $mod+Shift+r reload
 
 # screen saver
-bindsym $alt+F11 exec "xset +dpms && xset s on"
-bindsym $alt+F12 exec "xset -dpms && xset s off"
+bindsym $alt+F11 exec "xset +dpms && xset s on"; \
+    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 "Shortcut Notificaiton" "Screen Saving ON";
+bindsym $alt+F12 exec "xset -dpms && xset s off"; \
+    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 "Shortcut Notificaiton" "Screen Saving OFF";
 
 # monitor
 bindsym $alt+p move workspace to output primary
@@ -309,7 +311,8 @@ bindsym $alt+F4 [workspace=".*"] move workspace to output eDP-1;\
 bindsym $alt+F5 exec --no-startup-id vm-w11; \
     exec --no-startup-id claws-mail; \
     exec --no-startup-id google-chrome-stable; \
-    exec --no-startup-id gtk-launch network-management-wlan0-restart;
+    exec --no-startup-id gtk-launch network-management-wlan0-restart; \
+    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 "Shortcut Notificaiton" "Workstation mode Activitated";
 
 ###### auto workspace output assign
 workspace   1    output   primary
