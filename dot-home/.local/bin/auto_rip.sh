@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-destfile=/home/work/.config/.shadowsocks-redir-ignore
-tmpdestfile=/tmp/.shadowsocks-redir-ignore.tmp
-downloadfile=/tmp/apnic-lastest
+destfile=/home/work/.config/.proxy-ip.ignore
+tmpdestfile=/tmp/$(basename "$destfile").tmp
+downloadfile=/tmp/.apnic-lastest
 timeouts_sec=300
 
 curl -L --connect-timeout $timeouts_sec -m $timeouts_sec \

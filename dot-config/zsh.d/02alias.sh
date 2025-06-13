@@ -46,12 +46,7 @@ alias -s html=google-chrome-stable \
 #alias swf="sudo rc-service net.wlan0 start"
 #alias rswf="sudo rc-service net.wlan0 restart"
 
-alias vpntoggle="v2ray-nft T"
-alias vpnoff="v2ray-nft D"
-
-alias hdoff="hdmi-hotplug.sh off"
-alias hdm="hdmi-hotplug.sh mirror"
-alias hdauto="hdmi-hotplug.sh"
+alias vpntoggle="hysteria2-wrapper.nft.sh T"
 
 alias gw="./gradlew"
 alias unzip-cn="unzip -O cp936"
@@ -73,7 +68,7 @@ alias rcs="sudo rc-service"
 ### dingtalk
 #alias dingfix="pgrep -f com.alibabainc.dingtalk | xargs -I{} kill -9 {};rm -rf /home/work/.config/DingTalk/userdata/dump"
 #alias dingfix='kill -3 $(pgrep -f com.alibabainc.dingtalk -P $(pgrep -f Elevator.sh))'
-alias dingfix='kill -3 $(pgrep -f com.alibabainc.dingtalk)'
+#alias dingfix='kill -3 $(pgrep -f com.alibabainc.dingtalk)'
 
 #### fix zsh can not suspend(ctrl+z) after zplug update
 alias zsusfix="rm ~/.zplug/log/job.lock"

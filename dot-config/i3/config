@@ -338,13 +338,14 @@ exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id picom -b
 exec --no-startup-id dunst
 #exec --no-startup-id netrp w
-exec --no-startup-id v2ray-nft T
+#exec --no-startup-id v2ray-nft T
 
 ##### desktop app
 #exec --no-startup-id gtk-launch claws-mail
 exec --no-startup-id i3-utils-cmd-term.sh launch
 
 exec --no-startup-id fcitx5 -r -d
+exec --no-startup-id hdmi-hotplug.sh
 
 ## **IMPORTANT** make bar lauch last, as some service needs to start up first
 exec sh ~/.config/polybar/launch.sh
