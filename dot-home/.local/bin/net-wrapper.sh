@@ -22,20 +22,28 @@ case $opt in
   ;;
 
   d)
-    servs="net.eth0 net.wlan0 dnsmasq hysteria-client"
+    servs="net.eth0 net.wlan0 dnsmasq"
     for srv in $servs
     do
       sudo rc-service $srv stop
     done
-    hysteria2-wrapper.nft.sh D
     ;;
 
   v)
-    sudo rc-service hysteria-client start
+    if [[ -z "$(sudo rc-service hysteria-client status | grep -iE 'status.+started')" ]]; then
+        echo -e "no proxy client service found and restart it"
+        sudo rc-service hysteria-client restart
+    fi
+
+    if [[ "1" -gt "$(pgrep -fc hysteria | bc)" ]]; then
+        echo -e "no proxy client proc found and restart it"
+        sudo rc-service hysteria-client restart
+    fi
+
     hysteria2-wrapper.nft.sh T
     ;;
 
   *)
-    echo -e "Usage:\n\tsh net-wrapper.sh w|e|v(vpn)|d"
+    echo -e "Usage:\n\tsh net-wrapper.sh w(wlan)|e(eth)|v(vpn toggle)|d(down)"
     ;;
 esac
