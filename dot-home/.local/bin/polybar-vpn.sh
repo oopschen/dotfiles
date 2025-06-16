@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
-prefix_output="%{T2}%{F#63F3CF}󰖂 %{F-}%{T-}"
-output=""
+output=
 
 function check_v2ray() {
+    ## TODO fIX
     st_v2ray=$(pgrep -x v2ray)
     st_dns=$(pgrep -x dnsmasq)
     st_nft=$(v2ray-nft S | grep -iE "\bon\b")
@@ -15,29 +15,57 @@ function check_v2ray() {
     fi
 }
 
-function check_ld_vpn() {
-    # check ipsec
-    st_ipsec_server=$(sudo ipsec status | grep -i "===" | cut -d "="  -f 4 | sed -r 's/\s+([^/]+).+/\1/ig')
-    st_xl2tp=$(ps -ef | grep xl2tpd)
-    st_ppt_interface=$(ip l | grep ppp | head -n 1 |  cut -d ':' -f 2 | tr -d ' ')
-    if [ ! -z "$st_ipsec_server" ] && [ ! -z "$st_xl2tp" ] && [ ! -z "$st_ppt_interface" ]; then
-        echo -e "%{T1}%{F#F0C674}$st_ipsec_server(LD)%{F-}%{T-}"
-    else
-        echo ""
+###
+# 1. check nft tables
+# 2. check ip route
+###
+function check_tproxy_hysteria2() {
+    proxy_mark=$1
+    table_id=$2
+    nft_table_name=$3
+
+    fwmark_rule=$(ip rule | grep "fwmark")
+    has_target_mark=$(echo "$fwmark_rule" | grep -iE "\b$proxy_mark\b")
+    has_target_table=$(echo "$fwmark_rule" | grep -iE "\b$table_id\b")
+    has_nft_table=$(sudo nft list tables | grep -iE "$nft_table_name")
+
+    if [ ! -z "$fwmark_rule" ] && [ ! -z "$has_target_mark" ] \
+        && [ ! -z "$has_target_table" ] \
+        && [ ! -z "$has_nft_table" ]; then
+        echo "0"
+        return
     fi
+
+    echo "1"
+}
+
+function check_proxy_serv_hyseteria2() {
+    if [[ -z "$(sudo rc-service hysteria-client status | grep -iE 'status.+started')" ]]; then
+        echo 1
+        return
+    fi
+
+    echo 0
+}
+
+function check_tproxy_hysteria2_main() {
+    ## service off
+    color="63F3CF"
+    if [[  "0" != "$(check_proxy_serv_hyseteria2)" ]]; then
+        color="FF2171"
+    elif [[  "0" != $(check_tproxy_hysteria2 "0x67" "102" "tbl_hysteria") ]]; then
+    ## tproxy off
+        color="FFCA03"
+    fi
+
+    echo -e "%{T1}%{F#$color}\uf135%{F-}%{T-}"
 }
 
 ## call functions
-output=$(check_v2ray)
-if [ ! -z "$output" ]; then
-    output="$output $(check_ld_vpn)"
-else
-    output="$(check_ld_vpn)"
-fi
-
+output="$output $(check_tproxy_hysteria2_main)"
 
 if [ -z "$output" ]; then
-    echo -e "\n"
+    echo -e "%{T1}%{F#FF2171}\uf135%{F-}%{T-}"
 else
-    echo -e "$prefix_output $output"
+    echo -e "$output"
 fi

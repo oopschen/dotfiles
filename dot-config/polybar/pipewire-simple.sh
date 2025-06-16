@@ -51,5 +51,5 @@ done
 if [ -z "$MUTE_STATE" ]; then
     echo -e "%{T2}\UF028%{T-} %{T1}${VOLUME_PERCENTAGE}%{T-}"
 else
-    echo -e "%{F#A54242}%{T2}\UF026%{T-} %{T1}${VOLUME_PERCENTAGE}%{T-}%{F-}"
+    echo -e "%{F#FF2171}%{T2}\UF026%{T-} %{T1}${VOLUME_PERCENTAGE}%{T-}%{F-}"
 fi
