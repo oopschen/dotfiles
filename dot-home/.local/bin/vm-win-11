@@ -131,7 +131,8 @@ QEMU_OPTS="$QEMU_OPTS -numa node,memdev=mem0"
 
 QEMU_OPTS="$QEMU_OPTS $@"
 echo -e "VM Run as:\n\t $QEMU_OPTS"
-qemu-system-x86_64 $QEMU_OPTS > $log_dir/qemu.log 2>&1
+# TODO current nvidia offload not work with gtk gl=on 2025.07.08
+__NV_PRIME_RENDER_OFFLOAD=0 qemu-system-x86_64 $QEMU_OPTS > $log_dir/qemu.log 2>&1
 
 rm $pidfile > /dev/null 2>&1
 ## echo quit
