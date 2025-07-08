@@ -1,3 +1,4 @@
+# input method 
 export XMODIFIERS=@im=fcitx
 export QT_IM_MODULE=fcitx
 export GTK_IM_MODULE=fcitx
@@ -9,9 +10,7 @@ xsetroot -cursor_name left_ptr
 machineid=$(cat /etc/machine-id)
 
 ## nvidia setting
-#xrandr --setprovideroutputsource modesetting NVIDIA-0
-#xrandr --auto
-#hdmi-hotplug.sh
+xrandr --setprovideroutputsource modesetting NVIDIA-0
 
 ## start desktop env
 exec dbus-launch --auto-syntax --autolaunch=$machineid --exit-with-session i3

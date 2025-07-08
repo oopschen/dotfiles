@@ -319,7 +319,7 @@ bindsym $alt+F5 exec --no-startup-id vm-w11; \
 bindsym $alt+F6 exec --no-startup-id google-chrome-stable; \
     exec --no-startup-id gtk-launch network-management-wlan0-restart; \
     exec --no-startup-id /usr/bin/notify-send -u low -t 5000 \
-        "Shortcut Notificaiton" "Personal Ap Starting";
+        "Shortcut Notificaiton" "Personal App Starting";
 
 ###### auto workspace output assign
 workspace   1    output   primary

@@ -9,7 +9,7 @@ function check_v2ray() {
     st_nft=$(v2ray-nft S | grep -iE "\bon\b")
     st_nft_server=$(v2ray-nft S | grep -i server | sed -r 's/.+server=([^,]+).+/\1/ig')
     if [ ! -z "$st_v2ray" ] && [ ! -z "$st_dns" ] && [ ! -z "$st_nft" ]; then
-        echo -e "%{T1}%{F#F0C674}$st_nft_server(V2R)%{F-}%{T-}"
+        echo -e "%{T3}%{F#F0C674}$st_nft_server(V2R)%{F-}%{T-}"
     else
         echo ""
     fi
@@ -58,14 +58,14 @@ function check_tproxy_hysteria2_main() {
         color="FFCA03"
     fi
 
-    echo -e "%{T1}%{F#$color}\uf135%{F-}%{T-}"
+    echo -e "%{T3}%{F#$color}\uf135%{F-}%{T-}"
 }
 
 ## call functions
 output="$output $(check_tproxy_hysteria2_main)"
 
 if [ -z "$output" ]; then
-    echo -e "%{T1}%{F#FF2171}\uf135%{F-}%{T-}"
+    echo -e "%{T3}%{F#FF2171}\uf135%{F-}%{T-}"
 else
     echo -e "$output"
 fi

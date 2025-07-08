@@ -96,33 +96,42 @@ if [ ! -z "$NOTIFY_SND" ]; then
     $cmd_notify "VM($rnd_val) Start."
 fi
 
+QEMU_OPTS=
+# Basic VM
+QEMU_OPTS="$QEMU_OPTS --enable-kvm --name win11 -pidfile $pidfile"
+QEMU_OPTS="$QEMU_OPTS -machine pc,accel=kvm,vmport=off"
+QEMU_OPTS="$QEMU_OPTS -boot c -rtc base=localtime -k en-us"
+QEMU_OPTS="$QEMU_OPTS -qmp unix:$workingdir/qmp-shell.sock,server=on,wait=off"
+# Basic CPU
+QEMU_OPTS="$QEMU_OPTS -cpu $cpuinfo,$enlightenments -m $mem_size"
+QEMU_OPTS="$QEMU_OPTS -smp sockets=1,cores=2,threads=4"
+# Drive 
+QEMU_OPTS="$QEMU_OPTS -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough"
+QEMU_OPTS="$QEMU_OPTS -drive file=${diskdata},format=qcow2,media=disk,cache=writethrough"
+# Dispaly 
+QEMU_OPTS="$QEMU_OPTS -display gtk,zoom-to-fit=on,full-screen=off,gl=on,grab-on-hover=off,window-close=on,show-menubar=off"
+QEMU_OPTS="$QEMU_OPTS -vga virtio"
+# Netowrk
+QEMU_OPTS="$QEMU_OPTS -nic user,model=virtio-net-pci"
+# USB
+QEMU_OPTS="$QEMU_OPTS -device qemu-xhci,id=xhci"
+QEMU_OPTS="$QEMU_OPTS -usbdevice tablet"
+# Audio
+QEMU_OPTS="$QEMU_OPTS -audiodev pipewire,id=audio0"
+QEMU_OPTS="$QEMU_OPTS -device intel-hda -device hda-duplex,audiodev=audio0"
+# Vdagent for clipboard sharing
+QEMU_OPTS="$QEMU_OPTS -device virtio-serial,packed=on,ioeventfd=on"
+QEMU_OPTS="$QEMU_OPTS -device virtserialport,name=com.redhat.spice.0,chardev=vdagent0"
+QEMU_OPTS="$QEMU_OPTS -chardev qemu-vdagent,id=vdagent0,name=vdagent,clipboard=on,mouse=off"
+# VirtioFS
+QEMU_OPTS="$QEMU_OPTS -chardev socket,id=char0,path=${virtiofsd_sock_path}"
+QEMU_OPTS="$QEMU_OPTS -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=host-share"
+QEMU_OPTS="$QEMU_OPTS -object memory-backend-memfd,id=mem0,share=on,size=$mem_size"
+QEMU_OPTS="$QEMU_OPTS -numa node,memdev=mem0"
 
-qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
-  -boot c -rtc base=localtime \
-  -cpu $cpuinfo,$enlightenments -m $mem_size \
-  -smp sockets=1,cores=2,threads=4 \
-  -machine pc,accel=kvm,vmport=off \
-  -k en-us \
-  -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough \
-  -drive file=${diskdata},format=qcow2,media=disk,cache=writethrough \
-  -display gtk,zoom-to-fit=on,full-screen=off,gl=on,grab-on-hover=off,window-close=on,show-menubar=off\
-  -vga virtio \
-  -device virtio-gpu \
-  -device virtio-serial,packed=on,ioeventfd=on \
-  -device virtserialport,name=com.redhat.spice.0,chardev=vdagent0 \
-  -chardev qemu-vdagent,id=vdagent0,name=vdagent,clipboard=on,mouse=off \
-  -qmp unix:$workingdir/qmp-shell.sock,server=on,wait=off \
-  -device qemu-xhci,id=xhci \
-  -usbdevice tablet \
-  -audiodev pipewire,id=audio0 \
-  -device intel-hda -device hda-duplex,audiodev=audio0 \
-  -chardev socket,id=char0,path=${virtiofsd_sock_path} \
-  -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=host-share \
-  -object memory-backend-memfd,id=mem0,share=on,size=$mem_size \
-  -numa node,memdev=mem0 \
-  -nic user,model=virtio-net-pci \
-  \
-  $@ > $log_dir/qemu.log 2>&1
+QEMU_OPTS="$QEMU_OPTS $@"
+echo -e "VM Run as:\n\t $QEMU_OPTS"
+qemu-system-x86_64 $QEMU_OPTS > $log_dir/qemu.log 2>&1
 
 rm $pidfile > /dev/null 2>&1
 ## echo quit
