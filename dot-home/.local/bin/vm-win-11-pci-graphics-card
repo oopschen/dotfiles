@@ -96,6 +96,7 @@ if [ ! -z "$NOTIFY_SND" ]; then
     $cmd_notify "VM($rnd_val) Start."
 fi
 
+export QEMU_IOMMUFD=on
 
 qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
   -boot c -rtc base=localtime \
@@ -105,9 +106,8 @@ qemu-system-x86_64 --enable-kvm --name win11 -pidfile $pidfile \
   -k en-us \
   -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough \
   -drive file=${diskdata},format=qcow2,media=disk,cache=writethrough \
-  -display gtk,zoom-to-fit=on,full-screen=off,gl=on,grab-on-hover=off,window-close=on,show-menubar=off\
-  -vga virtio \
   -device virtio-gpu \
+  -monitor stdio \
   -device virtio-serial,packed=on,ioeventfd=on \
   -device virtserialport,name=com.redhat.spice.0,chardev=vdagent0 \
   -chardev qemu-vdagent,id=vdagent0,name=vdagent,clipboard=on,mouse=off \
