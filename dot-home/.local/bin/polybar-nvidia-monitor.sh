@@ -26,7 +26,7 @@ status_memoery_use_percentage=$(cal_gpu_memory_usage)
 
 
 #temp
-output="NV \uF8C7 %{T3}%{F#F0C674}\uf2c8%{F-}%{T-}"
+output="%{T2}%{F#F0C674}NV%{F-}%{T-} %{T4}%{F#F0C674}\uf2c8%{F-}%{T-}"
 output="$output%{T1} $status_gpu_temp %{T-}"
 
 #usage percentage

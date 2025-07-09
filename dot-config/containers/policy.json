@@ -7,7 +7,8 @@
             "docker.io/dpage/pgadmin4": [{"type": "insecureAcceptAnything"}],
             "docker.io/pandoc": [{"type": "insecureAcceptAnything"}],
             "docker.io/projectdiscovery/nuclei": [{"type": "insecureAcceptAnything"}],
-            "docker.io/apache/superset": [{"type": "insecureAcceptAnything"}]
+            "docker.io/apache/superset": [{"type": "insecureAcceptAnything"}],
+            "docker.io/thingsboard": [{"type": "insecureAcceptAnything"}]
         },
 
         "dir": {
