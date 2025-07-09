@@ -126,8 +126,8 @@ QEMU_OPTS="$QEMU_OPTS -chardev qemu-vdagent,id=vdagent0,name=vdagent,clipboard=o
 # VirtioFS
 QEMU_OPTS="$QEMU_OPTS -chardev socket,id=char0,path=${virtiofsd_sock_path}"
 QEMU_OPTS="$QEMU_OPTS -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=host-share"
-QEMU_OPTS="$QEMU_OPTS -object memory-backend-memfd,id=mem0,share=on,size=$mem_size"
-QEMU_OPTS="$QEMU_OPTS -numa node,memdev=mem0"
+QEMU_OPTS="$QEMU_OPTS -object memory-backend-memfd,id=mem0,size=$mem_size"
+QEMU_OPTS="$QEMU_OPTS -numa node,memdev=mem0" 
 
 QEMU_OPTS="$QEMU_OPTS $@"
 echo -e "VM Run as:\n\t $QEMU_OPTS"

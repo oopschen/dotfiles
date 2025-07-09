@@ -127,12 +127,6 @@ bindsym $mod+Shift+0 move container to workspace 10
 # reload the configuration file
 bindsym $mod+Shift+r reload
 
-# screen saver
-bindsym $alt+F11 exec "xset +dpms && xset s on"; \
-    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 "Shortcut Notificaiton" "Screen Saving ON";
-bindsym $alt+F12 exec "xset -dpms && xset s off"; \
-    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 "Shortcut Notificaiton" "Screen Saving OFF";
-
 # monitor
 bindsym $alt+p move workspace to output primary
 bindsym $alt+h move workspace to output left
@@ -197,10 +191,38 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id polybar-msg action pipewire-si
 bindsym XF86AudioLowerVolume exec --no-startup-id polybar-msg action pipewire-simple hook 3
 bindsym XF86AudioMute exec --no-startup-id polybar-msg action pipewire-simple hook 1
 
+# screen saver
+bindsym $alt+F11 exec "xset +dpms && xset s on"; \
+    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 "Shortcut Notificaiton" "Screen Saving ON";
+bindsym $alt+F12 exec "xset -dpms && xset s off"; \
+    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 "Shortcut Notificaiton" "Screen Saving OFF";
 
-### make termial on startup move to scratchpad
-for_window [instance="(?i)cmdterm"] move scratchpad
+##### set output mode to auto 
+bindsym $alt+F1 exec --no-startup-id hdmi-hotplug.sh
+bindsym $alt+F2 exec --no-startup-id hdmi-hotplug.sh mirror
+# main mode: move all workspace except 5 to primary
+bindsym $alt+F3 [workspace=".*"] move workspace to output primary; \
+    [workspace="[5]"] move workspace to output eDP-1;
+    exec --no-startup-id /usr/bin/notify-send -u low -t 3000 "Output Work";
+# presentation mode: move  3 to primary
+bindsym $alt+F4 [workspace=".*"] move workspace to output eDP-1;\
+                                    [workspace="9"] move workspace to output primary; \
+    exec --no-startup-id /usr/bin/notify-send -u low -t 3000 "Output Presentation";
+#### profile for work desktop mode
+bindsym $alt+F5 exec --no-startup-id vm-w11; \
+    exec --no-startup-id claws-mail; \
+    exec --no-startup-id google-chrome-stable; \
+    exec --no-startup-id gtk-launch network-management-wlan0-restart; \
+    [workspace=".*"] move workspace to output primary; \
+    [workspace="[5]"] move workspace to output eDP-1; \
+    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 \
+        "Shortcut Notificaiton" "Workstation App Starting";
 
+### profile for personal app
+bindsym $alt+F6 exec --no-startup-id google-chrome-stable; \
+    exec --no-startup-id gtk-launch network-management-wlan0-restart; \
+    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 \
+        "Shortcut Notificaiton" "Personal App Starting";
 
 #### Workspace Settings
 default_orientation auto
@@ -292,34 +314,20 @@ assign [class="(?i)dbeaver.*"] 10
 assign [title="(?i)spoon.*"] 10
 assign [class="(?i)st-256color"] 10
 
+### make termial on startup move to scratchpad
+for_window [instance="(?i)cmdterm"] move scratchpad
+
+
+###### workspace layout settings
+for_window [workspace="1"] layout tabbed
+for_window [workspace="3"] layout tabbed
+
 ## no foucs
 no_focus [class="(?i)thunderbird"] 
 no_focus [class="(?i)claws-mail"] 
 
 
 #### Workspace and Monitors
-##### set output mode to auto 
-bindsym $alt+F1 exec --no-startup-id hdmi-hotplug.sh
-bindsym $alt+F2 exec --no-startup-id hdmi-hotplug.sh mirror
-# main mode: move all workspace except 5 to primary
-bindsym $alt+F3 [workspace=".*"] move workspace to output primary; \
-    [workspace="[5]"] move workspace to output eDP-1;
-    exec --no-startup-id /usr/bin/notify-send -u low -t 3000 "Output Work";
-# presentation mode: move  3 to primary
-bindsym $alt+F4 [workspace=".*"] move workspace to output eDP-1;\
-                                    [workspace="9"] move workspace to output primary; \
-    exec --no-startup-id /usr/bin/notify-send -u low -t 3000 "Output Presentation";
-#### profile for work desktop mode
-bindsym $alt+F5 exec --no-startup-id vm-w11; \
-    exec --no-startup-id claws-mail; \
-    exec --no-startup-id google-chrome-stable; \
-    exec --no-startup-id gtk-launch network-management-wlan0-restart; \
-    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 \
-        "Shortcut Notificaiton" "Workstation App Starting";
-bindsym $alt+F6 exec --no-startup-id google-chrome-stable; \
-    exec --no-startup-id gtk-launch network-management-wlan0-restart; \
-    exec --no-startup-id /usr/bin/notify-send -u low -t 5000 \
-        "Shortcut Notificaiton" "Personal App Starting";
 
 ###### auto workspace output assign
 workspace   1    output   primary
@@ -332,11 +340,6 @@ workspace   7    output   primary
 workspace   8    output   primary
 workspace   9    output   primary
 workspace   10   output   primary
-
-###### workspace layout settings
-for_window [workspace="1"] layout tabbed
-for_window [workspace="3"] layout tabbed
-
 
 #### App Auto Startups.
 ##### service
