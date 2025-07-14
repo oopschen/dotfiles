@@ -20,7 +20,7 @@ function cal_gpu_memory_usage() {
     echo $(python -c "print(round($status_memoery_used/$status_memoery_total * 100,1))")
 }
 
-status_process_num=$($cmd_status | grep -iE "process.+id" | cut -d ':' -f 2 | tr -d ' ' | wc -l)
+status_process_num=$($cmd_status | grep -iE "process\s+id" | cut -d ':' -f 2 | tr -d ' ' | wc -l)
 status_gpu_temp=$($cmd_status | grep -iE "GPU Current Temp" | cut -d ':' -f 2 | sed -r 's/^\s+(.+)\s*$/\1/ig')
 status_memoery_use_percentage=$(cal_gpu_memory_usage)
 

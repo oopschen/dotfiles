@@ -72,7 +72,6 @@ alias rcs="sudo rc-service"
 
 #### fix zsh can not suspend(ctrl+z) after zplug update
 alias zsusfix="rm ~/.zplug/log/job.lock"
-alias pdm="podman"
 
 ### system tool alias
 #alias sys-upworld="sudo emerge -uDNq @world"

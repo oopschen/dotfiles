@@ -4,7 +4,7 @@ diskdir=$(realpath $basedir/win11_202307.qcow2)
 diskdata=$(realpath $basedir/win11_202410_data.qcow2)
 sharedir=$(realpath ~/share)
 cpuinfo="host"
-mem_size=8G
+mem_size=6G
 pidfile="/tmp/.vm.win11.pid"
 prefix_name=vmwrk-w11
 cmd_notify="notify-send -u normal 'VM($prefix_name)' -t 2000"
@@ -127,6 +127,11 @@ QEMU_OPTS="$QEMU_OPTS -chardev qemu-vdagent,id=vdagent0,name=vdagent,clipboard=o
 QEMU_OPTS="$QEMU_OPTS -chardev socket,id=char0,path=${virtiofsd_sock_path}"
 QEMU_OPTS="$QEMU_OPTS -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=host-share"
 QEMU_OPTS="$QEMU_OPTS -object memory-backend-memfd,id=mem0,size=$mem_size"
+## check hugepagetbl is on
+if [ ! -z "$(grep -i 'default_hugepagesz' /proc/cmdline)" ]; then
+    hugepagesz=$(sed -r 's/^.+\s+hugepagesz=(.+)\s+.+$/\1/ig' /proc/cmdline)
+    QEMU_OPTS="$QEMU_OPTS,hugetlb=on,hugetlbsize=$hugepagesz"
+fi
 QEMU_OPTS="$QEMU_OPTS -numa node,memdev=mem0" 
 
 QEMU_OPTS="$QEMU_OPTS $@"
