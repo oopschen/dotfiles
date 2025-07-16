@@ -3,7 +3,6 @@ basedir=/home/work/vm/win11
 diskdir=$(realpath $basedir/win11_202307.qcow2)
 diskdata=$(realpath $basedir/win11_202410_data.qcow2)
 sharedir=$(realpath ~/share)
-cpuinfo="host"
 mem_size=6G
 pidfile="/tmp/.vm.win11.pid"
 prefix_name=vmwrk-w11
@@ -18,9 +17,6 @@ gen_random_value() {
 #    vncviewer -FullScreen -Maximize −CompressLevel 6 \
 #        -EmulateMiddleButton −RemoteResize $1 2>/dev/null 
 #}
-
-### add enlightenments
-enlightenments="hv-relaxed,hv-frequencies,hv-reenlightenment"
 
 ## prepare virtiofsd share directory
 rnd_val=$(gen_random_value)
@@ -103,8 +99,8 @@ QEMU_OPTS="$QEMU_OPTS -machine pc,accel=kvm,vmport=off"
 QEMU_OPTS="$QEMU_OPTS -boot c -rtc base=localtime -k en-us"
 QEMU_OPTS="$QEMU_OPTS -qmp unix:$workingdir/qmp-shell.sock,server=on,wait=off"
 # Basic CPU
-QEMU_OPTS="$QEMU_OPTS -cpu $cpuinfo,$enlightenments -m $mem_size"
-QEMU_OPTS="$QEMU_OPTS -smp sockets=1,cores=2,threads=4"
+QEMU_OPTS="$QEMU_OPTS -cpu host,hv-relaxed,hv-frequencies,hv-reenlightenment -m $mem_size"
+QEMU_OPTS="$QEMU_OPTS -smp sockets=1,cores=4"
 # Drive 
 QEMU_OPTS="$QEMU_OPTS -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough"
 QEMU_OPTS="$QEMU_OPTS -drive file=${diskdata},format=qcow2,media=disk,cache=writethrough"
@@ -132,12 +128,16 @@ if [ ! -z "$(grep -i 'default_hugepagesz' /proc/cmdline)" ]; then
     hugepagesz=$(sed -r 's/^.+\s+hugepagesz=(.+)\s+.+$/\1/ig' /proc/cmdline)
     QEMU_OPTS="$QEMU_OPTS,hugetlb=on,hugetlbsize=$hugepagesz"
 fi
-QEMU_OPTS="$QEMU_OPTS -numa node,memdev=mem0" 
+QEMU_OPTS="$QEMU_OPTS -numa node,memdev=mem0,nodeid=0" 
+QEMU_OPTS="$QEMU_OPTS -numa cpu,node-id=0,socket-id=0,core-id=0" 
+QEMU_OPTS="$QEMU_OPTS -numa cpu,node-id=0,socket-id=0,core-id=1" 
+QEMU_OPTS="$QEMU_OPTS -numa cpu,node-id=0,socket-id=0,core-id=2" 
+QEMU_OPTS="$QEMU_OPTS -numa cpu,node-id=0,socket-id=0,core-id=3" 
 
 QEMU_OPTS="$QEMU_OPTS $@"
 echo -e "VM Run as:\n\t $QEMU_OPTS"
 # TODO current nvidia offload not work with gtk gl=on 2025.07.08
-__NV_PRIME_RENDER_OFFLOAD=0 qemu-system-x86_64 $QEMU_OPTS > $log_dir/qemu.log 2>&1
+__NV_PRIME_RENDER_OFFLOAD=0 taskset -c 4-7 qemu-system-x86_64 $QEMU_OPTS > $log_dir/qemu.log 2>&1
 
 rm $pidfile > /dev/null 2>&1
 ## echo quit

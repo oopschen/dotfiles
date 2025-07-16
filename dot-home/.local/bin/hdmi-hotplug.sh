@@ -116,4 +116,4 @@ else
 
 fi
 
-/usr/bin/notify-send -u low -t 5000 "Display Changed" "$display_mode"
+/usr/bin/notify-send -u low -t 5000 "Display Changed ($mode)" "$display_mode"
