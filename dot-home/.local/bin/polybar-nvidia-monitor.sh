@@ -7,7 +7,7 @@ nvidia-smi -q -f $output_file > /dev/null 2>&1
 
 if [ $? -ne 0 ];
 then
-  echo -e "%{T1}%{F##FF2171}ERR%{F-}%{T-}"
+  echo -e "%{T1}%{F#FF2171}ERR%{F-}%{T-}"
   exit 0
 fi
 

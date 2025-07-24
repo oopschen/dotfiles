@@ -95,15 +95,17 @@ fi
 QEMU_OPTS=
 # Basic VM
 QEMU_OPTS="$QEMU_OPTS --enable-kvm --name win11 -pidfile $pidfile"
-QEMU_OPTS="$QEMU_OPTS -machine pc,accel=kvm,vmport=off"
+QEMU_OPTS="$QEMU_OPTS -machine q35,accel=kvm,vmport=off,hmat=on"
 QEMU_OPTS="$QEMU_OPTS -boot c -rtc base=localtime -k en-us"
 QEMU_OPTS="$QEMU_OPTS -qmp unix:$workingdir/qmp-shell.sock,server=on,wait=off"
 # Basic CPU
-QEMU_OPTS="$QEMU_OPTS -cpu host,hv-relaxed,hv-frequencies,hv-reenlightenment -m $mem_size"
-QEMU_OPTS="$QEMU_OPTS -smp sockets=1,cores=4"
+QEMU_OPTS="$QEMU_OPTS -cpu host,hv-relaxed,hv-frequencies,hv-reenlightenment,migratable=off"
+QEMU_OPTS="$QEMU_OPTS -smp sockets=1,cores=4,threads=1"
+# memory
+QEMU_OPTS="$QEMU_OPTS -m $mem_size"
 # Drive 
-QEMU_OPTS="$QEMU_OPTS -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough"
-QEMU_OPTS="$QEMU_OPTS -drive file=${diskdata},format=qcow2,media=disk,cache=writethrough"
+QEMU_OPTS="$QEMU_OPTS -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough,aio=io_uring"
+QEMU_OPTS="$QEMU_OPTS -drive file=${diskdata},format=qcow2,media=disk,cache=writethrough,aio=io_uring"
 # Dispaly 
 QEMU_OPTS="$QEMU_OPTS -display gtk,zoom-to-fit=on,full-screen=off,gl=on,grab-on-hover=off,window-close=on,show-menubar=off"
 QEMU_OPTS="$QEMU_OPTS -vga virtio"
