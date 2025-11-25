@@ -34,6 +34,27 @@ application/wps-office.wpt=wps-office-wps.desktop
 x-scheme-handler/eclipse+command=_home_work_opt_dbeaver_.desktop
 x-scheme-handler/nc=com.nextcloud.desktopclient.nextcloud.desktop
 
+application/msword=wps-office-wps.desktop
+application/vnd.ms-excel=wps-office-wps.desktop
+application/vnd.ms-excel.addin.macroEnabled.12=wps-office-wps.desktop
+application/vnd.ms-excel.sheet.binary.macroEnabled.12=wps-office-wps.desktop
+application/vnd.ms-excel.sheet.macroEnabled.12=wps-office-wps.desktop
+application/vnd.ms-excel.template.macroEnabled.12=wps-office-wps.desktop
+application/vnd.ms-powerpoint=wps-office-wps.desktop
+application/vnd.ms-powerpoint.addin.macroEnabled.12=wps-office-wps.desktop
+application/vnd.ms-powerpoint.presentation.macroEnabled.12=wps-office-wps.desktop
+application/vnd.ms-powerpoint.slideshow.macroEnabled.12=wps-office-wps.desktop
+application/vnd.ms-powerpoint.template.macroEnabled.12=wps-office-wps.desktop
+application/vnd.ms-word.document.macroEnabled.12=wps-office-wps.desktop
+application/vnd.ms-word.template.macroEnabled.12=wps-office-wps.desktop
+application/vnd.openxmlformats-officedocument.presentationml.presentation=wps-office-wps.desktop
+application/vnd.openxmlformats-officedocument.presentationml.slideshow=wps-office-wps.desktop
+application/vnd.openxmlformats-officedocument.presentationml.template=wps-office-wps.desktop
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=wps-office-et.desktop
+application/vnd.openxmlformats-officedocument.spreadsheetml.template=wps-office-et.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=wps-office-wps.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.template=wps-office-wps.desktop
+
 [Added Associations]
 application/pdf=mupdf.desktop;google-chrome.desktop;
 image/png=sxiv.desktop;

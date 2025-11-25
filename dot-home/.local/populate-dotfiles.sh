@@ -48,3 +48,4 @@ link_file qemu-wrapper.sh
 link_file ff_extract_audio_from_video.sh
 link_file polybar-vm.sh
 link_file polybar-nvidia-monitor.sh
+link_file fzf-apps.sh

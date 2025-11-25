@@ -173,8 +173,6 @@ bindsym $mod+b exec --no-startup-id polybar-msg cmd toggle
 
 #bindsym $mod+m exec "i3-input -F 'mark %s' -l 4 -P 'Mark: '"
 #bindsym $mod+g exec "i3-input -F '[con_mark=%s] focus' -l 3 -P 'Go to: '"
-bindsym $mod+d exec "rofi -show combi"
-bindsym $mod+Tab exec "rofi -show window"
 bindsym --release $mod+Shift+p exec "scrot -s -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
 bindsym --release $mod+Shift+s exec "scrot -s -q 100 -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
 bindsym --release $mod+Shift+u exec "scrot -u -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
