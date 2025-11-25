@@ -276,7 +276,7 @@ assign [title="(?i)xmind"] 2
 assign [title="(?i).*亿图.*"] 2
 assign [title="(?i).*krita.*"] 2
 ## w3 office
-assign [class="(?i)^wps\b"] 3
+assign [class="(?i)^wpsoffice\b"] 3
 assign [class="(?i)^et\b"] 3
 assign [class="(?i)^wpp\b"] 3
 ## w4 media

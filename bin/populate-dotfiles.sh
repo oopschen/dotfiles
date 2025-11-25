@@ -50,7 +50,8 @@ do
     dest_dir=$(get_real_config_name "$(basename $dot_dir)")
     
     dot_file_or_dirs=$(find $dot_dir -maxdepth 1  -mindepth 1 ! -path '*tmp*' ! \
-                        -iname '.gitignore' ! -iname 'populate-dotfiles.sh' )
+                        -iname '.gitignore' ! -iname 'populate-dotfiles.sh' \
+                        ! -iname 'depressed')
     if [ 0 -ne $? ]; then
         echo "No dotfiles found at \"$cur_dir\"."
         continue

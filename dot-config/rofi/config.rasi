@@ -144,9 +144,14 @@ configuration {
       action: "kb-cancel";
       delay:  0;
   }
-  filebrowser {
+
+  recursivebrowser {
+      directory: "~/Downloads";
       directories-first: true;
-      sorting-method:    "name";
+      sorting-method:    "mtime";
+      show-hidden:    false;
+      command: "xdg-open";
+      filter-regex: "(.*cache.*|.*\.o|\.*.*)";
   }
 }
 @theme "rounded-nord-dark"

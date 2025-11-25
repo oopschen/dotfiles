@@ -12,10 +12,11 @@ alias x='startx'
 alias -s html=google-chrome-stable \
   docx=wps \
   doc=wps \
-  xlsx=et \
-  xls=et \
-  ppt=wpp \
-  pptx=wpp \
+  xlsx=wps \
+  xls=wps \
+  ppt=wps \
+  pptx=wps \
+  wps=wps \
   pdf=mupdf \
   png='feh -Z' \
   PNG='feh -Z' \
@@ -41,6 +42,7 @@ alias -s html=google-chrome-stable \
   tar.gz="tar -tf" \
   tar.bz="tar -tf" \
   tar="tar -tf" \
+  7z="7z l" \
 
 
 #alias swf="sudo rc-service net.wlan0 start"

@@ -24,7 +24,7 @@ workingdir=/tmp/.$prefix_name.$rnd_val
 virtiofsd_dir_base=$workingdir/.fsmounts
 current_shortcut_path=/tmp/.$prefix_name.current
 
-mkdir -p $virtiofsd_dir_base/{host-tmp,host-doc,host-app}
+mkdir -p $virtiofsd_dir_base/{host-tmp,host-doc,host-app,host-dl}
 
 ## generate setup.sh to workspace and run it in container
 setup_file_path=$workingdir/env-setup.sh
@@ -34,6 +34,7 @@ cat > $setup_file_path << EOF
 mount -o bind /tmp $virtiofsd_dir_base/host-tmp
 mount -o bind,ro $HOME/Documents $virtiofsd_dir_base/host-doc
 mount -o bind $HOME/Documents/40appData $virtiofsd_dir_base/host-app
+mount -o bind $HOME/Downloads $virtiofsd_dir_base/host-dl
 ## end
 
 # create shortcut for working dir
@@ -103,14 +104,15 @@ QEMU_OPTS="$QEMU_OPTS -smp sockets=1,cores=4,threads=1"
 # memory
 QEMU_OPTS="$QEMU_OPTS -m $mem_size"
 # Drive 
-QEMU_OPTS="$QEMU_OPTS -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough,aio=io_uring"
-QEMU_OPTS="$QEMU_OPTS -drive file=${diskdata},format=qcow2,media=disk,cache=writethrough,aio=io_uring"
+QEMU_OPTS="$QEMU_OPTS -drive file=${diskdir},format=qcow2,media=disk,cache=writethrough"
+QEMU_OPTS="$QEMU_OPTS -drive file=${diskdata},format=qcow2,media=disk,cache=writethrough"
 # Dispaly 
-QEMU_OPTS="$QEMU_OPTS -display gtk,zoom-to-fit=on,full-screen=off,gl=on,grab-on-hover=off,window-close=on,show-menubar=off"
+QEMU_OPTS="$QEMU_OPTS -display gtk,zoom-to-fit=on,full-screen=off,gl=on,grab-on-hover=on,window-close=on,show-menubar=off"
 QEMU_OPTS="$QEMU_OPTS -vga virtio"
 # Netowrk
 ## NAT net
 QEMU_OPTS="$QEMU_OPTS -nic user,model=virtio-net-pci"
+#QEMU_OPTS="$QEMU_OPTS -device virtio-net-pci,netdev=brd0 -netdev bridge,id=brd0,br=br11"
 # USB
 QEMU_OPTS="$QEMU_OPTS -device qemu-xhci,id=xhci"
 QEMU_OPTS="$QEMU_OPTS -usbdevice tablet"

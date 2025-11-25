@@ -1,0 +1,3 @@
+[[tool.uv.index]]
+name = "default"
+url = "https://mirrors.ustc.edu.cn/pypi/simple"
