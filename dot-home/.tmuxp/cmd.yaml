@@ -1,9 +1,0 @@
-session_name: czz-dev
-windows:
-- window_name: python-cmd
-  start_directory: ~/
-  layout: even-horizontal
-  panes:
-    - shell_command:
-      - source $(which virtualenvwrapper.sh)
-      - workon cmd

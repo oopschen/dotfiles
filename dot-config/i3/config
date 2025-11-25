@@ -309,6 +309,7 @@ assign [class="(?i)mysql-workbench-bin"] 10
 assign [class="(?i)dbeaver.*"] 10
 assign [title="(?i)spoon.*"] 10
 assign [class="(?i)st-256color"] 10
+assign [class="(?i)st-256color" title="coding"] 10
 
 ### make termial on startup move to scratchpad
 for_window [instance="(?i)cmdterm"] move scratchpad
@@ -349,6 +350,7 @@ exec --no-startup-id dunst
 ##### desktop app
 #exec --no-startup-id gtk-launch claws-mail
 exec --no-startup-id i3-utils-cmd-term.sh launch
+exec --no-startup-id i3-utils-base-term.sh "-n coding -e tmuxp load normal"
 
 exec --no-startup-id fcitx5 -r -d
 exec --no-startup-id hdmi-hotplug.sh

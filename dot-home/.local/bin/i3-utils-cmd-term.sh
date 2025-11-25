@@ -56,7 +56,7 @@ function i3wm_is_window_focus() {
 }
 
 function i3wm_display_window() {
-    i3-msg "[instance=\"(?i)$1\"] exec i3-move-position.sh cur-float-cmd-by-instance '(i?)$1' 50 5; [instance=\"(?i)$1\"] scratchpad show;resize set 50 ppt 90 ppt; "
+    i3-msg "[instance=\"(?i)$1\"] exec i3-move-position.sh cur-float-cmd-by-instance '(i?)$1' 0 79 ; [instance=\"(?i)$1\"] scratchpad show;resize set 40 ppt 20 ppt; "
 }
 
 function i3wm_hide_window() {
@@ -132,7 +132,7 @@ if [ "1" = "$has_prog_exists" ]; then
     fi
 else
     echo "command term launches..."
-    i3-utils-base-term.sh "-n $wm_instance -e tmuxp load normal"
+    i3-utils-base-term.sh "-n $wm_instance -t $wm_instance"
 
     case $mode in
         launch)
