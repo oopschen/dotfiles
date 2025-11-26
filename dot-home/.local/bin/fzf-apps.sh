@@ -18,9 +18,8 @@ case $cmd in
 
         for sel_file in $($cmd_fzf $opt_dirs --sortr modified | fzf);
         do
-            echo -e "[FZF-APPS]fs: open file $sel_file"
-            xdg-mime query filetype $sel_file
-            xdg-open $sel_file
+            echo -e "[FZF-APPS]fs: open file $sel_file "
+            setsid xdg-open "$sel_file"
         done
         ;;
 

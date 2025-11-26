@@ -314,7 +314,7 @@ assign [class="(?i)jetbrains.*"] 10
 assign [class="(?i)mysql-workbench-bin"] 10
 assign [class="(?i)dbeaver.*"] 10
 assign [title="(?i)spoon.*"] 10
-assign [class="(?i)st-256color" title="coding"] 10
+assign [class="(?i)coding"] 10
 
 ### make termial on startup move to scratchpad
 for_window [instance="(?i)cmdterm"] move scratchpad
