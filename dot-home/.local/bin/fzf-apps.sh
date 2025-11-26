@@ -16,20 +16,21 @@ case $cmd in
             opt_dirs="/tmp"
         fi
 
-        for sel_file in $($cmd_fzf $opt_dirs | fzf);
+        for sel_file in $($cmd_fzf $opt_dirs --sortr modified | fzf);
         do
             echo -e "[FZF-APPS]fs: open file $sel_file"
             xdg-mime query filetype $sel_file
             xdg-open $sel_file
         done
         ;;
+
+    ## app launcher
     apps )
         for sel_file in $($cmd_fzf /usr/share/applications ~/.local/share/applications \
             -g '**/*.desktop' | fzf);
         do
             echo -e "[FZF-APPS]fs: launch file $sel_file"
-            bsname=$(basename "$sel_file")
-            gtk-launch ${bsname%.desktop}
+            setsid -f gtk-launch $(basename "$sel_file")
         done
         ;;
     * )

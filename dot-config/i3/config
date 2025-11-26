@@ -184,10 +184,10 @@ bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir 
 #### Terminal Settings
 bindsym $mod+slash exec i3-utils-cmd-term.sh toggle
 ##### menu
-bindsym $mod+d exec  st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n MenuApps -t MenuApps -e zsh -c '~/.local/bin/fzf-apps.sh apps'
+bindsym $mod+d exec  st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n MenuApps -t MenuApps -e fzf-apps.sh apps
 for_window [instance="(?i)MenuApps"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)MenuApps' 30 25, resize set 40 ppt 50 ppt; 
 
-bindsym $mod+q exec st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n QuickFS -t QuickFS -e zsh -c '~/.local/bin/fzf-apps.sh fs /tmp ~/Downloads'
+bindsym $mod+q exec st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n QuickFS -t QuickFS -e fzf-apps.sh fs ~/Downloads
 for_window [instance="(?i)QuickFS"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)QuickFS' 30 25, resize set 40 ppt 50 ppt; 
 ##### file search
 ## key bindgs for media keys
