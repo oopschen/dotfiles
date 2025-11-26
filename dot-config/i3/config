@@ -182,8 +182,13 @@ bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir 
 #bindsym $alt+Shift+0 [class="(?i)weixin"] move scratchpad 
 
 #### Terminal Settings
-bindsym $mod+Shift+slash exec i3-utils-base-term.sh
 bindsym $mod+slash exec i3-utils-cmd-term.sh toggle
+##### menu
+bindsym $mod+d exec st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' \
+                -n MenuApps -t MenuApps -e zsh -c '~/.local/bin/fzf-apps.sh apps'
+for_window [instance="(?i)MenuApps"] floating enable, \
+                exec i3-move-position.sh cur-float-cmd-by-instance '(i?)MenuApps' 40 30 ;\
+                                    resize set 20 ppt 40 ppt; 
 ## key bindgs for media keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id polybar-msg action pipewire-simple hook 2
 bindsym XF86AudioLowerVolume exec --no-startup-id polybar-msg action pipewire-simple hook 3
