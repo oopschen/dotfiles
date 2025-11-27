@@ -3,7 +3,6 @@
 cmd=$1
 
 cmd_fzf="$FZF_DEFAULT_COMMAND "
-IFS=$'\n'
 
 case $cmd in
     ## file search in directories, order by mtime desc
@@ -17,7 +16,11 @@ case $cmd in
             opt_dirs="/tmp"
         fi
 
-        for sel_file in $($cmd_fzf $opt_dirs --sortr modified | fzf);
+        for sel_file in $( \
+            $cmd_fzf --sortr modified $opt_dirs \
+                | fzf   --preview-window=top,20%,wrap  --preview \
+                "file -b {};ls -l {};" \
+            );
         do
             echo -e "[FZF-APPS]fs: open file $sel_file "
             setsid -f xdg-open "$sel_file"
@@ -28,11 +31,12 @@ case $cmd in
     ## app launcher
     apps )
         sel_lc=${LANG%%.*}
+        IFS=$'\n'
 
-        for sel_file in $(rg --no-heading -m 1 -i  -g '*.desktop' \
+        for sel_file in $(rg -L --no-heading -m 1 -i  -g '*.desktop' \
             "name=|comment=|name[$sel_lc]=|comment[$sel_lc]=" \
                 /usr/share/applications ~/.local/share/applications \
-                | fzf -d ':'  --preview-window=top,15% --nth=2 --preview \
+                | fzf -d ':'  --preview-window=top,25% --nth=2 --preview \
                 "grep -iE 'name=|comment=|name[$sel_lc]=|comment[$sel_lc]=' {1}" \
         );
         do
