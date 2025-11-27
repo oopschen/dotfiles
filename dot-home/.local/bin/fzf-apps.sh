@@ -3,6 +3,7 @@
 cmd=$1
 
 cmd_fzf="$FZF_DEFAULT_COMMAND "
+IFS=$'\n'
 
 case $cmd in
     ## file search in directories, order by mtime desc
@@ -19,20 +20,30 @@ case $cmd in
         for sel_file in $($cmd_fzf $opt_dirs --sortr modified | fzf);
         do
             echo -e "[FZF-APPS]fs: open file $sel_file "
-            setsid xdg-open "$sel_file"
+            setsid -f xdg-open "$sel_file"
+            sleep 10
         done
         ;;
 
     ## app launcher
     apps )
-        for sel_file in $($cmd_fzf /usr/share/applications ~/.local/share/applications \
-            -g '**/*.desktop' | fzf);
+        sel_lc=${LANG%%.*}
+
+        for sel_file in $(rg --no-heading -m 1 -i  -g '*.desktop' \
+            "name=|comment=|name[$sel_lc]=|comment[$sel_lc]=" \
+                /usr/share/applications ~/.local/share/applications \
+                | fzf -d ':'  --preview-window=top,15% --nth=2 --preview \
+                "grep -iE 'name=|comment=|name[$sel_lc]=|comment[$sel_lc]=' {1}" \
+        );
         do
-            echo -e "[FZF-APPS]fs: launch file $sel_file"
-            setsid -f gtk-launch $(basename "$sel_file")
+            f=${sel_file%%:*}
+            echo -e "[FZF-APPS]fs: Select $f" 
+            setsid -f gtk-launch $(basename "$f")
         done
         ;;
     * )
         echo -e "Usage sh $0 fs"
         ;;
 esac
+
+#

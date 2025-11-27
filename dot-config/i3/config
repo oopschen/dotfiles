@@ -187,7 +187,8 @@ bindsym $mod+slash exec i3-utils-cmd-term.sh toggle
 bindsym $mod+d exec  st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n MenuApps -t MenuApps -e fzf-apps.sh apps
 for_window [instance="(?i)MenuApps"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)MenuApps' 30 25, resize set 40 ppt 50 ppt; 
 
-bindsym $mod+q exec st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n QuickFS -t QuickFS -e fzf-apps.sh fs ~/Downloads
+bindsym $mod+q exec st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n QuickFS -t QuickFS -e fzf-apps.sh fs ~/Downloads \
+                    ~/Documents/40appData/01wechat/xwechat_files/**/msg
 for_window [instance="(?i)QuickFS"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)QuickFS' 30 25, resize set 40 ppt 50 ppt; 
 ##### file search
 ## key bindgs for media keys
@@ -314,7 +315,7 @@ assign [class="(?i)jetbrains.*"] 10
 assign [class="(?i)mysql-workbench-bin"] 10
 assign [class="(?i)dbeaver.*"] 10
 assign [title="(?i)spoon.*"] 10
-assign [class="(?i)coding"] 10
+assign [class="(?i).*coding.*"] 10
 
 ### make termial on startup move to scratchpad
 for_window [instance="(?i)cmdterm"] move scratchpad
@@ -355,7 +356,7 @@ exec --no-startup-id dunst
 ##### desktop app
 #exec --no-startup-id gtk-launch claws-mail
 exec --no-startup-id i3-utils-cmd-term.sh launch
-exec --no-startup-id i3-utils-base-term.sh "-n coding -e tmuxp load normal"
+exec --no-startup-id i3-utils-base-term.sh "-n coding -t coding -e tmuxp load normal"
 
 exec --no-startup-id fcitx5 -r -d
 exec --no-startup-id hdmi-hotplug.sh
