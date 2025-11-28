@@ -43,6 +43,7 @@ alias -s html=google-chrome-stable \
   tar.bz="tar -tf" \
   tar="tar -tf" \
   7z="7z l" \
+  rar="rar l" \
 
 
 #alias swf="sudo rc-service net.wlan0 start"
