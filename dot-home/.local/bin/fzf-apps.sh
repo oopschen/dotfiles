@@ -18,8 +18,8 @@ case $cmd in
 
         for sel_file in $( \
             $cmd_fzf --sortr modified $opt_dirs \
-                | fzf   --preview-window=top,20%,wrap  --preview \
-                "file -b {};ls -l {};" \
+                | fzf --preview-window=top,20%,wrap  --preview \
+                "file -b {};ls -lh {};" \
             );
         do
             echo -e "[FZF-APPS]fs: open file $sel_file "
