@@ -23,8 +23,8 @@ case $cmd in
             );
         do
             echo -e "[FZF-APPS]fs: open file $sel_file "
+            #setsid -f xdg-open "$sel_file"
             setsid -f xdg-open "$sel_file"
-            sleep 10
         done
         ;;
 
