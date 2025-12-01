@@ -16,12 +16,15 @@ case $cmd in
             opt_dirs="/tmp"
         fi
 
-        for sel_file in $( \
-            $cmd_fzf --sortr modified $opt_dirs \
+        for sel_file in "$($cmd_fzf --sortr modified $opt_dirs \
                 | fzf --preview-window=top,20%,wrap  --preview \
-                "file -b {};ls -lh {};" \
-            );
+                    'file -b {};ls -lh {};' \
+            )";
         do
+            if [ -z "$sel_file" ];then 
+                break
+            fi
+
             echo -e "[FZF-APPS]fs: open file $sel_file "
             #setsid -f xdg-open "$sel_file"
             setsid -f xdg-open "$sel_file"
@@ -33,12 +36,12 @@ case $cmd in
         sel_lc=${LANG%%.*}
         IFS=$'\n'
 
-        for sel_file in $(rg -L --no-heading -m 1 -i  -g '*.desktop' \
+        for sel_file in "$(rg -L --no-heading -m 1 -i  -g '*.desktop' \
             "name=|comment=|name[$sel_lc]=|comment[$sel_lc]=" \
                 /usr/share/applications ~/.local/share/applications \
                 | fzf -d ':'  --preview-window=top,25% --nth=2 --preview \
-                "grep -iE 'name=|comment=|name[$sel_lc]=|comment[$sel_lc]=' {1}" \
-        );
+                \\"grep -iE 'name=|comment=|name[$sel_lc]=|comment[$sel_lc]=' {1}\\" \
+        )";
         do
             f=${sel_file%%:*}
             echo -e "[FZF-APPS]fs: Select $f" 
