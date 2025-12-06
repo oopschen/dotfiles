@@ -173,10 +173,14 @@ bindsym $mod+b exec --no-startup-id polybar-msg cmd toggle
 
 #bindsym $mod+m exec "i3-input -F 'mark %s' -l 4 -P 'Mark: '"
 #bindsym $mod+g exec "i3-input -F '[con_mark=%s] focus' -l 3 -P 'Go to: '"
-bindsym --release $mod+Shift+p exec "scrot -s -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
-bindsym --release $mod+Shift+s exec "scrot -s -q 100 -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
-bindsym --release $mod+Shift+u exec "scrot -u -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
-bindsym --release $mod+Shift+m exec "scrot -m -e 'test ! -d /tmp/scrot && mkdir /tmp/scrot; mv $f /tmp/scrot/; feh -Z /tmp/scrot/$f' %Y-%m-%d-%H-%M-%S.jpeg"
+## capture full screen 
+bindsym --release $mod+Shift+p exec "test ! -d /tmp/scrot && mkdir /tmp/scrot; flameshot screen --path /tmp/scrot/; feh -Z --title flameshot-preview /tmp/scrot/$(ls -t /tmp/scrot | head -1)"
+## capture based on selection
+bindsym --release $mod+Shift+s exec "test ! -d /tmp/scrot && mkdir /tmp/scrot; flameshot gui --path /tmp/scrot/; feh -Z --title flameshot-preview /tmp/scrot/$(ls -t /tmp/scrot | head -1)"
+## capture all monitor
+bindsym --release $mod+Shift+u exec "test ! -d /tmp/scrot && mkdir /tmp/scrot; flameshot full --path /tmp/scrot/ --raw"
+### preview capture by feh
+for_window [class="(?i)feh" title="(?i)flameshot-preview"] floating enable,resize set 60 ppt 40 ppt
 
 #bindsym $alt+Shift+9 [class="(?i)weixin"]  move scratchpad, workspace --no-auto-back-and-forth 8, split h, scratchpad show, floating disable
 #bindsym $alt+Shift+0 [class="(?i)weixin"] move scratchpad 
@@ -264,9 +268,7 @@ for_window [floating_from="user"] move position center
 for_window [class="(?i)com.alibabainc.dingtalk" title="(?i).*(?:分享|预览|.doc|.docx|.ppt|.pptx|.xls|.xlsx).*"] floating enable, resize set 90 ppt 80 ppt
 ### dia window settings: 1. float toolbox_window & dia ,set size to 800x200
 for_window [class="(?i)dia" window_role="toolbox_window"] floating enable,resize set 10 ppt 60 ppt
-### preview scrot by feh
-for_window [class="(?i)feh" title=".*/tmp/scrot/.*"] floating enable,resize set 80 ppt 60 ppt
-for_window [class="(?i)feh" floating]border pixel 3
+for_window [class="(?i)feh" floating]border pixel 2
 for_window [class="(?i)simplescreenrecorder"]floating enable,resize set 10 ppt 50 ppt
 
 ## w1 web: chrome

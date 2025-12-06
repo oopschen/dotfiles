@@ -27,7 +27,8 @@ case $cmd in
 
             echo -e "[FZF-APPS]fs: open file $sel_file "
             #setsid -f xdg-open "$sel_file"
-            setsid -f xdg-open "$sel_file"
+            xdg-open "$sel_file"
+            sleep 100
         done
         ;;
 
