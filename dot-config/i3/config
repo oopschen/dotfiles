@@ -191,8 +191,6 @@ bindsym $mod+slash exec i3-utils-cmd-term.sh toggle
 bindsym $mod+d exec  st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n MenuApps -t MenuApps fzf-apps.sh apps
 for_window [instance="(?i)MenuApps"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)MenuApps' 30 25, resize set 40 ppt 50 ppt; 
 
-bindsym $mod+q exec st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n QuickFS -t QuickFS fzf-apps.sh fs ~/Downloads \
-                    ~/Documents/40appData/01wechat/xwechat_files/**/msg
 for_window [instance="(?i)QuickFS"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)QuickFS' 30 25, resize set 40 ppt 50 ppt; 
 ##### file search
 ## key bindgs for media keys
