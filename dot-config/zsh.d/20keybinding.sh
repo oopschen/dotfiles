@@ -3,7 +3,7 @@ list_recently_modified_files() {
 }
 
 list_temp_recently_modified_files() {
-	_list_recently_modified_files  ~/Downloads /tmp
+	_list_recently_modified_files  ~/Downloads ~/DownloadsTemp
 }
 
 _list_recently_modified_files() {

@@ -174,14 +174,14 @@ bindsym $mod+b exec --no-startup-id polybar-msg cmd toggle
 #bindsym $mod+m exec "i3-input -F 'mark %s' -l 4 -P 'Mark: '"
 #bindsym $mod+g exec "i3-input -F '[con_mark=%s] focus' -l 3 -P 'Go to: '"
 ## capture full screen 
-bindsym --release $mod+Shift+p exec "test ! -d /tmp/scrot && mkdir /tmp/scrot; flameshot screen --path /tmp/scrot/; feh -Z --title flameshot-preview /tmp/scrot/$(ls -t /tmp/scrot | head -1)"
+bindsym --release $mod+Shift+p exec flameshot screen --path ~/DownloadsTemp --pin
 ## capture based on selection
-bindsym --release $mod+Shift+s exec "test ! -d /tmp/scrot && mkdir /tmp/scrot; flameshot gui --path /tmp/scrot/; feh -Z --title flameshot-preview /tmp/scrot/$(ls -t /tmp/scrot | head -1)"
+bindsym --release $mod+Shift+s exec flameshot gui --path ~/DownloadsTemp --pin
 ## capture all monitor
-bindsym --release $mod+Shift+u exec "test ! -d /tmp/scrot && mkdir /tmp/scrot; flameshot full --path /tmp/scrot/ --raw"
+bindsym --release $mod+Shift+u exec flameshot full --path ~/DownloadsTemp --raw
 ### preview capture by feh
-for_window [class="(?i)feh" title="(?i)flameshot-preview"] floating enable,resize set 60 ppt 40 ppt
-
+#for_window [class="(?i)feh" title="(?i)flameshot-preview"] floating enable,resize set 60 ppt 40 ppt
+for_window [instance="(?i)flameshot" title="(?i)flameshot-pin"] border  pixel 2
 #bindsym $alt+Shift+9 [class="(?i)weixin"]  move scratchpad, workspace --no-auto-back-and-forth 8, split h, scratchpad show, floating disable
 #bindsym $alt+Shift+0 [class="(?i)weixin"] move scratchpad 
 
@@ -292,6 +292,7 @@ assign [class="(?i)vuze"] 5
 assign [class="(?i)thunderbird"] 5
 assign [class="(?i)claws-mail"] 5
 ## w6 remote desktop
+assign [class="(?i)scrcpy"] 6
 ## w7 virtual host
 assign [class="(?i)VirtualBox.*"] 7
 assign [class="(?i)vmware.*"] 7
