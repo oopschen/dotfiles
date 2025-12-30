@@ -89,6 +89,6 @@ alias zsusfix="rm ~/.zplug/log/job.lock"
 #alias rdpc="xfreerdp  /cert:ignore /dynamic-resolution /scale:100 /scale-desktop:192 +async-update +async-input  +clipboard /video /network:auto"
 
 ### local vm win11
-alias vm-win11-usb="QMP_SERVER='/tmp/.vmwrk-w11.current/qmp-shell.sock' qemu-wrapper.sh"
+alias vm-win11-usb="QMP_SERVER='/tmp/vm-qemu-w11.current/qmp-shell.sock' qemu-wrapper.sh"
 
 alias init-java-dirs="mkdir -p ./src/{main,test}/{java,resources}"

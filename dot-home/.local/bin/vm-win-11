@@ -5,7 +5,7 @@ diskdata=$(realpath $basedir/win11_202410_data.qcow2)
 sharedir=$(realpath ~/share)
 mem_size=6G
 pidfile="/tmp/.vm.win11.pid"
-prefix_name=vmwrk-w11
+prefix_name=vm-qemu-w11
 cmd_notify="notify-send -u normal 'VM($prefix_name)' -t 2000"
 
 gen_random_value() {
@@ -20,11 +20,13 @@ gen_random_value() {
 
 ## prepare virtiofsd share directory
 rnd_val=$(gen_random_value)
-workingdir=/tmp/.$prefix_name.$rnd_val
-virtiofsd_dir_base=$workingdir/.fsmounts
-current_shortcut_path=/tmp/.$prefix_name.current
+workingdir=~/.cache/vm/win11/$prefix_name.$rnd_val
+mkdir -p $workingdir
 
+virtiofsd_dir_base=$workingdir/fsmounts
 mkdir -p $virtiofsd_dir_base/{host-tmp,host-doc,host-app,host-dl}
+
+current_shortcut_path=/tmp/$prefix_name.current
 
 ## generate setup.sh to workspace and run it in container
 setup_file_path=$workingdir/env-setup.sh
