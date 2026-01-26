@@ -92,3 +92,9 @@ alias zsusfix="rm ~/.zplug/log/job.lock"
 alias vm-win11-usb="QMP_SERVER='/tmp/vm-qemu-w11.current/qmp-shell.sock' qemu-wrapper.sh"
 
 alias init-java-dirs="mkdir -p ./src/{main,test}/{java,resources}"
+
+
+### feh shortcuts
+alias feh="feh -r -B '#2B2A2A' -."
+alias feh-slide-show="feh -t -E 512 -y 512 -W 4096 "
+alias feh-slide-showl="feh -t -E 512 -y 512 -W 2048 "
