@@ -96,5 +96,4 @@ alias init-java-dirs="mkdir -p ./src/{main,test}/{java,resources}"
 
 ### feh shortcuts
 alias feh="feh -r -B '#2B2A2A' -."
-alias feh-slide-show="feh -t -E 512 -y 512 -W 4096 "
-alias feh-slide-showl="feh -t -E 512 -y 512 -W 2048 "
+alias feh-slide-show="feh -t -E 500 -y 500 -W 3200 -H 2000"
