@@ -194,8 +194,8 @@ for_window [instance="(?i)MenuApps"] floating enable, exec i3-move-position.sh c
 for_window [instance="(?i)QuickFS"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)QuickFS' 30 25, resize set 40 ppt 50 ppt; 
 ##### file search
 ## key bindgs for media keys
-bindsym XF86AudioRaiseVolume exec --no-startup-id polybar-msg action pipewire-simple hook 2
-bindsym XF86AudioLowerVolume exec --no-startup-id polybar-msg action pipewire-simple hook 3
+bindsym XF86AudioRaiseVolume exec --no-startup-id polybar-msg action pipewire-simple hook 3
+bindsym XF86AudioLowerVolume exec --no-startup-id polybar-msg action pipewire-simple hook 2
 bindsym XF86AudioMute exec --no-startup-id polybar-msg action pipewire-simple hook 1
 
 # screen saver
