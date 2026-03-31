@@ -17,3 +17,6 @@ zplug load
 for zsh_conf_file in $(find "$HOME/.config/zsh.d/" -mindepth 1 -type f -iname '*.sh' | sort -n); do
     source $zsh_conf_file
 done
+
+# OpenClaw Completion
+source "/home/work/.openclaw/completions/openclaw.zsh"

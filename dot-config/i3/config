@@ -188,10 +188,14 @@ for_window [instance="(?i)flameshot" title="(?i)flameshot-pin"] border  pixel 2
 #### Terminal Settings
 bindsym $mod+slash exec i3-utils-cmd-term.sh toggle
 ##### menu
-bindsym $mod+d exec  st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n MenuApps -t MenuApps fzf-apps.sh apps
-for_window [instance="(?i)MenuApps"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)MenuApps' 30 25, resize set 40 ppt 50 ppt; 
+#bindsym $mod+d exec  st -f 'FiraCode Nerd Font:style=Regular:pixelsize=28:antialias=true:hinting:true' -n MenuApps -t MenuApps fzf-apps.sh apps
+#for_window [instance="(?i)MenuApps"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)MenuApps' 30 25, resize set 40 ppt 50 ppt; 
+#
+#for_window [instance="(?i)QuickFS"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)QuickFS' 30 25, resize set 40 ppt 50 ppt; 
+###### Rofi
+bindsym $mod+d exec  rofi -show drun
+bindsym $mod+Shift+w exec  rofi -show window
 
-for_window [instance="(?i)QuickFS"] floating enable, exec i3-move-position.sh cur-float-cmd-by-instance '(i?)QuickFS' 30 25, resize set 40 ppt 50 ppt; 
 ##### file search
 ## key bindgs for media keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id polybar-msg action pipewire-simple hook 3
@@ -303,7 +307,8 @@ assign [class="(?i).*remote-viewer.*"] 7
 assign [class="(?i).*remmina.*"] 7
 # w8 empty
 assign [class="(?i)com.alibabainc.dingtalk"] 8
-assign [class="(?i)weixin"] 8
+assign [class="(?i)wechat"] 8
+assign [title="(?i)weixin"] 8
 # w9 misc
 assign [title="(?i)baidunetdisk"] 9
 assign [title="(?i)百度网盘"] 9
