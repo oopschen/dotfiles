@@ -1,16 +1,23 @@
 configuration {
-    modi: "window,run,ssh,combi";
-    combi-modi: "drun,run";
     show-icons: true;
     ssh-command: "tmux-wrapper ssh {ssh-client} {host} [-p {port}]";
 	dpi: 192;
-    recursivebrowser {
-      directory:         "~/Downloads";
-      directories-first: true;
-      command:           "xdg-open";
-      show-hidden:       false;
-      filter-regex:      "(.*cache.*|.*.o|.*.*)";
-      sorting-method:    "mtime";
-    }
 }
-@theme "my-fullscreen-preview"
+@theme "fullscreen-preview"
+
+entry {
+    placeholder: "输入搜索内容";
+    placeholder-color: white;
+}
+listview {
+    columns:       6;
+}
+
+element-icon {
+    size: 4em;
+}
+element selected {
+    border-color: rgb(129, 143, 180);
+    background-color: rgb(129, 143, 180);
+}
+
