@@ -8,7 +8,8 @@
             "docker.io/pandoc": [{"type": "insecureAcceptAnything"}],
             "docker.io/projectdiscovery/nuclei": [{"type": "insecureAcceptAnything"}],
             "docker.io/apache/superset": [{"type": "insecureAcceptAnything"}],
-            "docker.io/thingsboard": [{"type": "insecureAcceptAnything"}]
+            "docker.io/thingsboard": [{"type": "insecureAcceptAnything"}],
+            "docker.io/metabase/metabase": [{"type": "insecureAcceptAnything"}]
         },
 
         "dir": {

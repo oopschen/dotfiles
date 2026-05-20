@@ -10,7 +10,7 @@ xsetroot -cursor_name left_ptr
 machineid=$(cat /etc/machine-id)
 
 ## nvidia setting
-xrandr --setprovideroutputsource modesetting NVIDIA-0
+#xrandr --setprovideroutputsource modesetting NVIDIA-0
 
 ## start desktop env
 exec dbus-launch --auto-syntax --autolaunch=$machineid --exit-with-session i3
