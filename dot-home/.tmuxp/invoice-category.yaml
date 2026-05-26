@@ -1,0 +1,12 @@
+session_name: invoice-category
+windows:
+- window_name: code-base
+  start_directory: ~/Documents/10codebase/demo/invoice-category
+  layout: tiled
+  panes:
+    - focus: true
+    - shell_command:
+      - cd ~/Documents/10codebase/demo/ld-invoice
+      - source ./.venv/bin/activate
+    - blank
+    - cd ~/Documents/10codebase/demo/ld-invoice
