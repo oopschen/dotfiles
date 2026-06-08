@@ -6,7 +6,7 @@ windows:
   panes:
     - focus: true
     - shell_command:
-      - cd ~/Documents/10codebase/demo/ld-invoice
+      - cd ~/Documents/10codebase/demo/invoice-production
       - source ./.venv/bin/activate
     - blank
-    - cd ~/Documents/10codebase/demo/ld-invoice
+    - cd ~/Documents/10codebase/demo/invoice-production
