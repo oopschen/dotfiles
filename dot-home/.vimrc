@@ -1,7 +1,7 @@
 " plug manager
 call plug#begin('~/.vim/plugged')
 
-Plug 'SirVer/ultisnips'
+"Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 "Plug 'altercation/vim-colors-solarized'
 "Plug 'morhetz/gruvbox'
@@ -21,10 +21,10 @@ Plug 'mattn/emmet-vim', { 'for': ['javascript', 'markdown', 'javascript.jsx', 'h
 
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --go-completer --js-completer --rust-completer', 'for': ['javascript', 'go', 'javascript.jsx', 'c', 'cpp']}
 "Plug 'rdnetto/YCM-Generator', { 'branch': 'stable', 'for': ['javascript', 'go', 'javascript.jsx', 'c', 'cpp']}
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+"Plug 'vim-pandoc/vim-pandoc'
+"Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " use zsh installation instead Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug '~/.zplug/bin/fzf'

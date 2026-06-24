@@ -3,6 +3,11 @@
   "suggest.minTriggerInputLength": 3,
   "suggest.enablePreview": true,
   "suggest.noselect": false,
-  "suggest.timeout": 500
+  "suggest.timeout": 2000,
+  "workspace.ignoredFolders": [
+      "$HOME",
+      "$HOME/.cargo/**",
+      "$HOME/.rustup/**"
+  ]
 
 }

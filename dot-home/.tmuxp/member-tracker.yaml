@@ -1,0 +1,14 @@
+session_name: member-tracker
+windows:
+- window_name: code-base
+  start_directory: ~/Documents/10codebase/04memtracker
+  layout: tiled
+  panes:
+    - cd ./membtrac-miniapp
+    - cd ./membtrac-apiserver
+    - focus: true
+- window_name: doc 
+  start_directory: ~/Documents/10codebase/04memtracker
+  layout: tiled
+  panes:
+    - blank

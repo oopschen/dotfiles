@@ -94,7 +94,21 @@ function create_proxy() {
     fi
 
     ### 2. init ignore ip set
-    create_or_swap_ip_whitelist $ignore_file
+    rignore_file=$(realpath "$ignore_file")
+    ignore_file_final="$rignore_file-final"
+    ignore_filename=$(basename "$rignore_file")
+    ignore_filepath=${rignore_file%%/$ignore_filename}
+    ignore_file_more=$(find $ignore_filepath -iname "$ignore_filename.*")
+
+    cp $rignore_file $ignore_file_final
+    if [ ! -z "$ignore_file_more" ]; then
+        for f in $ignore_file_more; do
+            echo -e "concate final ignore file: $f"
+            cat $f >> $ignore_file_final
+        done
+    fi
+
+    create_or_swap_ip_whitelist $ignore_file_final
 
     if [ 0 -eq $? ]; then
         echo "proxy VPN init ignore-ip..."
