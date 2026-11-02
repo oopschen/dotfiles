@@ -341,6 +341,12 @@ no_focus [class="(?i)claws-mail"]
 ## chrome limit memory
 for_window [instance="(?i)google-chrome" window_role="(?i)browser"] exec sleep 3 && pgrep -f "google/chrome" | xargs -I{} sudo /root/.bin/write-pid2-cgroup-browser-ram.sh {}
 
+## common rule for floating windows
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_role="bubble"] floating enable
+
 #### Workspace and Monitors
 
 ###### auto workspace output assign

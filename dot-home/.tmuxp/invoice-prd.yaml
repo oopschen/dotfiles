@@ -1,0 +1,19 @@
+session_name: invoice-production
+windows:
+- window_name: workdir
+  start_directory: ~/Documents/10codebase/demo/invoice-production
+  layout: tiled
+  panes:
+    - shell_command:
+      - cd ~/Documents/60share/ld/invoice
+    - shell_command:
+      - cd ~/Downloads/01TempFS
+    - focus: true
+- window_name: invoice
+  start_directory: ~/Documents/60share/ld/invoice
+  layout: main-horizontal
+  panes:
+    - focus: true
+    - blank
+    - shell_command:
+      - cd ~/Documents/60share/ld/invoice/unused-invoice
