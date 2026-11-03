@@ -1,7 +1,10 @@
 configuration {
     show-icons: true;
+    modes: "drun";
     ssh-command: "tmux-wrapper ssh {ssh-client} {host} [-p {port}]";
 	dpi: 192;
+    drun-use-desktop-cache: true;
+    max-history-size: 128;
 }
 @theme "fullscreen-preview"
 
@@ -14,7 +17,7 @@ listview {
 }
 
 element-icon {
-    size: 4em;
+    size: 8em;
 }
 element selected {
     border-color: rgb(129, 143, 180);

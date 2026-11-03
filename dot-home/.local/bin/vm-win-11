@@ -67,6 +67,7 @@ nohup podman unshare /usr/libexec/virtiofsd \
     --socket-path=$virtiofsd_sock_path \
     --shared-dir $virtiofsd_dir_base \
     --announce-submounts --sandbox chroot \
+    --cache=always \
     > $log_dir/virtiofsd.log 2>&1 & 
 
 
@@ -102,7 +103,7 @@ QEMU_OPTS="$QEMU_OPTS -qmp unix:$workingdir/qmp-shell.sock,server=on,wait=off"
 # Basic CPU
 QEMU_OPTS="$QEMU_OPTS -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time,hv_synic,hv-vpindex,hv_stimer,hv_frequencies,hv-reenlightenment,migratable=off,kvm=off"
 #QEMU_OPTS="$QEMU_OPTS -smp sockets=1,cores=4,threads=1"
-QEMU_OPTS="$QEMU_OPTS -smp 8,sockets=1,cores=4,threads=2"
+QEMU_OPTS="$QEMU_OPTS -smp 4,sockets=1,cores=2,threads=2"
 # memory
 QEMU_OPTS="$QEMU_OPTS -m $mem_size"
 # Drive 
@@ -127,7 +128,7 @@ QEMU_OPTS="$QEMU_OPTS -device virtserialport,name=com.redhat.spice.0,chardev=vda
 QEMU_OPTS="$QEMU_OPTS -chardev qemu-vdagent,id=vdagent0,name=vdagent,clipboard=on,mouse=off"
 # VirtioFS
 QEMU_OPTS="$QEMU_OPTS -chardev socket,id=char0,path=${virtiofsd_sock_path}"
-QEMU_OPTS="$QEMU_OPTS -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=host-share"
+QEMU_OPTS="$QEMU_OPTS -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=host-share,cache-size=512M"
 QEMU_OPTS="$QEMU_OPTS -object memory-backend-memfd,id=mem0,size=$mem_size"
 ## check hugepagetbl is on
 if [ ! -z "$(grep -i 'default_hugepagesz' /proc/cmdline)" ]; then
@@ -137,8 +138,8 @@ fi
 QEMU_OPTS="$QEMU_OPTS -numa node,memdev=mem0,nodeid=0" 
 QEMU_OPTS="$QEMU_OPTS -numa cpu,node-id=0,socket-id=0,core-id=0" 
 QEMU_OPTS="$QEMU_OPTS -numa cpu,node-id=0,socket-id=0,core-id=1" 
-QEMU_OPTS="$QEMU_OPTS -numa cpu,node-id=0,socket-id=0,core-id=2" 
-QEMU_OPTS="$QEMU_OPTS -numa cpu,node-id=0,socket-id=0,core-id=3" 
+#QEMU_OPTS="$QEMU_OPTS -numa cpu,node-id=0,socket-id=0,core-id=2" 
+#QEMU_OPTS="$QEMU_OPTS -numa cpu,node-id=0,socket-id=0,core-id=3" 
 # GPU passthrough
 QEMU_OPTS="$QEMU_OPTS -vga virtio"
 QEMU_OPTS="$QEMU_OPTS -display gtk,zoom-to-fit=on,full-screen=off,gl=on,window-close=on,show-menubar=off"

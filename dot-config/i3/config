@@ -198,9 +198,9 @@ bindsym $mod+Shift+w exec  rofi -show window  -cache-dir ~/.cache/rofi
 
 ##### file search
 ## key bindgs for media keys
-bindsym XF86AudioLowerVolume exec --no-startup-id polybar-msg action pipewire-simple hook 3
-bindsym XF86AudioRaiseVolume exec --no-startup-id polybar-msg action pipewire-simple hook 2
-bindsym XF86AudioMute exec --no-startup-id polybar-msg action pipewire-simple hook 1
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/polybar/pipewire-wireplumber.sh down sink
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/polybar/pipewire-wireplumber.sh up sink
+bindsym XF86AudioMute exec --no-startup-id ~/.config/polybar/pipewire-wireplumber.sh toggle sink
 
 # screen saver
 bindsym $alt+F11 exec "xset +dpms && xset s on"; \
@@ -248,8 +248,6 @@ mouse_warping output
 popup_during_fullscreen smart
 focus_wrapping yes
 
-floating_minimum_size 200 x 150
-
 #### UI Settings
 client.background #272827
 client.focused          #657b83 #272827 #B06534 #B06534   #657b83
@@ -268,8 +266,7 @@ for_window [class="(?i)google-chrome"] move --no-auto-back-and-forth window to w
 for_window [class="(?i)chromium"] move --no-auto-back-and-forth window to workspace 1
 ### floating window center
 for_window [floating_from="user"] move position center
-### dingtalk & weixin popup
-for_window [class="(?i)com.alibabainc.dingtalk" title="(?i).*(?:分享|预览|.doc|.docx|.ppt|.pptx|.xls|.xlsx).*"] floating enable, resize set 90 ppt 80 ppt
+ 
 ### dia window settings: 1. float toolbox_window & dia ,set size to 800x200
 for_window [class="(?i)dia" window_role="toolbox_window"] floating enable,resize set 10 ppt 60 ppt
 for_window [class="(?i)feh" floating]border pixel 2
@@ -310,8 +307,12 @@ assign [class="(?i).*remote-viewer.*"] 7
 assign [class="(?i).*remmina.*"] 7
 # w8 empty
 assign [class="(?i)com.alibabainc.dingtalk"] 8
+### dingtalk & weixin popup
+for_window [class="(?i)com.alibabainc.dingtalk" title="(?i).*(?:分享的图片|预览|\.doc|\.docx|\.ppt|\.pptx|\.xls|\.xlsx).*"] \
+                        floating enable
 assign [class="(?i)wechat"] 8
 assign [title="(?i)weixin"] 8
+assign [class="(?i)wemeetapp"] 8
 # w9 misc
 assign [title="(?i)baidunetdisk"] 9
 assign [title="(?i)百度网盘"] 9
@@ -347,6 +348,12 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_role="Preferences"] floating enable
 for_window [window_role="bubble"] floating enable
 
+## specific window adject
+### EdrawMax resize dialog for open file
+for_window [instance="(?i)EdrawMax" title="打开文件"] resize set 1200 px 800 px
+
+
+
 #### Workspace and Monitors
 
 ###### auto workspace output assign
@@ -373,13 +380,13 @@ exec --no-startup-id dunst
 ##### desktop app
 #exec --no-startup-id gtk-launch claws-mail
 exec --no-startup-id i3-utils-cmd-term.sh launch
-exec i3-utils-base-term.sh "-n coding -t coding -e tmuxp load normal"
+exec --no-startup-id i3-utils-base-term.sh "-n coding -t coding -e tmuxp load normal"
 
 exec --no-startup-id fcitx5 -r -d
 exec --no-startup-id hdmi-hotplug.sh
 
 ## **IMPORTANT** make bar lauch last, as some service needs to start up first
-exec gtk4-launch org.ray.desktop.statusbar
+exec --no-startup-id gtk4-launch org.ray.desktop.statusbar
 
 #exec --no-startup-id firefox-bin
 #exec --no-startup-id gtk-launch weixin-uos
