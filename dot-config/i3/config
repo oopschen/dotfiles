@@ -220,8 +220,7 @@ bindsym $alt+F4 [workspace=".*"] move workspace to output eDP-1;\
                                     [workspace="9"] move workspace to output primary; \
     exec --no-startup-id /usr/bin/notify-send -u low -t 3000 "Output Presentation";
 #### profile for work desktop mode
-bindsym $alt+F5 exec --no-startup-id vm-w11; \
-    exec --no-startup-id thunderbird-bin; \
+bindsym $alt+F5 exec --no-startup-id thunderbird-bin; \
     exec --no-startup-id google-chrome-stable; \
     exec --no-startup-id gtk4-launch org.ray.network.wlan0.restart; \
     exec pgrep -f "google/chrome" | xargs -I{} sudo /root/.bin/write-pid2-cgroup-browser-ram.sh {}; \
