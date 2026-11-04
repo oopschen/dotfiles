@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 basedir=/home/work/vm/win11
-diskdir=$(realpath $basedir/win11_202307.qcow2)
-diskdata=$(realpath $basedir/win11_202410_data.qcow2)
-sharedir=$(realpath ~/share)
+diskdir=$(realpath "$basedir/win11_202307.qcow2")
+diskdata=$(realpath "$basedir/win11_202410_data.qcow2")
+sharedir=$(realpath "$HOME/share")
 mem_size=4G
 pidfile="/tmp/.vm.win11.pid"
 prefix_name=vm-qemu-w11
@@ -128,7 +128,7 @@ QEMU_OPTS="$QEMU_OPTS -device virtserialport,name=com.redhat.spice.0,chardev=vda
 QEMU_OPTS="$QEMU_OPTS -chardev qemu-vdagent,id=vdagent0,name=vdagent,clipboard=on,mouse=off"
 # VirtioFS
 QEMU_OPTS="$QEMU_OPTS -chardev socket,id=char0,path=${virtiofsd_sock_path}"
-QEMU_OPTS="$QEMU_OPTS -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=host-share,cache-size=512M"
+QEMU_OPTS="$QEMU_OPTS -device vhost-user-fs-pci,queue-size=1024,chardev=char0,tag=host-share"
 QEMU_OPTS="$QEMU_OPTS -object memory-backend-memfd,id=mem0,size=$mem_size"
 ## check hugepagetbl is on
 if [ ! -z "$(grep -i 'default_hugepagesz' /proc/cmdline)" ]; then
@@ -151,6 +151,7 @@ echo -e "VM Run as:\n\t $QEMU_OPTS"
 # TODO current nvidia offload not work with gtk gl=on 2025.07.08
 __NV_PRIME_RENDER_OFFLOAD=0 taskset -c 4-7 qemu-system-x86_64 $QEMU_OPTS > $log_dir/qemu.log 2>&1
 
+
 rm $pidfile > /dev/null 2>&1
 ## echo quit
 echo "VM Quit with code($?)."
@@ -158,7 +159,12 @@ echo "VM Quit with code($?)."
 
 ### clean virtiofs daemon
 kill -3 $(cat $virtiofs_pidfile) > /dev/null 2>&1
-podman unshare mount -l | grep -i $prefix_name | cut -d ' ' -f 3 | tr -d ' ' | xargs -I{} podman unshare umount {}
+
+#podman unshare mount -l | grep -i $prefix_name | cut -d ' ' -f 3 | tr -d ' ' | xargs -I{} podman unshare umount {}
+for d in "$virtiofsd_dir_base"/host-*; do
+    podman unshare umount "$d" 2>/dev/null
+done
+
 echo "Virtiofs Daemon Quit ."
 
 if [ ! -z "$NOTIFY_SND" ]; then
