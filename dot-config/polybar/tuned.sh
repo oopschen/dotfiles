@@ -58,7 +58,7 @@ SHORT=${TUNED_SHORT:-0}          # 1 = label 使用短名称
 # 白名单：只允许切换这些 profile（同时也是循环切换的顺序），空格分隔。
 # 留空 = 不限制，使用 tuned-adm list 的全部 profile。
 # 也可通过环境变量覆盖：TUNED_WHITELIST="powersave balanced throughput-performance"
-WHITELIST=${TUNED_WHITELIST:-"powersave laptop-battery-powersave balanced balanced-battery latency-performance"}
+WHITELIST=${TUNED_WHITELIST:-"latency-performance balanced laptop-battery-powersave powersave balanced-battery"}
 NOTIFY=${TUNED_NOTIFY:-0}        # 1 = 切换后 notify-send
 FALLBACK=${TUNED_FALLBACK:-60}   # 兜底刷新间隔(秒)，正常情况靠 DBus 事件触发
 SEP=${TUNED_SEP:-" "}            # 图标与文字之间的分隔
