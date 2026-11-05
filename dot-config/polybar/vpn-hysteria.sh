@@ -56,6 +56,7 @@ shopt -u patsub_replacement 2>/dev/null
 # nft 脚本目录(冒号分隔，条目可为目录或文件，支持 ~)，靠前优先
 : "${VPN_NFT_DIRS:=/etc/nftables.d:/etc/nftables:/etc/nft:/etc/nftables.conf:/usr/local/etc/nftables.d:$HOME/.config/nftables:/etc/hysteria:$HOME/.config/hysteria}"
 : "${VPN_NFT_GLOB:=*.nft *.nftables *.conf *.rules *.sh}"
+: "${VPN_NFT_RETRY:=10}"       # 尚未发现 nft 规则时，每隔 N 秒重试发现(开机早期)
 : "${VPN_RESCAN:=1}"            # watch 中检测脚本/配置变化并自动重新发现
 
 # 覆盖自动发现（留空=自动）
@@ -322,7 +323,7 @@ nft_parse() {  # stdin=nft 文本; $1=来源标识
     dup=0; for t in "${NFT_TABLES[@]}"; do [[ $t == "$fam $tbl" ]] && dup=1; done
     (( dup )) || NFT_TABLES+=("$fam $tbl")
     [[ -n $NFT_PORT ]] || NFT_PORT=$port
-    [[ -n $NFT_FILE ]] || NFT_FILE=$src
+    [[ -n $NFT_FILE || $src == \(* ]] || NFT_FILE=$src
     if [[ -z $NFT_MARK && -n $mark ]]; then NFT_MARK=$mark; fi
   done
   if [[ -z $NFT_MARK && -n $m2 ]]; then
@@ -358,6 +359,13 @@ nft_scan() {
   if (( ${#NFT_TABLES[@]} == 0 )) && [[ $NFT_MODE == priv ]]; then   # 兜底: 运行中的规则
     nft_parse "(live ruleset)" < <($NFT_PRIV nft list ruleset 2>/dev/null)
   fi
+  if (( ${#NFT_TABLES[@]} )); then
+    ( IFS=';'; printf '%s\n%s\n%s\n%s\n' "${NFT_TABLES[*]}" "$NFT_PORT" "$NFT_MARK" "$NFT_FILE" ) >"$STATE_DIR/nft" 2>/dev/null
+  elif [[ -r $STATE_DIR/nft ]]; then                 # 开机早期规则/目录未就绪: 用上次的发现结果
+    local l1=""
+    { IFS= read -r l1; IFS= read -r NFT_PORT; IFS= read -r NFT_MARK; IFS= read -r NFT_FILE; } <"$STATE_DIR/nft"
+    IFS=';' read -ra NFT_TABLES <<<"$l1"
+  fi
   [[ -n $OV_TABLE ]] && NFT_TABLES=("$OV_TABLE")
   return 0
 }
@@ -370,6 +378,17 @@ eff() {  # 生效的 tproxy 端口 / mark: 手动覆盖 > hysteria 配置 > nft 
 }
 
 # ---- 环境探测（兼容多发行版 / 多 init）----
+# nft 检测权限: root / sudo -n / doas -n，否则退回 ip rule fwmark 检测
+nft_detect_priv() {
+  NFT_PRIV=""; NFT_MODE=iprule
+  if command -v nft >/dev/null 2>&1; then
+    if (( EUID == 0 )); then NFT_MODE=priv
+    elif command -v sudo >/dev/null 2>&1 && sudo -n nft list tables >/dev/null 2>&1; then NFT_MODE=priv; NFT_PRIV="sudo -n"
+    elif command -v doas >/dev/null 2>&1 && doas -n nft list tables >/dev/null 2>&1; then NFT_MODE=priv; NFT_PRIV="doas -n"
+    fi
+  fi
+}
+
 detect_env() {
   local d f n
   if [[ $VPN_INIT == auto ]]; then
@@ -405,14 +424,7 @@ detect_env() {
       command -v "$n" >/dev/null 2>&1 && { VPN_BIN=$(command -v "$n"); break; }
     done
   fi
-  # nft 检测权限: root / sudo -n / doas -n，否则退回 ip rule fwmark 检测
-  NFT_PRIV=""; NFT_MODE=iprule
-  if command -v nft >/dev/null 2>&1; then
-    if (( EUID == 0 )); then NFT_MODE=priv
-    elif command -v sudo >/dev/null 2>&1 && sudo -n nft list tables >/dev/null 2>&1; then NFT_MODE=priv; NFT_PRIV="sudo -n"
-    elif command -v doas >/dev/null 2>&1 && doas -n nft list tables >/dev/null 2>&1; then NFT_MODE=priv; NFT_PRIV="doas -n"
-    fi
-  fi
+  nft_detect_priv
   HAVE_IP=0; command -v ip >/dev/null 2>&1 && HAVE_IP=1
   HAVE_LISTEN=1
   if   command -v ss >/dev/null 2>&1;      then LISTEN_CMD="ss -H -lntu"
@@ -437,14 +449,22 @@ init_env() {
   SELF=$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "$0")
   SETSID=$(command -v setsid)
   OV_PORT=$VPN_TPROXY_PORT; OV_MARK=$VPN_TPROXY_MARK; OV_TABLE=$VPN_NFT_TABLE
-  NFT_TS=0; NFT_CACHE=0
+  NFT_TS=0; NFT_CACHE=0; now; NFT_RETRY_TS=$NOW
   detect_env; init_theme; nft_scan; init_hy
   : >"$RUN/scan.stamp"
 }
 
 maybe_reload() {  # 脚本目录/配置有变化才重新发现；全部 bash 内建判断，无 fork
-  (( VPN_RESCAN )) || return 0
   local p
+  if (( ${#NFT_TABLES[@]} == 0 )) && [[ -z $VPN_NFT_CHECK_CMD ]]; then   # 还没发现 nft 规则: 周期重试
+    now
+    if (( NOW - NFT_RETRY_TS >= VPN_NFT_RETRY )); then
+      NFT_RETRY_TS=$NOW
+      [[ $NFT_MODE == priv ]] || nft_detect_priv
+      nft_scan; NFT_TS=0; : >"$RUN/scan.stamp"; return 0
+    fi
+  fi
+  (( VPN_RESCAN )) || return 0
   for p in "${SCAN_PATHS[@]}" ${HY_CFG:+"$HY_CFG"}; do
     [[ -e $p && $p -nt $RUN/scan.stamp ]] || continue
     nft_scan; hy_refresh; NFT_TS=0; : >"$RUN/scan.stamp"; return 0
@@ -489,11 +509,13 @@ compute() {
   (( VPN_CHECK_PORT && HAVE_LISTEN && HY_PROC )) && [[ -n $TP_PORT ]] && ! listening "$TP_PORT" && H=0
 
   T=-1
-  if (( VPN_CHECK_NFT )) && { (( ${#NFT_TABLES[@]} )) || [[ -n $VPN_NFT_CHECK_CMD ]]; } \
-     && { [[ $NFT_MODE == priv ]] || (( HAVE_IP )) || [[ -n $VPN_NFT_CHECK_CMD ]]; }; then
-    now
-    if (( NOW - NFT_TS >= VPN_NFT_TTL )); then nft_probe && NFT_CACHE=1 || NFT_CACHE=0; NFT_TS=$NOW; fi
-    T=$NFT_CACHE
+  if (( VPN_CHECK_NFT )); then
+    if { (( ${#NFT_TABLES[@]} )) || [[ -n $VPN_NFT_CHECK_CMD ]]; } \
+       && { [[ $NFT_MODE == priv ]] || (( HAVE_IP )) || [[ -n $VPN_NFT_CHECK_CMD ]]; }; then
+      now
+      if (( NOW - NFT_TS >= VPN_NFT_TTL )); then nft_probe && NFT_CACHE=1 || NFT_CACHE=0; NFT_TS=$NOW; fi
+      T=$NFT_CACHE
+    else T=-2; fi                                   # 暂时无法检测: 灰点占位
   fi
   D=-1
   if (( VPN_CHECK_DNS )); then
@@ -533,7 +555,9 @@ resolve_state() {
 # ---- 渲染 ----
 dot() {
   local col
-  if (( $1 == 1 )); then col=${C[up]}; elif [[ $RAW == down ]]; then col=${C[down]}; else col=${C[error]}; fi
+  if   (( $1 == 1 ));  then col=${C[up]}
+  elif (( $1 == -2 )); then col=${C[muted]}
+  elif [[ $RAW == down ]]; then col=${C[down]}; else col=${C[error]}; fi
   dots+="${dots:+ }%{F$col}$DOT%{F-}"
 }
 
@@ -547,7 +571,7 @@ render() {
   case $STATE in up|partial|pending) tc=${C[text]};; *) tc=${C[muted]};; esac
   srv_fmt "$SRV"; [[ -n $REPLY ]] && srv="%{F${C[muted]}}$REPLY%{F-}"
   [[ -n $TP_PORT ]] && tp="%{F${C[muted]}}:$TP_PORT%{F-}"
-  dot "$H"; (( T >= 0 )) && dot "$T"; (( D >= 0 )) && dot "$D"
+  dot "$H"; (( T != -1 )) && dot "$T"; (( D >= 0 )) && dot "$D"
 
   local P_icon="$ti%{F$c}$g%{F-}$te"
   local P_name="%{F$tc}$NAME%{F-}"
