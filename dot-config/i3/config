@@ -167,7 +167,8 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-bindsym $mod+b exec --no-startup-id polybar-msg cmd toggle
+bindsym $mod+b exec --no-startup-id "polybar-msg -p $(grep -i pid /tmp/polybar-gbar.log | tail -n1  | sed -r 's/.*pid\s*:\s+([0-9]+).+/\1/ig') cmd toggle"
+bindsym $mod+Shift+b exec --no-startup-id "polybar-msg -p $(grep -i pid /tmp/polybar-statusBar.log | tail -n1  | sed -r 's/.*pid\s*:\s+([0-9]+).+/\1/ig') cmd toggle"
 # bindsym $mod+Shift+j move container to output left
 # bindsym $mod+Shift+r move container to output right
 
@@ -351,6 +352,9 @@ for_window [window_role="bubble"] floating enable
 ### EdrawMax resize dialog for open file
 for_window [instance="(?i)EdrawMax" title="打开文件"] resize set 1200 px 800 px
 
+
+## polybar status
+for_window [class="(?i)polybar" title="(?i).*statusBar.*"] floating enable, sticky enable 
 
 
 #### Workspace and Monitors

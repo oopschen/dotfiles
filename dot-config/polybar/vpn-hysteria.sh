@@ -104,6 +104,7 @@ declare -A FORMATS=(
   [full]='{icon} {name} {server} {dots}'
   [fwd]='{icon} {name} {server} {tproxy} {dots}'
   [dots]='{name} {dots}'
+  [dots-compact]='{dots}'
 )
 declare -A STATE_TXT=([up]=ON [down]=OFF [pending]='...' [partial]=PART [error]=ERR)
 
