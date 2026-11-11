@@ -116,4 +116,7 @@ else
 
 fi
 
+## restart status bar
+gtk4-launch org.ray.desktop.statusbar
+
 /usr/bin/notify-send -u low -t 5000 "Display Changed ($mode)" "$display_mode"

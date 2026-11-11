@@ -1,33 +1,35 @@
 #!/usr/bin/env bash
 
-# Terminate already running bar instances
-# If all your bars have ipc enabled, you can use
-polybar-msg cmd quit
-# Otherwise you can use the nuclear option:
-# killall -q polybar
+# 先尝试优雅退出
+polybar-msg cmd quit >/dev/null 2>&1
+sleep 0.3
+pkill -u "$UID" -x polybar
 
-# Launch bar1 and bar2
+# 等待旧进程退出，超时则强杀
+tries=0
+while pgrep -u "$UID" -x polybar >/dev/null; do
+    tries=$((tries + 1))
+    if [ "$tries" -gt 10 ]; then
+        pkill -9 -u "$UID" -x polybar 2>/dev/null
+    fi
+    sleep 0.2
+done
+
 loggbar=/tmp/polybar-gbar.log
 loggstatusbar=/tmp/polybar-statusBar.log
+: > "$loggbar"
+: > "$loggstatusbar"
 
-# clean log files
-truncate -s 0 $loggbar  2>>/dev/null
-truncate -s 0 $loggstatusbar 2>>/dev/null
-
-echo "---" | tee -a  $loggbar $loggstatusbar
-polybar gbar 2>&1 | tee -a $loggbar & disown
-polybar statusBar 2>&1 | tee -a $loggstatusbar & disown
+polybar gbar      >>"$loggbar"       2>&1 </dev/null &
+gbar_pid=$!
+polybar statusBar >>"$loggstatusbar" 2>&1 </dev/null &
+disown -a
 
 echo "Bars launched..."
 
-while :; do
-    gbar_pid=$(grep -i pid $loggbar | tail -n1  | sed -r 's/.*pid\s*:\s+([0-9]+).+/\1/ig')
-    echo -en "gbar log $gbar_pid" > /tmp/c.log
-    if [ -z "$gbar_pid" ]; then
-        sleep 0.3
-        continue
+for _ in $(seq 1 33); do
+    if polybar-msg -p "$gbar_pid" cmd hide >/dev/null 2>&1; then
+        break
     fi
-
-    polybar-msg -p $gbar_pid cmd hide
-    break
+    sleep 0.3
 done
