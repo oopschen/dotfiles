@@ -8,6 +8,9 @@
       "$HOME",
       "$HOME/.cargo/**",
       "$HOME/.rustup/**"
-  ]
+  ],
+  "json.schemaDownload.trustedDomains": {
+    "https://raw.githubusercontent.com": true
+  }
 
 }

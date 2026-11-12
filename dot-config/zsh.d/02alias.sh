@@ -17,6 +17,7 @@ alias -s html=google-chrome-stable \
   ppt=wps \
   pptx=wps \
   wps=wps \
+  et=wps \
   pdf=mupdf \
   png='feh -Z' \
   PNG='feh -Z' \

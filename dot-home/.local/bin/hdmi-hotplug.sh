@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#
+echo "$(date +%T) hotplug args=[$*] parent=[$(ps -o args= -p $PPID)]" >> /tmp/hotplug.log
 
 # find hdmi name
 extern_status=
@@ -74,6 +74,9 @@ function gen_scale_xrandr_param() {
         echo "--scale ${scale_x}x${scale_y}"
     fi
 }
+
+# killall polybar 
+pkill -u "$UID" -x polybar
 
 if [[ ! -z "$extern_status" && ! -z "$intern_status" ]]; then
     case $mode in 
