@@ -70,6 +70,8 @@ alias ffcp="fzf -m --print0 --prompt=\"search: >\" | xargs -I{} --null cp {}"
 alias ffmv="fzf -m --print0 --prompt=\"search: >\" | xargs -I{} --null mv {}"
 alias rcs="sudo rc-service"
 alias mupdf="mupdf-gl -Y 2"
+alias tmxls="tmuxp ls"
+alias tmxld="tmuxp load"
 
 ### dingtalk
 #alias dingfix="pgrep -f com.alibabainc.dingtalk | xargs -I{} kill -9 {};rm -rf /home/work/.config/DingTalk/userdata/dump"
